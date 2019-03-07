@@ -1,13 +1,14 @@
 {
     "title": "Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)",
-    "description": "Docker Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) ",
+    "description": "Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) ",
     "language": "zh-hans",
     "author": "Donald Tsang（圆月弯刀）",
     "links": {
         "sidebar": {
             "Donald Tsang": "https://b.qqbb.app",
-            "Swift Docs": "https://eiu.app/swift-docs",
-            "Swift Handbook": "https://eiu.app/swift-handbook"
+            "Swift Docs": "https://eiuapp.github.io/swift-docs",
+            "Swift Handbook": "https://eiuapp.github.io/swift-handbook",
+            "Ceph Handbook": "https://eiuapp.github.io/ceph-handbook"
         }
     },
     "plugins": [
