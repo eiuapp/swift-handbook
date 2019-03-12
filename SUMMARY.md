@@ -15,6 +15,7 @@
 * [多代理节点安装](docs/swift-multy-proxy-node-conf.md)
 * [多代理节点通过nginx实现HA](docs/swift-multy-proxy-node-ha-with-nginx.md)
 * [多代理节点效果展示](docs/swift-multy-proxy-node-illustration.md)
+* [代理节点安装](docs/proxy-node-install.md)
 
 ## 认证
 
