@@ -66,6 +66,7 @@
 * [rsync数据通信](docs/swift-rsync-dev2-fix-rsyncdconf.md)
 * [rebalance后数据未通信](docs/swift-rsync-storage-node-cannot-get-rebalance-data.md)
 * [storage node 的主板坏了](docs/swift-storage-node-system-failed-re-mount.md)
+* [mount Structure needs cleaning](docs/swift-mount-structure-needs-cleaning.md)
 
 ## 笔记
 
