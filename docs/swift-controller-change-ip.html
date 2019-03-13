@@ -1,0 +1,1341 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>controller节点更换IP · Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Donald Tsang（圆月弯刀）">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-ghcolors.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-lightbox/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="swift-demo-cannot-get-user-info.html" />
+    
+    
+    <link rel="prev" href="swift-admin-cannot-login.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://b.qqbb.app" target="_blank" class="custom-link">Donald Tsang</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-docs" target="_blank" class="custom-link">Swift Docs</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-handbook" target="_blank" class="custom-link">Swift Handbook</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/ceph-handbook" target="_blank" class="custom-link">Ceph Handbook</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        <li class="header">序言</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">环境配置</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="env.html">
+            
+                <a href="env.html">
+            
+                    
+                        <b>2.1.</b>
+                    
+                    swift 2.17 环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">安装</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="swift-queens-install.html">
+            
+                <a href="swift-queens-install.html">
+            
+                    
+                        <b>3.1.</b>
+                    
+                    swift 安装过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="swift-controller-node-add-a-new-storage-node.html">
+            
+                <a href="swift-controller-node-add-a-new-storage-node.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    增加storage节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="swift-multy-proxy-node-conf.html">
+            
+                <a href="swift-multy-proxy-node-conf.html">
+            
+                    
+                        <b>3.3.</b>
+                    
+                    多代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                <a href="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                    
+                        <b>3.4.</b>
+                    
+                    多代理节点通过nginx实现HA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="swift-multy-proxy-node-illustration.html">
+            
+                <a href="swift-multy-proxy-node-illustration.html">
+            
+                    
+                        <b>3.5.</b>
+                    
+                    多代理节点效果展示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="proxy-node-install.html">
+            
+                <a href="proxy-node-install.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">认证</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="analysis-openstack-swift-keystone-authentication.html">
+            
+                <a href="analysis-openstack-swift-keystone-authentication.html">
+            
+                    
+                        <b>4.1.</b>
+                    
+                    与keystone结合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                    
+                        <b>4.2.</b>
+                    
+                    让swift通过keystone认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">ring</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="analysis-openstack-swift-overview-ring.html">
+            
+                <a href="analysis-openstack-swift-overview-ring.html">
+            
+                    
+                        <b>5.1.</b>
+                    
+                    overview ring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">partition</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="swift-what-is-a-swift-partition.html">
+            
+                <a href="swift-what-is-a-swift-partition.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    what is a swift partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="openstack-swift-analysis-partition.html">
+            
+                <a href="openstack-swift-analysis-partition.html">
+            
+                    
+                        <b>6.2.</b>
+                    
+                    ring如何生成partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="openstack-swift-object-storage-result-analysis.html">
+            
+                <a href="openstack-swift-object-storage-result-analysis.html">
+            
+                    
+                        <b>6.3.</b>
+                    
+                    上传文件结果分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">quota</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                <a href="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                    
+                        <b>7.1.</b>
+                    
+                    enable reseller admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="swift-account-quota-outcome.html">
+            
+                <a href="swift-account-quota-outcome.html">
+            
+                    
+                        <b>7.2.</b>
+                    
+                    设置account的quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="swift-account-quota-process.html">
+            
+                <a href="swift-account-quota-process.html">
+            
+                    
+                        <b>7.3.</b>
+                    
+                    设置account的quota（分析过程）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="swfit-account-quota-restful-api.html">
+            
+                <a href="swfit-account-quota-restful-api.html">
+            
+                    
+                        <b>7.4.</b>
+                    
+                    REST调用accout quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">erasure code</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="analysis-openstack-swift-overview_erasure_code.html">
+            
+                <a href="analysis-openstack-swift-overview_erasure_code.html">
+            
+                    
+                        <b>8.1.</b>
+                    
+                    与 erasure code 相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">测试</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="swift-benchmarking-getput.html">
+            
+                <a href="swift-benchmarking-getput.html">
+            
+                    
+                        <b>9.1.</b>
+                    
+                    getput使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">日志</li>
+        
+        
+    
+        <li class="chapter " data-level="10.1" data-path="swift-logfiles.html">
+            
+                <a href="swift-logfiles.html">
+            
+                    
+                        <b>10.1.</b>
+                    
+                    组件日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">常见问题</li>
+        
+        
+    
+        <li class="chapter " data-level="11.1" data-path="swift-faq.html">
+            
+                <a href="swift-faq.html">
+            
+                    
+                        <b>11.1.</b>
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.2" data-path="swift-admin-cannot-login.html">
+            
+                <a href="swift-admin-cannot-login.html">
+            
+                    
+                        <b>11.2.</b>
+                    
+                    admin被删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="11.3" data-path="swift-controller-change-ip.html">
+            
+                <a href="swift-controller-change-ip.html">
+            
+                    
+                        <b>11.3.</b>
+                    
+                    controller节点更换IP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.4" data-path="swift-demo-cannot-get-user-info.html">
+            
+                <a href="swift-demo-cannot-get-user-info.html">
+            
+                    
+                        <b>11.4.</b>
+                    
+                    无法获取用户信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.5" data-path="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                <a href="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                    
+                        <b>11.5.</b>
+                    
+                    auth version require python-keystoneclient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.6" data-path="swift-installed-source-code-address.html">
+            
+                <a href="swift-installed-source-code-address.html">
+            
+                    
+                        <b>11.6.</b>
+                    
+                    swift安装包源码地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.7" data-path="swift-multy-proxy-node-faq.html">
+            
+                <a href="swift-multy-proxy-node-faq.html">
+            
+                    
+                        <b>11.7.</b>
+                    
+                    多代理节点安装出现的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.8" data-path="swift-problem-with-xfs-file-system.html">
+            
+                <a href="swift-problem-with-xfs-file-system.html">
+            
+                    
+                        <b>11.8.</b>
+                    
+                    swift storage node 出现 xfs 错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.9" data-path="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                <a href="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                    
+                        <b>11.9.</b>
+                    
+                    rsync数据通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.10" data-path="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                    
+                        <b>11.10.</b>
+                    
+                    rebalance后数据未通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.11" data-path="swift-storage-node-system-failed-re-mount.html">
+            
+                <a href="swift-storage-node-system-failed-re-mount.html">
+            
+                    
+                        <b>11.11.</b>
+                    
+                    storage node 的主板坏了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.12" data-path="swift-mount-structure-needs-cleaning.html">
+            
+                <a href="swift-mount-structure-needs-cleaning.html">
+            
+                    
+                        <b>11.12.</b>
+                    
+                    mount Structure needs cleaning
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">笔记</li>
+        
+        
+    
+        <li class="chapter " data-level="12.1" data-path="note-about-openstack-swift.html">
+            
+                <a href="note-about-openstack-swift.html">
+            
+                    
+                        <b>12.1.</b>
+                    
+                    笔记1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">未来</li>
+        
+        
+    
+        <li class="chapter " data-level="13.1" >
+            
+                <a target="_blank" href="https://b.qqbb.app/tags/swift/">
+            
+                    
+                        <b>13.1.</b>
+                    
+                    我的swift探险之旅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="13.2" >
+            
+                <a target="_blank" href="https://eiuapp.github.io/swift-handbook/">
+            
+                    
+                        <b>13.2.</b>
+                    
+                    Swift Handbook
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">相关资源</li>
+        
+        
+    
+        <li class="chapter " data-level="14.1" data-path="tech_resource.md">
+            
+                <span>
+            
+                    
+                        <b>14.1.</b>
+                    
+                    swift技术工具与资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >controller节点更换IP</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <html><head></head><body><p>controller node &#x66F4;&#x6362; IP </p>
+<pre class="language-"><code>root@controller:~# . demo-openrc 
+root@controller:~# swift stat
+^C Aborted
+root@controller:~# cat /etc/hosts
+127.0.0.1    localhost
+127.0.1.1    controller
+
+# controller
+192.168.100.50       controller
+
+# compute1
+192.168.100.61       compute1
+
+# block1
+192.168.100.101       block1
+
+# controller
+#192.168.0.51    controller
+
+# storage 
+192.168.0.198    swift0198
+192.168.0.180    swift0180
+192.168.0.135    swift0135
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+root@controller:~# service swift-proxy status
+&#x25CF; swift-proxy.service - LSB: Swift proxy server
+   Loaded: loaded (/etc/init.d/swift-proxy; bad; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 11:16:57 CST; 2min 38s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 5510 ExecStart=/etc/init.d/swift-proxy start (code=exited, status=0/SUCCESS)
+    Tasks: 5
+   Memory: 88.5M
+      CPU: 2.874s
+   CGroup: /system.slice/swift-proxy.service
+           &#x251C;&#x2500;5520 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;5529 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;5530 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;5531 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x2514;&#x2500;5532 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+
+Jan 10 11:18:07 controller proxy-server[5530]: STDERR: ERROR:root:Error limiting server controller:11211 (txn: tx6d251040de4d487c8441b-005c
+Jan 10 11:18:07 controller proxy-server[5530]: - - 10/Jan/2019/03/18/07 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP
+Jan 10 11:18:08 controller keystoneauth.identity.generic.base[5530]: Failed to discover available identity versions when contacting http://
+Jan 10 11:18:08 controller proxy-server[5530]: 127.0.0.1 127.0.0.1 10/Jan/2019/03/18/08 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Ffo
+Jan 10 11:18:08 controller proxy-server[5530]: Error: An error occurred: #012Traceback (most recent call last):#012  File &quot;/usr/lib/python2
+Jan 10 11:18:16 controller proxy-server[5530]: Account HEAD returning 503 for [] (txn: tx95a396094b87489bb2393-005c36b978)
+Jan 10 11:18:16 controller proxy-server[5530]: - - 10/Jan/2019/03/18/16 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP
+Jan 10 11:18:17 controller keystoneauth.identity.generic.base[5530]: Failed to discover available identity versions when contacting http://
+Jan 10 11:18:17 controller proxy-server[5530]: 127.0.0.1 127.0.0.1 10/Jan/2019/03/18/17 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Ffo
+Jan 10 11:18:17 controller proxy-server[5530]: Error: An error occurred: #012Traceback (most recent call last):#012  File &quot;/usr/lib/python2
+root@controller:~# netstat -nlpt
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:8774            0.0.0.0:*               LISTEN      2711/python2    
+tcp        0      0 0.0.0.0:8775            0.0.0.0:*               LISTEN      2711/python2    
+tcp        0      0 0.0.0.0:9191            0.0.0.0:*               LISTEN      2686/python2    
+tcp        0      0 0.0.0.0:25672           0.0.0.0:*               LISTEN      2089/beam.smp   
+tcp        0      0 192.168.100.50:3306     0.0.0.0:*               LISTEN      2064/mysqld     
+tcp        0      0 192.168.100.50:11211    0.0.0.0:*               LISTEN      5494/memcached  
+tcp        0      0 192.168.100.50:2379     0.0.0.0:*               LISTEN      1396/etcd       
+tcp        0      0 0.0.0.0:9292            0.0.0.0:*               LISTEN      2698/python2    
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      5520/python     
+tcp        0      0 0.0.0.0:4369            0.0.0.0:*               LISTEN      1828/epmd       
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1619/sshd       
+tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN      2518/0          
+tcp        0      0 0.0.0.0:9696            0.0.0.0:*               LISTEN      2691/python2    
+tcp        0      0 0.0.0.0:6080            0.0.0.0:*               LISTEN      2703/python2    
+tcp6       0      0 :::5672                 :::*                    LISTEN      2089/beam.smp   
+tcp6       0      0 :::5000                 :::*                    LISTEN      2221/apache2    
+tcp6       0      0 :::8776                 :::*                    LISTEN      2221/apache2    
+tcp6       0      0 :::8778                 :::*                    LISTEN      2221/apache2    
+tcp6       0      0 :::2380                 :::*                    LISTEN      1396/etcd       
+tcp6       0      0 :::80                   :::*                    LISTEN      2221/apache2    
+tcp6       0      0 :::4369                 :::*                    LISTEN      1828/epmd       
+tcp6       0      0 :::22                   :::*                    LISTEN      1619/sshd       
+tcp6       0      0 ::1:6010                :::*                    LISTEN      2518/0          
+root@controller:~#
+</code></pre><p>&#x770B;&#x5230;&#x4E0A;&#x9762;&#xFF0C;&#x4E3B;&#x8981;&#x5C31;&#x662F; mysql , memcached, etcd &#x4E09;&#x4E2A;&#x8FDB;&#x7A0B;&#x4F7F;&#x7528;&#x4E86; 192.168.100.50&#xFF0C;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x8981;&#x628A;&#x8FD9;&#x4E9B;IP, &#x66F4;&#x6362;&#x6210; 192.168.0.51</p>
+<p>&#x5230; <a href="https://docs.openstack.org/install-guide/environment.html" target="_blank">https://docs.openstack.org/install-guide/environment.html</a> &#x627E;&#x5230;&#x76F8;&#x5E94;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x4FEE;&#x6539;&#x8FD9;&#x4E9B;&#x914D;&#x7F6E;&#x81F3;&#x65B0;&#x7684;controller node IPv6</p>
+<p>&#x5982;mysql &#x5C31;&#x662F; <a href="https://docs.openstack.org/install-guide/environment-sql-database-ubuntu.html" target="_blank">https://docs.openstack.org/install-guide/environment-sql-database-ubuntu.html</a></p>
+<p>mysql &#x66FF;&#x6362;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code>root@controller:~# cat /etc/mysql/mariadb.conf.d/99-openstack.cnf 
+[mysqld]
+
+feedback=ON
+innodb_use_sys_malloc = 1
+
+bind-address = 192.168.100.50
+
+default-storage-engine = innodb
+innodb_file_per_table = on
+max_connections = 4096
+collation-server = utf8_general_ci
+character-set-server = utf8
+root@controller:~# 
+root@controller:~# grep &quot;192.168.100.50&quot; -rl /etc/mysql/mariadb.conf.d/99-openstack.cnf | xargs sed -i &quot;s/192.168.100.50/192.168.0.51/g&quot;
+root@controller:~# cat /etc/mysql/mariadb.conf.d/99-openstack.cnf 
+[mysqld]
+
+feedback=ON
+innodb_use_sys_malloc = 1
+
+bind-address = 192.168.0.51
+
+default-storage-engine = innodb
+innodb_file_per_table = on
+max_connections = 4096
+collation-server = utf8_general_ci
+character-set-server = utf8
+root@controller:~#
+</code></pre><p>memcached &#x66FF;&#x6362;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code>root@controller:~# grep &quot;192.168.100.50&quot; -rl /etc/memcached.conf | xargs sed -i &quot;s/192.168.100.50/192.168.0.51/g&quot;
+root@controller:~# grep &quot;192.168.100.50&quot; -rl /etc/memcached.conf 
+root@controller:~# grep &quot;192.168.0.51&quot; -rl /etc/memcached.conf 
+/etc/memcached.conf
+root@controller:~# service memcached restart
+root@controller:~# service memcached status
+&#x25CF; memcached.service - memcached daemon
+   Loaded: loaded (/lib/systemd/system/memcached.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 11:33:20 CST; 3s ago
+ Main PID: 5871 (memcached)
+    Tasks: 6
+   Memory: 480.0K
+      CPU: 5ms
+   CGroup: /system.slice/memcached.service
+           &#x2514;&#x2500;5871 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 192.168.0.51
+
+Jan 10 11:33:20 controller systemd[1]: Started memcached daemon.
+root@controller:~# 
+
+etcd &#x66FF;&#x6362;&#x5982;&#x4E0B;&#xFF1A;
+
+root@controller:~# grep &quot;192.168.100.50&quot; -rl /etc/default/etcd | xargs sed -i &quot;s/192.168.100.50/192.168.0.51/g&quot;
+root@controller:~# systemctl restart etcd
+root@controller:~# systemctl status etcd
+&#x25CF; etcd.service - etcd - highly-available key value store
+   Loaded: loaded (/lib/systemd/system/etcd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 11:35:51 CST; 5s ago
+     Docs: https://github.com/coreos/etcd
+           man:etcd
+ Main PID: 5922 (etcd)
+    Tasks: 10
+   Memory: 6.7M
+      CPU: 248ms
+   CGroup: /system.slice/etcd.service
+           &#x2514;&#x2500;5922 /usr/bin/etcd
+
+Jan 10 11:35:51 controller etcd[5922]: a591474479d0011e became follower at term 20
+Jan 10 11:35:51 controller etcd[5922]: newRaft a591474479d0011e [peers: [a591474479d0011e], term: 20, commit: 117159, applied: 110011, lastindex: 117159, lastterm: 20]
+Jan 10 11:35:51 controller etcd[5922]: starting server... [version: 2.2.5, cluster version: 2.2]
+Jan 10 11:35:51 controller systemd[1]: Started etcd - highly-available key value store.
+Jan 10 11:35:51 controller etcd[5922]: a591474479d0011e is starting a new election at term 20
+Jan 10 11:35:51 controller etcd[5922]: a591474479d0011e became candidate at term 21
+Jan 10 11:35:51 controller etcd[5922]: a591474479d0011e received vote from a591474479d0011e at term 21
+Jan 10 11:35:51 controller etcd[5922]: a591474479d0011e became leader at term 21
+Jan 10 11:35:51 controller etcd[5922]: raft.node: a591474479d0011e elected leader a591474479d0011e at term 21
+Jan 10 11:35:51 controller etcd[5922]: published {Name:controller ClientURLs:[http://192.168.0.51:2379]} to cluster 18c3b45aeb9b5e12
+root@controller:~#
+</code></pre><p>&#x505A;&#x4E86;&#x8FD9;&#x4E9B;&#x66F4;&#x6362;&#xFF0C;&#x518D;&#x68C0;&#x67E5;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code>root@controller:/home/ubuntu# netstat -tlnp 
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name  
+tcp        0      0 192.168.100.50:3306     0.0.0.0:*               LISTEN      2064/mysqld     
+tcp        0      0 192.168.0.51:2379       0.0.0.0:*               LISTEN      5922/etcd       
+tcp        0      0 192.168.0.51:11211      0.0.0.0:*               LISTEN      5871/memcached   
+root@controller:/home/ubuntu#
+</code></pre><p>&#x53D1;&#x73B0;mysql &#x8FD8;&#x662F;&#x6CA1;&#x6709;&#x66F4;&#x6362;&#x6210;&#x529F;&#x3002;&#x4E3A;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<p>&#x518D;&#x91CD;&#x542F;</p>
+<pre class="language-"><code>root@controller:~# service mysql restart
+root@controller:~# netstat -tlnp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name  
+tcp        0      0 192.168.100.50:3306     0.0.0.0:*               LISTEN      2064/mysqld  
+root@controller:~#
+</code></pre><p>&#x6D9B;&#x58F0;&#x4F9D;&#x65E7;</p>
+<pre class="language-"><code>root@controller:~# service mysql stop
+root@controller:~# netstat -tlnp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name  
+tcp        0      0 192.168.100.50:3306     0.0.0.0:*               LISTEN      2064/mysqld  
+root@controller:~#
+</code></pre><p>&#x6D9B;&#x58F0;&#x4F9D;&#x65E7;</p>
+<p>&#x8FD9;&#x53EA;&#x80FD;&#x591F; kill -9 &#x4E86;&#x3002;</p>
+<pre class="language-"><code>root@controller:~# kill -9 2064
+root@controller:~# netstat -tlnp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name 
+tcp        0      0 192.168.0.51:3306       0.0.0.0:*               LISTEN      6713/mysqld         
+root@controller:~#
+</code></pre><p>&#x8FD9;&#x91CC;&#x7EC8;&#x4E8E;&#x6B63;&#x5E38;&#x4E86;&#xFF0C;&#x6709;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;IP&#x3002;
+&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x8981;&#x518D;&#x6B21;&#x91CD;&#x542F;&#x4E00;&#x4E0B;&#x3002;</p>
+<pre class="language-"><code>root@controller:~# service mysql status
+&#x25CF; mysql.service - LSB: Start and stop the mysql database server daemon
+   Loaded: loaded (/etc/init.d/mysql; bad; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 11:55:02 CST; 1min 34s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 6623 ExecStop=/etc/init.d/mysql stop (code=exited, status=1/FAILURE)
+  Process: 6663 ExecStart=/etc/init.d/mysql start (code=exited, status=0/SUCCESS)
+    Tasks: 41
+   Memory: 129.2M
+      CPU: 634ms
+   CGroup: /system.slice/mysql.service
+           &#x251C;&#x2500;1890 /bin/bash /usr/bin/mysqld_safe
+           &#x251C;&#x2500;6713 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mysql/plugin --user=mysql --skip-log-error --pid-file=/var/run/mysqld/mysqld.pid --socke
+           &#x2514;&#x2500;6714 logger -t mysqld -p daemon error
+
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB: Completed initialization of buffer pool
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB: Highest supported file format is Barracuda.
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB: The log sequence numbers 28098537 and 28098537 in ibdata files do not match the log sequence number 29193113 in t
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB: Restoring possible half-written data pages from the doublewrite buffer...
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB: 128 rollback segment(s) are active.
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB: Waiting for purge to start
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] InnoDB:  Percona XtraDB (http://www.percona.com) 5.6.39-83.1 started; log sequence number 29193113
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] Server socket created on IP: &apos;192.168.0.51&apos;.
+Jan 10 11:55:41 controller mysqld[6714]: 190110 11:55:41 [Note] /usr/sbin/mysqld: ready for connections.
+Jan 10 11:55:41 controller mysqld[6714]: Version: &apos;10.0.36-MariaDB-0ubuntu0.16.04.1&apos;  socket: &apos;/var/run/mysqld/mysqld.sock&apos;  port: 3306  Ubuntu 16.04
+root@controller:~# service mysql restart
+root@controller:~# service mysql status
+&#x25CF; mysql.service - LSB: Start and stop the mysql database server daemon
+   Loaded: loaded (/etc/init.d/mysql; bad; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 11:56:49 CST; 1s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 6783 ExecStop=/etc/init.d/mysql stop (code=exited, status=1/FAILURE)
+  Process: 6808 ExecStart=/etc/init.d/mysql start (code=exited, status=0/SUCCESS)
+    Tasks: 42
+   Memory: 129.3M
+      CPU: 39ms
+   CGroup: /system.slice/mysql.service
+           &#x251C;&#x2500;1890 /bin/bash /usr/bin/mysqld_safe
+           &#x251C;&#x2500;6713 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mysql/plugin --user=mysql --skip-log-error --pid-file=/var/run/mysqld/mysqld.pid --socke
+           &#x2514;&#x2500;6714 logger -t mysqld -p daemon error
+
+Jan 10 11:56:49 controller systemd[1]: mysql.service: Failed with result &apos;exit-code&apos;.
+Jan 10 11:56:49 controller systemd[1]: Starting LSB: Start and stop the mysql database server daemon...
+Jan 10 11:56:49 controller mysql[6808]:  * Starting MariaDB database server mysqld
+Jan 10 11:56:49 controller mysql[6808]:    ...done.
+Jan 10 11:56:49 controller systemd[1]: Started LSB: Start and stop the mysql database server daemon.
+root@controller:~# 
+root@controller:~# mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 21
+Server version: 10.0.36-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.
+
+MariaDB [(none)]&gt; 
+MariaDB [(none)]&gt; Bye
+root@controller:~#
+</code></pre><p>&#x73B0;&#x5728;&#x518D;&#x56DE;&#x5230;&#x521A;&#x521A;&#x7684; <a href="https://docs.openstack.org/swift/queens/install/verify.html" target="_blank">https://docs.openstack.org/swift/queens/install/verify.html</a></p>
+<pre class="language-"><code>root@controller:~# swift stat
+Auth version 1.0 requires ST_AUTH, ST_USER, and ST_KEY environment variables
+to be set or overridden with -A, -U, or -K.
+
+Auth version 2.0 requires OS_AUTH_URL, OS_USERNAME, OS_PASSWORD, and
+OS_TENANT_NAME OS_TENANT_ID to be set or overridden with --os-auth-url,
+--os-username, --os-password, --os-tenant-name or os-tenant-id. Note:
+adding &quot;-V 2&quot; is necessary for this.
+root@controller:~#
+</code></pre><p>&#x8FD9;&#x91CC;&#x53C8;&#x662F;&#x53E6;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x4E86;&#x54C8;&#xFF01;~ </p>
+<pre class="language-"><code>root@controller:~# service swift-proxy status
+&#x25CF; swift-proxy.service - LSB: Swift proxy server
+   Loaded: loaded (/etc/init.d/swift-proxy; bad; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 13:17:11 CST; 13s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 8761 ExecStop=/etc/init.d/swift-proxy stop (code=exited, status=0/SUCCESS)
+  Process: 8773 ExecStart=/etc/init.d/swift-proxy start (code=exited, status=0/SUCCESS)
+    Tasks: 5
+   Memory: 88.2M
+      CPU: 1.200s
+   CGroup: /system.slice/swift-proxy.service
+           &#x251C;&#x2500;8784 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;8793 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;8794 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;8795 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x2514;&#x2500;8796 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+
+Jan 10 13:17:21 controller proxy-server[8796]: ERROR Insufficient Storage 192.168.0.180:6202/sdc (txn: tx052351248e9443ff9d8f8-005c36d561)
+Jan 10 13:17:21 controller proxy-server[8796]: ERROR Insufficient Storage 192.168.0.135:6202/sdc (txn: tx052351248e9443ff9d8f8-005c36d561)
+Jan 10 13:17:21 controller proxy-server[8796]: Account HEAD returning 503 for [507, 507, 507] (txn: tx052351248e9443ff9d8f8-005c36d561)
+Jan 10 13:17:21 controller proxy-server[8796]: - - 10/Jan/2019/05/17/21 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP/1.0 503 - Swift - - - - tx052351248e9443ff9d8f8-
+Jan 10 13:17:23 controller proxy-server[8796]: Account HEAD returning 503 for [] (txn: tx052351248e9443ff9d8f8-005c36d561) (client_ip: 192.168.0.51)
+Jan 10 13:17:23 controller proxy-server[8796]: 192.168.0.51 192.168.0.51 10/Jan/2019/05/17/23 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP/1.0 503 - python-swiftclie
+Jan 10 13:17:24 controller proxy-server[8796]: Account HEAD returning 503 for [] (txn: tx409727b312c54262bb43a-005c36d564)
+Jan 10 13:17:24 controller proxy-server[8796]: - - 10/Jan/2019/05/17/24 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP/1.0 503 - Swift - - - - tx409727b312c54262bb43a-
+Jan 10 13:17:24 controller proxy-server[8796]: Account HEAD returning 503 for [] (txn: tx409727b312c54262bb43a-005c36d564) (client_ip: 192.168.0.51)
+Jan 10 13:17:24 controller proxy-server[8796]: 192.168.0.51 192.168.0.51 10/Jan/2019/05/17/24 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP/1.0 503 - python-swiftclie
+root@controller:~#
+</code></pre><p>&#x770B;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5E94;&#x8BE5;&#x662F;&#x4E0E; &quot;ERROR Insufficient Storage 192.168.0.180:6202/sdc&quot; &#x76F8;&#x5173;&#x4E86;&#x3002;&#x4E00;&#x770B;&#x5C31;&#x77E5;&#x9053;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x662F;&#x914D;&#x7F6E;&#x9519;&#x4E86;&#xFF0C;&#x5E94;&#x8BE5;&#x662F; sdb &#x800C;&#x4E0D;&#x662F; sdc &#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x5E94;&#x8BE5;&#x662F;&#x6211;&#x4EEC;&#x5728;&#x914D;&#x7F6E; ring.gz &#x7684;&#x65F6;&#x5019;&#x5F04;&#x9519;&#x4E86;&#xFF01;</p>
+<p>&#x91CD;&#x590D; <a href="https://docs.openstack.org/swift/queens/install/initial-rings.html" target="_blank">https://docs.openstack.org/swift/queens/install/initial-rings.html</a> &#x8FC7;&#x7A0B;&#xFF0C;&#x91CD;&#x65B0; rebalance &#x5427;&#x3002;</p>
+<p>&#x518D;&#x6765;</p>
+<pre class="language-"><code>root@controller:~# swift stat 
+Auth version 1.0 requires ST_AUTH, ST_USER, and ST_KEY environment variables
+to be set or overridden with -A, -U, or -K.
+
+Auth version 2.0 requires OS_AUTH_URL, OS_USERNAME, OS_PASSWORD, and
+OS_TENANT_NAME OS_TENANT_ID to be set or overridden with --os-auth-url,
+--os-username, --os-password, --os-tenant-name or os-tenant-id. Note:
+adding &quot;-V 2&quot; is necessary for this.
+root@controller:~#
+</code></pre><p>&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x5728; controller node &#x4E2D;&#x7684; /etc/swift/proxy-server.conf &#x4E2D;&#x7684; auth_url&#x548C;memcached_servers&#x914D;&#x7F6E;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x914D;&#x7F6E;&#x6210;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+<pre class="language-"><code>root@controller:~# grep controller -rn /etc/swift/proxy-server.conf 
+365:www_authenticate_uri = http://controller:5000
+366:auth_url = http://controller:5000
+367:memcached_servers = controller:11211
+472:memcache_servers = controller:11211
+root@controller:~#
+</code></pre><p>&#x91CD;&#x65B0;&#x542F;&#x52A8; swift-proxy &#x3002;</p>
+<p>&#x8FD9;&#x65F6;&#x5019;&#xFF0C;&#x679C;&#x7136;&#x6210;&#x529F;&#x4E86;&#x3002;</p>
+<pre class="language-"><code>root@controller:~# . demo-openrc 
+root@controller:~# swift stat
+               Account: AUTH_7d6eaa90d74a4f239963933c3a744df3
+            Containers: 0
+               Objects: 0
+                 Bytes: 0
+       X-Put-Timestamp: 1547100678.74534
+           X-Timestamp: 1547100678.74534
+            X-Trans-Id: txc0d3298c805c45a9afb35-005c36e203
+          Content-Type: text/plain; charset=utf-8
+X-Openstack-Request-Id: txc0d3298c805c45a9afb35-005c36e203
+root@controller:~#
+</code></pre><p>&#x4F46;&#x662F;&#x5728;&#x521B;&#x5EFA; container &#x7684;&#x65F6;&#x5019;&#x51FA;&#x9519;&#x4E86;&#xFF01;</p>
+<pre class="language-"><code>root@controller:~# openstack container create container1
+Internal Server Error (HTTP 500) (Request-ID: txb93d09f0ee1a4e9fbe9c7-005c36e410)
+root@controller:~# service swift-proxy status
+&#x25CF; swift-proxy.service - LSB: Swift proxy server
+   Loaded: loaded (/etc/init.d/swift-proxy; bad; vendor preset: enabled)
+   Active: active (running) since Thu 2019-01-10 14:10:23 CST; 9min ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 9674 ExecStop=/etc/init.d/swift-proxy stop (code=exited, status=0/SUCCESS)
+  Process: 9686 ExecStart=/etc/init.d/swift-proxy start (code=exited, status=0/SUCCESS)
+    Tasks: 5
+   Memory: 98.8M
+      CPU: 9.731s
+   CGroup: /system.slice/swift-proxy.service
+           &#x251C;&#x2500;9697 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;9706 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;9707 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x251C;&#x2500;9708 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+           &#x2514;&#x2500;9709 /usr/bin/python /usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
+
+Jan 10 14:12:58 controller proxy-server[9706]: Container GET returning 503 for (503, 503, 503) (txn: tx8f9df230a2f544808d3a5-005c36e26a) (client_ip: 192.168.0.51)
+Jan 10 14:12:58 controller proxy-server[9706]: Could not autocreate account &apos;/AUTH_7d6eaa90d74a4f239963933c3a744df3&apos; (txn: tx8f9df230a2f544808d3a5-005c36e26a) (client_ip: 192.168.0.51)
+Jan 10 14:12:58 controller proxy-server[9706]: 192.168.0.51 192.168.0.51 10/Jan/2019/06/12/58 PUT /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/container1 HTTP/1.0 500 - python-swiftclient-3.5
+Jan 10 14:20:01 controller proxy-server[9708]: - - 10/Jan/2019/06/20/01 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP/1.0 200 - Swift - - - - txb93d09f0ee1a4e9fbe9c7-
+Jan 10 14:20:01 controller proxy-server[9708]: ERROR 500 Trying to PUT /AUTH_7d6eaa90d74a4f239963933c3a744df3 From Container Server 192.168.0.198:6202/sdb (txn: txb93d09f0ee1a4e9fbe9c7-005
+Jan 10 14:20:01 controller proxy-server[9708]: ERROR 500 Trying to PUT /AUTH_7d6eaa90d74a4f239963933c3a744df3 From Container Server 192.168.0.135:6202/sdb (txn: txb93d09f0ee1a4e9fbe9c7-005
+Jan 10 14:20:01 controller proxy-server[9708]: ERROR 500 Trying to PUT /AUTH_7d6eaa90d74a4f239963933c3a744df3 From Container Server 192.168.0.180:6202/sdb (txn: txb93d09f0ee1a4e9fbe9c7-005
+Jan 10 14:20:01 controller proxy-server[9708]: Container GET returning 503 for (503, 503, 503) (txn: txb93d09f0ee1a4e9fbe9c7-005c36e410) (client_ip: 192.168.0.51)
+Jan 10 14:20:01 controller proxy-server[9708]: Could not autocreate account &apos;/AUTH_7d6eaa90d74a4f239963933c3a744df3&apos; (txn: txb93d09f0ee1a4e9fbe9c7-005c36e410) (client_ip: 192.168.0.51)
+Jan 10 14:20:01 controller proxy-server[9708]: 192.168.0.51 192.168.0.51 10/Jan/2019/06/20/01 PUT /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/container1 HTTP/1.0 500 - osc-lib/1.9.0%20keysto
+
+root@controller:~#
+</code></pre><p>&#x8FD9;&#x4E2A;&#x5C31;&#xFF0C;&#x641E;&#x5927;&#x53D1;&#x4E86;&#xFF0C;&#x53C8;&#x51FA;&#x9519;&#x4E86;&#x3002;&#x8981;&#x4E0D;&#x8981;&#x8FD9;&#x6837;&#x5BF9;&#x6211;&#xFF01;~</p>
+<pre class="language-"><code>ERROR 500 Trying to PUT /AUTH_7d6eaa90d74a4f239963933c3a744df3 From Container Server 192.168.0.198:6202/sdb
+</code></pre><p>&#x8FD9;&#x91CC;&#x8BF4;&#x7684;&#x662F; &quot;Container Server 192.168.0.198:6202&quot; , &#x4F46;&#x662F;&#x6B63;&#x786E;&#x7684;&#x5BF9;&#x5E94;&#x662F;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#x7684;&#xFF1A;</p>
+<pre class="language-"><code>object.builder 6200 
+container.builder 6201 
+account.builder 6202
+</code></pre><p>&#x4E3A;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<p>&#x7136;&#x540E;&#xFF0C;&#x6CA1;&#x6709;&#x601D;&#x8DEF;&#x4E86;&#x3002;</p>
+<p>&#x9009;&#x62E9;&#x91CD;&#x65B0;&#x542F;&#x52A8;&#x6240;&#x6709;&#x7684;node&#x3002;</p>
+<p>&#x4F46;&#x662F;&#xFF0C;&#x5176;&#x4E2D;2&#x4E2A;storage node &#x6302;&#x4E86;&#xFF0C;&#x8981;&#x91CD;&#x65B0;&#x70E7;&#x4E00;&#x4E0B;&#x76D8;&#xFF01;~&#x60B2;&#x5267;&#xFF01;</p>
+<p>&#x6309;&#x7167;&#x8096;&#x5DE5;&#x7ED9;&#x7684;&#x6D41;&#x7A0B;&#xFF0C;&#x91CD;&#x65B0;&#x70E7;&#x597D;&#x4E86;&#xFF01;</p>
+<p>&#x7136;&#x540E;&#xFF0C;&#x91CD;&#x65B0;&#x914D;&#x7F6E; storage node ,&#x7136;&#x540E;&#x4E0A;&#x9762;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5C31;&#x6D88;&#x5931;&#x4E86;&#xFF0C;&#x54C8;&#x54C8;&#x3002;</p>
+<p>&#x90A3;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF01;</p>
+<footer class="page-footer"><span class="copyright"><p><a href="https://github.com/eiuapp/swift-handbook" target="_blank">Openstack Swift&#x5B9E;&#x8DF5;&#x6307;&#x5357;</a> | <a href="https://github.com/eiuapp/swift-docs" target="_blank">Openstack Swift&#x6587;&#x6863;&#x9605;&#x8BFB;</a></p><p><a href="https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg" data-lightbox="2fd927ee-fa64-4eca-8ed5-6bd72b573a3c" target="_blank">&#x70B9;&#x51FB;&#x5173;&#x6CE8;&#x3010;servicemesher&#x3011;&#x516C;&#x4F17;&#x53F7;&#x56DE;&#x590D;&#x3010;&#x52A0;&#x7FA4;&#x3011;&#x52A0;&#x5165;&#x5B66;&#x4E60;&#x7FA4;</a> | </p>Copyright &#xA9; <a href="https://eiu.app" target="_blank">eiu.app</a> 2017-2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification"> Updated at 
+2019-03-13 06:22:24
+</span></footer></body></html>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="swift-admin-cannot-login.html" class="navigation navigation-prev " aria-label="Previous page: admin被删除">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="swift-demo-cannot-get-user-info.html" class="navigation navigation-next " aria-label="Next page: 无法获取用户信息">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"controller节点更换IP","level":"11.3","depth":1,"next":{"title":"无法获取用户信息","level":"11.4","depth":1,"path":"docs/swift-demo-cannot-get-user-info.md","ref":"docs/swift-demo-cannot-get-user-info.md","articles":[]},"previous":{"title":"admin被删除","level":"11.2","depth":1,"path":"docs/swift-admin-cannot-login.md","ref":"docs/swift-admin-cannot-login.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github","codesnippet","splitter","page-toc-button","editlink","back-to-top-button","-lunr","-search","search-plus","github-buttons@2.1.0","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","3-ba","theme-default","-highlight","prism","prism-themes","sitemap-general","lightbox","adsense","ga"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"<p><a href=https://github.com/eiuapp/swift-handbook>Openstack Swift实践指南</a> | <a href=https://github.com/eiuapp/swift-docs>Openstack Swift文档阅读</a></p><p><a href=https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【servicemesher】公众号回复【加群】加入学习群</a> | </p>Copyright © <a href=https://eiu.app>eiu.app</a> 2017-2019","modify_label":" Updated at ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"lang":{"shell":"bash"},"css":["prism-themes/themes/prism-ghcolors.css"]},"github":{"url":"https://github.com/eiuapp/swift-handbook"},"editlink":{"label":"编辑本页","multilingual":false,"base":"https://github.com/eiuapp/swift-handbook/blob/master/"},"splitter":{},"adsense":{"client":"ca-pub-4029167986768912","slot":"2445941692","format":"auto","element":".page-inner section","position":"bottom"},"codesnippet":{},"sitemap-general":{"prefix":"https://eiu.app/swift-docs/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"lightbox":{"jquery":true},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"11f7d254cfa4e0ca44b175c66d379ecc"},"ga":{"configuration":"auto","token":"UA-93485976-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{}},"theme":"default","author":"Donald Tsang（圆月弯刀）","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)","language":"zh-hans","links":{"sidebar":{"Donald Tsang":"https://b.qqbb.app","Swift Docs":"https://eiuapp.github.io/swift-docs","Swift Handbook":"https://eiuapp.github.io/swift-handbook","Ceph Handbook":"https://eiuapp.github.io/ceph-handbook"}},"gitbook":"*","description":"Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) "},"file":{"path":"docs/swift-controller-change-ip.md","mtime":"2019-03-13T06:22:24.673Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T06:23:30.925Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-adsense/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

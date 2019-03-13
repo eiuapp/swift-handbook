@@ -1,0 +1,1054 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>rsync数据通信 · Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Donald Tsang（圆月弯刀）">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-ghcolors.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-lightbox/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="swift-rsync-storage-node-cannot-get-rebalance-data.html" />
+    
+    
+    <link rel="prev" href="swift-problem-with-xfs-file-system.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://b.qqbb.app" target="_blank" class="custom-link">Donald Tsang</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-docs" target="_blank" class="custom-link">Swift Docs</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-handbook" target="_blank" class="custom-link">Swift Handbook</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/ceph-handbook" target="_blank" class="custom-link">Ceph Handbook</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        <li class="header">序言</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">环境配置</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="env.html">
+            
+                <a href="env.html">
+            
+                    
+                        <b>2.1.</b>
+                    
+                    swift 2.17 环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">安装</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="swift-queens-install.html">
+            
+                <a href="swift-queens-install.html">
+            
+                    
+                        <b>3.1.</b>
+                    
+                    swift 安装过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="swift-controller-node-add-a-new-storage-node.html">
+            
+                <a href="swift-controller-node-add-a-new-storage-node.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    增加storage节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="swift-multy-proxy-node-conf.html">
+            
+                <a href="swift-multy-proxy-node-conf.html">
+            
+                    
+                        <b>3.3.</b>
+                    
+                    多代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                <a href="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                    
+                        <b>3.4.</b>
+                    
+                    多代理节点通过nginx实现HA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="swift-multy-proxy-node-illustration.html">
+            
+                <a href="swift-multy-proxy-node-illustration.html">
+            
+                    
+                        <b>3.5.</b>
+                    
+                    多代理节点效果展示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="proxy-node-install.html">
+            
+                <a href="proxy-node-install.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">认证</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="analysis-openstack-swift-keystone-authentication.html">
+            
+                <a href="analysis-openstack-swift-keystone-authentication.html">
+            
+                    
+                        <b>4.1.</b>
+                    
+                    与keystone结合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                    
+                        <b>4.2.</b>
+                    
+                    让swift通过keystone认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">ring</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="analysis-openstack-swift-overview-ring.html">
+            
+                <a href="analysis-openstack-swift-overview-ring.html">
+            
+                    
+                        <b>5.1.</b>
+                    
+                    overview ring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">partition</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="swift-what-is-a-swift-partition.html">
+            
+                <a href="swift-what-is-a-swift-partition.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    what is a swift partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="openstack-swift-analysis-partition.html">
+            
+                <a href="openstack-swift-analysis-partition.html">
+            
+                    
+                        <b>6.2.</b>
+                    
+                    ring如何生成partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="openstack-swift-object-storage-result-analysis.html">
+            
+                <a href="openstack-swift-object-storage-result-analysis.html">
+            
+                    
+                        <b>6.3.</b>
+                    
+                    上传文件结果分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">quota</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                <a href="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                    
+                        <b>7.1.</b>
+                    
+                    enable reseller admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="swift-account-quota-outcome.html">
+            
+                <a href="swift-account-quota-outcome.html">
+            
+                    
+                        <b>7.2.</b>
+                    
+                    设置account的quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="swift-account-quota-process.html">
+            
+                <a href="swift-account-quota-process.html">
+            
+                    
+                        <b>7.3.</b>
+                    
+                    设置account的quota（分析过程）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="swfit-account-quota-restful-api.html">
+            
+                <a href="swfit-account-quota-restful-api.html">
+            
+                    
+                        <b>7.4.</b>
+                    
+                    REST调用accout quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">erasure code</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="analysis-openstack-swift-overview_erasure_code.html">
+            
+                <a href="analysis-openstack-swift-overview_erasure_code.html">
+            
+                    
+                        <b>8.1.</b>
+                    
+                    与 erasure code 相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">测试</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="swift-benchmarking-getput.html">
+            
+                <a href="swift-benchmarking-getput.html">
+            
+                    
+                        <b>9.1.</b>
+                    
+                    getput使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">日志</li>
+        
+        
+    
+        <li class="chapter " data-level="10.1" data-path="swift-logfiles.html">
+            
+                <a href="swift-logfiles.html">
+            
+                    
+                        <b>10.1.</b>
+                    
+                    组件日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">常见问题</li>
+        
+        
+    
+        <li class="chapter " data-level="11.1" data-path="swift-faq.html">
+            
+                <a href="swift-faq.html">
+            
+                    
+                        <b>11.1.</b>
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.2" data-path="swift-admin-cannot-login.html">
+            
+                <a href="swift-admin-cannot-login.html">
+            
+                    
+                        <b>11.2.</b>
+                    
+                    admin被删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.3" data-path="swift-controller-change-ip.html">
+            
+                <a href="swift-controller-change-ip.html">
+            
+                    
+                        <b>11.3.</b>
+                    
+                    controller节点更换IP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.4" data-path="swift-demo-cannot-get-user-info.html">
+            
+                <a href="swift-demo-cannot-get-user-info.html">
+            
+                    
+                        <b>11.4.</b>
+                    
+                    无法获取用户信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.5" data-path="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                <a href="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                    
+                        <b>11.5.</b>
+                    
+                    auth version require python-keystoneclient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.6" data-path="swift-installed-source-code-address.html">
+            
+                <a href="swift-installed-source-code-address.html">
+            
+                    
+                        <b>11.6.</b>
+                    
+                    swift安装包源码地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.7" data-path="swift-multy-proxy-node-faq.html">
+            
+                <a href="swift-multy-proxy-node-faq.html">
+            
+                    
+                        <b>11.7.</b>
+                    
+                    多代理节点安装出现的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.8" data-path="swift-problem-with-xfs-file-system.html">
+            
+                <a href="swift-problem-with-xfs-file-system.html">
+            
+                    
+                        <b>11.8.</b>
+                    
+                    swift storage node 出现 xfs 错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="11.9" data-path="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                <a href="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                    
+                        <b>11.9.</b>
+                    
+                    rsync数据通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.10" data-path="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                    
+                        <b>11.10.</b>
+                    
+                    rebalance后数据未通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.11" data-path="swift-storage-node-system-failed-re-mount.html">
+            
+                <a href="swift-storage-node-system-failed-re-mount.html">
+            
+                    
+                        <b>11.11.</b>
+                    
+                    storage node 的主板坏了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.12" data-path="swift-mount-structure-needs-cleaning.html">
+            
+                <a href="swift-mount-structure-needs-cleaning.html">
+            
+                    
+                        <b>11.12.</b>
+                    
+                    mount Structure needs cleaning
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">笔记</li>
+        
+        
+    
+        <li class="chapter " data-level="12.1" data-path="note-about-openstack-swift.html">
+            
+                <a href="note-about-openstack-swift.html">
+            
+                    
+                        <b>12.1.</b>
+                    
+                    笔记1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">未来</li>
+        
+        
+    
+        <li class="chapter " data-level="13.1" >
+            
+                <a target="_blank" href="https://b.qqbb.app/tags/swift/">
+            
+                    
+                        <b>13.1.</b>
+                    
+                    我的swift探险之旅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="13.2" >
+            
+                <a target="_blank" href="https://eiuapp.github.io/swift-handbook/">
+            
+                    
+                        <b>13.2.</b>
+                    
+                    Swift Handbook
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">相关资源</li>
+        
+        
+    
+        <li class="chapter " data-level="14.1" data-path="tech_resource.md">
+            
+                <span>
+            
+                    
+                        <b>14.1.</b>
+                    
+                    swift技术工具与资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >rsync数据通信</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <html><head></head><body><p>&#x89C2;&#x5BDF; swift storage node &#x95F4;&#x901A;&#x8FC7; rsync &#x8FDB;&#x884C;&#x6570;&#x636E;&#x901A;&#x4FE1;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x7ED3;&#x8BBA;&#xFF1A;</p>
+<p>&#x8981;&#x628A;&#x6700;&#x65B0;&#x7684; *.ring.gz &#x6587;&#x4EF6;&#x5206;&#x53D1;&#x81F3;&#x6240;&#x6709;&#x7684; storage node &#xFF0C;&#x7136;&#x540E; &#x8282;&#x70B9;&#x8FD0;&#x884C; <code>swift-init all restart</code></p>
+<h2 id="step">step</h2>
+<p>&#x4FEE;&#x6539; /etc/rsyncd.conf</p>
+<p>&#x7136;&#x540E;&#xFF0C;&#x628A;&#x5404;&#x8282;&#x70B9; rsync &#x91CD;&#x542F;</p>
+<pre class="language-"><code class="lang-shell"><span class="token function">service</span> <span class="token function">rsync</span> restart
+<span class="token function">service</span> <span class="token function">rsync</span> status
+</code></pre>
+<p>&#x6B64;&#x65F6;&#xFF0C;180,198,135&#x7684;rsync&#x65E5;&#x5FD7;&#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x65B0;&#x7684;&#x540C;&#x6B65;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x8BF4;&#x660E;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x91CD;&#x542F;&#x542F;&#x52A8;<code>swift-init</code>&#x670D;&#x52A1;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#xFF0C;127&#xFF0C;134&#x7684;rsync&#x65E5;&#x5FD7;&#xFF0C;&#x4F9D;&#x65E7;&#x6CA1;&#x6709;&#x53D8;&#x5316;&#x3002;(&#x5F88;&#x53EF;&#x80FD;&#x6CA1;&#x6709;&#x5F00;&#x59CB;&#x540C;&#x6B65;&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;&#x662F;&#x9700;&#x8981;&#x65F6;&#x95F4;&#x7B49;&#x5F85;&#x4E48;&#xFF1F;&#xFF09;</p>
+<p>&#x73B0;&#x5728;&#x53D1;&#x73B0; 134&#x7684; <code>/etc/swift/*.ring.gz</code> &#x6587;&#x4EF6;&#x4E0D;&#x662F;rebalance&#x540E;&#x7684;*.ring.gz&#x6587;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x6000;&#x7591;&#x662F;&#x4E0D;&#x662F;&#x8FD9;&#x4E2A;&#x5730;&#x65B9;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x4ECE;51&#x4E2D;&#x590D;&#x5236;*.ring.gz&#x6587;&#x4EF6;&#x7ED9; 134&#xFF0C;&#x91CD;&#x542F;rsync&#xFF0C;&#x6CA1;&#x6709;&#x540C;&#x6B65;&#x3002;&#x91CD;&#x542F;swift-init&#x3002;</p>
+<pre class="language-"><code class="lang-shell">swift-init all status
+swift-init all restart
+swift-init all status
+</code></pre>
+<p>&#x4F9D;&#x7136;&#x6CA1;&#x6709;&#x540C;&#x6B65;&#x3002;&#x4E3A;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<p>&#x597D;&#x4E86;&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x53D1;&#x73B0; &#x539F;&#x6765; 180&#xFF0C;198&#xFF0C;135&#x80FD;&#x540C;&#x6B65;&#xFF0C;&#x800C;134&#xFF0C;127&#x4E0E;&#x5176;&#x5B83;3&#x4E2A;&#x8FDE;&#x63A5;&#x4E0D;&#x4E0A;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#xFF0C; 180&#xFF0C;198&#xFF0C;135&#x4F7F;&#x7528;&#x7684;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x8001;&#x7248;&#x672C;&#x7684; *.ring.gz &#x6587;&#x4EF6;&#x3002;&#x6655;&#x6B7B;&#x4E86;&#xFF01;</p>
+<p>&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x4ECE;51&#x4E2D;&#x590D;&#x5236;*.ring.gz&#x6587;&#x4EF6;&#x7ED9; 180&#x3002;&#x4E0D;&#x91CD;&#x542F;&#x4EFB;&#x4F55;&#x670D;&#x52A1;&#x3002;&#x8FD9;&#x65F6;&#xFF0C;</p>
+<p>127 rsync&#x65E5;&#x5FD7;</p>
+<pre class="language-"><code class="lang-text">2019/01/22 17:26:37 [25850] connect from swift0180 (192.168.0.180)
+2019/01/22 09:26:37 [25850] rsync to object/sdb/objects/834 from swift0180 (192.168.0.180)
+2019/01/22 09:26:37 [25850] receiving file list
+2019/01/22 09:26:44 [25850] sent 62 bytes  received 74104148 bytes  total size 74085496
+</code></pre>
+<p>134 rsync&#x65E5;&#x5FD7;</p>
+<pre class="language-"><code class="lang-text">2019/01/22 17:26:43 [6716] connect from swift0180 (192.168.0.180)
+2019/01/22 17:26:43 [6717] connect from swift0180 (192.168.0.180)
+2019/01/22 09:26:43 [6716] rsync to account/sdb/tmp/a3ed88a4-5dcb-4f09-9122-96c590ec12cf from swift0180 (192.168.0.180)
+2019/01/22 09:26:43 [6716] receiving file list
+2019/01/22 09:26:43 [6717] rsync to account/sdb/tmp/2043b019-6d91-4c89-b1c0-ab4a9b05f460 from swift0180 (192.168.0.180)
+2019/01/22 09:26:43 [6717] receiving file list
+2019/01/22 17:26:45 [6720] connect from swift0180 (192.168.0.180)
+2019/01/22 09:26:45 [6720] rsync to object/sdb/objects/538 from swift0180 (192.168.0.180)
+2019/01/22 09:26:45 [6720] receiving file list
+2019/01/22 17:27:00 [6723] connect from swift0180 (192.168.0.180)
+2019/01/22 17:27:00 [6724] connect from swift0180 (192.168.0.180)
+2019/01/22 09:27:00 [6723] rsync to container/sdb/tmp/42bc9ff4-1ad1-4802-bfbc-40796ca93fde from swift0180 (192.168.0.180)
+2019/01/22 09:27:00 [6723] receiving file list
+2019/01/22 09:27:00 [6724] rsync to container/sdb/tmp/0f6aa3dc-2abd-4259-a0f3-89ad321882c1 from swift0180 (192.168.0.180)
+2019/01/22 09:27:00 [6724] receiving file list
+</code></pre>
+<p>&#x4F46;&#x662F;&#xFF0C;&#x90FD;&#x505C;&#x6B62;&#x5728;&#x8FD9;&#x91CC;&#x4E86;&#xFF0C;&#x6CA1;&#x6709;&#x4E0B;&#x6587;&#x4E86;&#x3002;&#x7136;&#x540E;&#xFF0C;&#x6211;&#x518D;&#x56DE; 180&#x770B; rsync&#x65E5;&#x5FD7;
+&#x90FD;&#x662F;&#x4E0E; 135,198 &#x7684;&#x540C;&#x6B65;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x6211;&#x8003;&#x8651;&#x628A; 180 rsync &#x91CD;&#x542F;&#x3002;</p>
+<p>&#x65E0;&#x6548;&#xFF0C;&#x4F9D;&#x7136;&#x8FDE;&#x63A5;&#x7684;&#x662F; 135&#xFF0C;198.</p>
+<p>180 </p>
+<pre class="language-"><code>swift-init restart
+</code></pre><p>134</p>
+<pre class="language-"><code>2019/01/22 17:34:46 [6768] connect from swift0180 (192.168.0.180)
+2019/01/22 09:34:46 [6768] rsync to object/sdb/objects/415 from swift0180 (192.168.0.180)
+2019/01/22 09:34:46 [6768] receiving file list
+2019/01/22 17:34:47 [6770] connect from swift0180 (192.168.0.180)
+2019/01/22 17:34:47 [6770] max connections (2) reached
+2019/01/22 17:34:47 [6771] connect from swift0180 (192.168.0.180)
+2019/01/22 17:34:47 [6771] max connections (2) reached
+2019/01/22 17:34:49 [6772] connect from swift0180 (192.168.0.180)
+2019/01/22 17:34:50 [6772] max connections (2) reached
+2019/01/22 17:34:50 [6773] connect from swift0180 (192.168.0.180)
+2019/01/22 17:34:50 [6773] max connections (2) reached
+2019/01/22 17:35:17 [6779] connect from swift0180 (192.168.0.180)
+2019/01/22 17:35:17 [6779] max connections (2) reached
+</code></pre><p>127</p>
+<pre class="language-"><code class="lang-text">2019/01/22 09:34:45 [25913] rsync to object/sdb/objects/415 from swift0180 (192.168.0.180)
+2019/01/22 09:34:45 [25913] receiving file list
+2019/01/22 09:34:46 [25913] sent 31 bytes  received 198 bytes  total size 487805144
+2019/01/22 17:34:47 [25935] connect from swift0180 (192.168.0.180)
+2019/01/22 09:34:47 [25935] rsync to container/sdb/tmp/0f6aa3dc-2abd-4259-a0f3-89ad321882c1 from swift0180 (192.168.0.180)
+2019/01/22 09:34:47 [25935] receiving file list
+2019/01/22 09:34:48 [25935] sent 44 bytes  received 21625 bytes  total size 21504
+</code></pre>
+<p>&#x65E0;&#x6548;&#xFF0C;&#x4F9D;&#x7136;&#x8FDE;&#x63A5;&#x7684;&#x662F; 135&#xFF0C;198.</p>
+<p>&#x8FD9;&#x4E2A;&#x8BF4;&#x660E;&#xFF0C;&#x8FD9;&#x4E2A;&#x540C;&#x6B65;&#x673A;&#x5236;&#xFF0C;&#x4F1A;&#x7531;proxy&#x534F;&#x8C03;&#xFF0C;&#x5E76;&#xFF0C;&#x4E0D;&#x53D7; &#x672C;&#x5730;&#x7684;rsync &#x5F71;&#x54CD;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;chrome&#x8BBF;&#x95EE;&#xFF1A; <a href="http://192.168.0.51/horizon/auth/login/?next=/horizon/project/" target="_blank">http://192.168.0.51/horizon/auth/login/?next=/horizon/project/</a></p>
+<p>&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x770B;&#x6765;&#xFF0C;&#x53EA;&#x80FD;&#x662F;&#x628A; *.ring.gz &#x6587;&#x4EF6;&#x5206;&#x53D1;&#x7ED9;&#x6240;&#x6709;&#x8282;&#x70B9;&#xFF0C;&#x518D;&#x8BD5;&#x4E00;&#x4E0B;&#x4E86;&#x3002;</p>
+<hr>
+<p>&#x540C;&#x65F6;&#xFF0C;&#x89C2;&#x5BDF;180&#x7684; /var/log/rsync.log </p>
+<pre class="language-"><code class="lang-text">2019/01/22 09:10:24 [22897] receiving file list
+2019/01/22 09:10:24 [22897] rsync: mkdir &quot;/sdc/objects/832&quot; (in object) failed: No such file or directory (2)
+2019/01/22 09:10:24 [22897] rsync error: error in file IO (code 11) at main.c(674) [Receiver=3.1.1]
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x51FA;&#x73B0;&#x4E86; <code>rsync error: error in file IO (code 11) at main.c(674) [Receiver=3.1.1]</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;&#x6307;&#x540C;&#x6B65;&#x51FA;&#x9519;&#x4E86;&#x4E48;&#xFF1F;</p>
+<hr>
+<p>&#x89E3;&#x51B3;&#x5B8C;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x540E;&#xFF0C;&#x53D1;&#x73B0;&#xFF0C;&#x6700;&#x540E;&#xFF0C;&#x4F9D;&#x7136;&#x662F;&#x8981;&#x628A;&#x6700;&#x65B0;&#x7684; *.ring.gz &#x6587;&#x4EF6;&#x5206;&#x53D1;&#x81F3;&#x6240;&#x6709;&#x7684; storage node &#xFF0C;&#x7136;&#x540E; &#x8282;&#x70B9;&#x8FD0;&#x884C; <code>swift-init all restart</code> </p>
+<footer class="page-footer"><span class="copyright"><p><a href="https://github.com/eiuapp/swift-handbook" target="_blank">Openstack Swift&#x5B9E;&#x8DF5;&#x6307;&#x5357;</a> | <a href="https://github.com/eiuapp/swift-docs" target="_blank">Openstack Swift&#x6587;&#x6863;&#x9605;&#x8BFB;</a></p><p><a href="https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg" data-lightbox="2fd927ee-fa64-4eca-8ed5-6bd72b573a3c" target="_blank">&#x70B9;&#x51FB;&#x5173;&#x6CE8;&#x3010;servicemesher&#x3011;&#x516C;&#x4F17;&#x53F7;&#x56DE;&#x590D;&#x3010;&#x52A0;&#x7FA4;&#x3011;&#x52A0;&#x5165;&#x5B66;&#x4E60;&#x7FA4;</a> | </p>Copyright &#xA9; <a href="https://eiu.app" target="_blank">eiu.app</a> 2017-2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification"> Updated at 
+2019-03-13 06:22:24
+</span></footer></body></html>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="swift-problem-with-xfs-file-system.html" class="navigation navigation-prev " aria-label="Previous page: swift storage node 出现 xfs 错误">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html" class="navigation navigation-next " aria-label="Next page: rebalance后数据未通信">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"rsync数据通信","level":"11.9","depth":1,"next":{"title":"rebalance后数据未通信","level":"11.10","depth":1,"path":"docs/swift-rsync-storage-node-cannot-get-rebalance-data.md","ref":"docs/swift-rsync-storage-node-cannot-get-rebalance-data.md","articles":[]},"previous":{"title":"swift storage node 出现 xfs 错误","level":"11.8","depth":1,"path":"docs/swift-problem-with-xfs-file-system.md","ref":"docs/swift-problem-with-xfs-file-system.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github","codesnippet","splitter","page-toc-button","editlink","back-to-top-button","-lunr","-search","search-plus","github-buttons@2.1.0","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","3-ba","theme-default","-highlight","prism","prism-themes","sitemap-general","lightbox","adsense","ga"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"<p><a href=https://github.com/eiuapp/swift-handbook>Openstack Swift实践指南</a> | <a href=https://github.com/eiuapp/swift-docs>Openstack Swift文档阅读</a></p><p><a href=https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【servicemesher】公众号回复【加群】加入学习群</a> | </p>Copyright © <a href=https://eiu.app>eiu.app</a> 2017-2019","modify_label":" Updated at ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"lang":{"shell":"bash"},"css":["prism-themes/themes/prism-ghcolors.css"]},"github":{"url":"https://github.com/eiuapp/swift-handbook"},"editlink":{"label":"编辑本页","multilingual":false,"base":"https://github.com/eiuapp/swift-handbook/blob/master/"},"splitter":{},"adsense":{"client":"ca-pub-4029167986768912","slot":"2445941692","format":"auto","element":".page-inner section","position":"bottom"},"codesnippet":{},"sitemap-general":{"prefix":"https://eiu.app/swift-docs/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"lightbox":{"jquery":true},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"11f7d254cfa4e0ca44b175c66d379ecc"},"ga":{"configuration":"auto","token":"UA-93485976-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{}},"theme":"default","author":"Donald Tsang（圆月弯刀）","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)","language":"zh-hans","links":{"sidebar":{"Donald Tsang":"https://b.qqbb.app","Swift Docs":"https://eiuapp.github.io/swift-docs","Swift Handbook":"https://eiuapp.github.io/swift-handbook","Ceph Handbook":"https://eiuapp.github.io/ceph-handbook"}},"gitbook":"*","description":"Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) "},"file":{"path":"docs/swift-rsync-dev2-fix-rsyncdconf.md","mtime":"2019-03-13T06:22:24.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T06:23:30.925Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-adsense/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

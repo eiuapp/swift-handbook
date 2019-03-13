@@ -1,0 +1,1333 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ring如何生成partition · Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Donald Tsang（圆月弯刀）">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-ghcolors.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-lightbox/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="openstack-swift-object-storage-result-analysis.html" />
+    
+    
+    <link rel="prev" href="swift-what-is-a-swift-partition.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://b.qqbb.app" target="_blank" class="custom-link">Donald Tsang</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-docs" target="_blank" class="custom-link">Swift Docs</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-handbook" target="_blank" class="custom-link">Swift Handbook</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/ceph-handbook" target="_blank" class="custom-link">Ceph Handbook</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        <li class="header">序言</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">环境配置</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="env.html">
+            
+                <a href="env.html">
+            
+                    
+                        <b>2.1.</b>
+                    
+                    swift 2.17 环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">安装</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="swift-queens-install.html">
+            
+                <a href="swift-queens-install.html">
+            
+                    
+                        <b>3.1.</b>
+                    
+                    swift 安装过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="swift-controller-node-add-a-new-storage-node.html">
+            
+                <a href="swift-controller-node-add-a-new-storage-node.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    增加storage节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="swift-multy-proxy-node-conf.html">
+            
+                <a href="swift-multy-proxy-node-conf.html">
+            
+                    
+                        <b>3.3.</b>
+                    
+                    多代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                <a href="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                    
+                        <b>3.4.</b>
+                    
+                    多代理节点通过nginx实现HA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="swift-multy-proxy-node-illustration.html">
+            
+                <a href="swift-multy-proxy-node-illustration.html">
+            
+                    
+                        <b>3.5.</b>
+                    
+                    多代理节点效果展示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="proxy-node-install.html">
+            
+                <a href="proxy-node-install.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">认证</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="analysis-openstack-swift-keystone-authentication.html">
+            
+                <a href="analysis-openstack-swift-keystone-authentication.html">
+            
+                    
+                        <b>4.1.</b>
+                    
+                    与keystone结合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                    
+                        <b>4.2.</b>
+                    
+                    让swift通过keystone认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">ring</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="analysis-openstack-swift-overview-ring.html">
+            
+                <a href="analysis-openstack-swift-overview-ring.html">
+            
+                    
+                        <b>5.1.</b>
+                    
+                    overview ring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">partition</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="swift-what-is-a-swift-partition.html">
+            
+                <a href="swift-what-is-a-swift-partition.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    what is a swift partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="6.2" data-path="openstack-swift-analysis-partition.html">
+            
+                <a href="openstack-swift-analysis-partition.html">
+            
+                    
+                        <b>6.2.</b>
+                    
+                    ring如何生成partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="openstack-swift-object-storage-result-analysis.html">
+            
+                <a href="openstack-swift-object-storage-result-analysis.html">
+            
+                    
+                        <b>6.3.</b>
+                    
+                    上传文件结果分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">quota</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                <a href="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                    
+                        <b>7.1.</b>
+                    
+                    enable reseller admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="swift-account-quota-outcome.html">
+            
+                <a href="swift-account-quota-outcome.html">
+            
+                    
+                        <b>7.2.</b>
+                    
+                    设置account的quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="swift-account-quota-process.html">
+            
+                <a href="swift-account-quota-process.html">
+            
+                    
+                        <b>7.3.</b>
+                    
+                    设置account的quota（分析过程）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="swfit-account-quota-restful-api.html">
+            
+                <a href="swfit-account-quota-restful-api.html">
+            
+                    
+                        <b>7.4.</b>
+                    
+                    REST调用accout quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">erasure code</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="analysis-openstack-swift-overview_erasure_code.html">
+            
+                <a href="analysis-openstack-swift-overview_erasure_code.html">
+            
+                    
+                        <b>8.1.</b>
+                    
+                    与 erasure code 相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">测试</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="swift-benchmarking-getput.html">
+            
+                <a href="swift-benchmarking-getput.html">
+            
+                    
+                        <b>9.1.</b>
+                    
+                    getput使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">日志</li>
+        
+        
+    
+        <li class="chapter " data-level="10.1" data-path="swift-logfiles.html">
+            
+                <a href="swift-logfiles.html">
+            
+                    
+                        <b>10.1.</b>
+                    
+                    组件日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">常见问题</li>
+        
+        
+    
+        <li class="chapter " data-level="11.1" data-path="swift-faq.html">
+            
+                <a href="swift-faq.html">
+            
+                    
+                        <b>11.1.</b>
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.2" data-path="swift-admin-cannot-login.html">
+            
+                <a href="swift-admin-cannot-login.html">
+            
+                    
+                        <b>11.2.</b>
+                    
+                    admin被删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.3" data-path="swift-controller-change-ip.html">
+            
+                <a href="swift-controller-change-ip.html">
+            
+                    
+                        <b>11.3.</b>
+                    
+                    controller节点更换IP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.4" data-path="swift-demo-cannot-get-user-info.html">
+            
+                <a href="swift-demo-cannot-get-user-info.html">
+            
+                    
+                        <b>11.4.</b>
+                    
+                    无法获取用户信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.5" data-path="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                <a href="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                    
+                        <b>11.5.</b>
+                    
+                    auth version require python-keystoneclient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.6" data-path="swift-installed-source-code-address.html">
+            
+                <a href="swift-installed-source-code-address.html">
+            
+                    
+                        <b>11.6.</b>
+                    
+                    swift安装包源码地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.7" data-path="swift-multy-proxy-node-faq.html">
+            
+                <a href="swift-multy-proxy-node-faq.html">
+            
+                    
+                        <b>11.7.</b>
+                    
+                    多代理节点安装出现的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.8" data-path="swift-problem-with-xfs-file-system.html">
+            
+                <a href="swift-problem-with-xfs-file-system.html">
+            
+                    
+                        <b>11.8.</b>
+                    
+                    swift storage node 出现 xfs 错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.9" data-path="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                <a href="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                    
+                        <b>11.9.</b>
+                    
+                    rsync数据通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.10" data-path="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                    
+                        <b>11.10.</b>
+                    
+                    rebalance后数据未通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.11" data-path="swift-storage-node-system-failed-re-mount.html">
+            
+                <a href="swift-storage-node-system-failed-re-mount.html">
+            
+                    
+                        <b>11.11.</b>
+                    
+                    storage node 的主板坏了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.12" data-path="swift-mount-structure-needs-cleaning.html">
+            
+                <a href="swift-mount-structure-needs-cleaning.html">
+            
+                    
+                        <b>11.12.</b>
+                    
+                    mount Structure needs cleaning
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">笔记</li>
+        
+        
+    
+        <li class="chapter " data-level="12.1" data-path="note-about-openstack-swift.html">
+            
+                <a href="note-about-openstack-swift.html">
+            
+                    
+                        <b>12.1.</b>
+                    
+                    笔记1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">未来</li>
+        
+        
+    
+        <li class="chapter " data-level="13.1" >
+            
+                <a target="_blank" href="https://b.qqbb.app/tags/swift/">
+            
+                    
+                        <b>13.1.</b>
+                    
+                    我的swift探险之旅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="13.2" >
+            
+                <a target="_blank" href="https://eiuapp.github.io/swift-handbook/">
+            
+                    
+                        <b>13.2.</b>
+                    
+                    Swift Handbook
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">相关资源</li>
+        
+        
+    
+        <li class="chapter " data-level="14.1" data-path="tech_resource.md">
+            
+                <span>
+            
+                    
+                        <b>14.1.</b>
+                    
+                    swift技术工具与资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >ring如何生成partition</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <html><head></head><body><p>ring &#x751F;&#x6210; partition &#x5206;&#x6790;</p>
+<h2 id="env">env</h2>
+<ul>
+<li>&#x7CFB;&#x7EDF;&#xFF1A;Ubuntu Server 16.04&#xD7;64 </li>
+<li>&#x5B58;&#x50A8;&#x8BBE;&#x7F6E;&#xFF1A;4T</li>
+<li>python-swiftclient 3.5.0</li>
+<li>&#x67B6;&#x6784;&#x90E8;&#x7F72;: </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>&#x4E3B;&#x673A;&#x540D;</th>
+<th style="text-align:center">IP</th>
+<th style="text-align:right">&#x4F5C;&#x7528;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keystone</td>
+<td style="text-align:center">192.168.100.50</td>
+<td style="text-align:right">keystone node</td>
+</tr>
+<tr>
+<td>Proxy</td>
+<td style="text-align:center">192.168.100.50/192.168.0.50</td>
+<td style="text-align:right">&#x4EE3;&#x7406;&#x8282;&#x70B9;</td>
+</tr>
+<tr>
+<td>object1</td>
+<td style="text-align:center">192.168.100.105</td>
+<td style="text-align:right">&#x5B58;&#x50A8;&#x8282;&#x70B9;1(zone1)</td>
+</tr>
+<tr>
+<td>object2</td>
+<td style="text-align:center">192.168.100.106</td>
+<td style="text-align:right">&#x5B58;&#x50A8;&#x8282;&#x70B9;2(zone1)</td>
+</tr>
+<tr>
+<td>object3</td>
+<td style="text-align:center">192.168.100.107</td>
+<td style="text-align:right">&#x5B58;&#x50A8;&#x8282;&#x70B9;3(zone1)</td>
+</tr>
+<tr>
+<td>object4</td>
+<td style="text-align:center">192.168.100.107</td>
+<td style="text-align:right">&#x5B58;&#x50A8;&#x8282;&#x70B9;4(zone1)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step">step</h2>
+<h4 id="&#x7F51;&#x4E0A;&#x793A;&#x4F8B;">&#x7F51;&#x4E0A;&#x793A;&#x4F8B;</h4>
+<p>&#x901A;&#x8FC7; <a href="https://ask.openstack.org/en/question/6766/what-is-a-swift-partition/" target="_blank">https://ask.openstack.org/en/question/6766/what-is-a-swift-partition/</a> &#x77E5;&#x9053;&#xFF1A;</p>
+<p>SEC/MY_account/cats/kitten.jpgRET =&gt; 4f3146f77835ff33a6baba807f7f5c10 =&gt; 4f31</p>
+<ul>
+<li>SEC/MY_account/cats/kitten.jpgRET =&gt; 4f3146f77835ff33a6baba807f7f5c10 &#x8FD9;&#x4E00;&#x6B65;&#xFF0C;&#x653E;&#x5230;<a href="https://md5jiami.51240.com/" target="_blank">&#x7F51;&#x4E0A;md5&#x52A0;&#x5BC6;</a>&#x5C31;&#x80FD;&#x5F97;&#x5230;&#x4E86;&#x3002;</li>
+<li>4f3146f77835ff33a6baba807f7f5c10 =&gt; 4f31</li>
+<li>4f31 =&gt; 20273 &#x8FD9;&#x4E00;&#x6B65;&#xFF0C;&#x653E;&#x5230;<a href="http://tool.oschina.net/hexconvert" target="_blank">&#x7F51;&#x4E0A;16&#x8FDB;&#x5236;&#x8F6C;10&#x8FDB;&#x5236;</a>&#x5C31;&#x80FD;&#x5F97;&#x5230;&#x4E86;&#x3002;</li>
+</ul>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x8FD9;&#x4E2A;&#x7248;&#x672C;&#x7684;&#x662F;&#x5982;&#x4F55;&#x751F;&#x6210; partition &#x7684;&#x5462;&#xFF1F;</p>
+<h4 id="&#x73B0;&#x8C61;">&#x73B0;&#x8C61;</h4>
+<p>&#x4ECE;&#x4E0B;&#x9762;&#x7684;&#x73B0;&#x8C61;&#xFF0C;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#xFF0C;&#x5F53;&#x4F20;&#x5165; </p>
+<p>account= &quot;AUTH_7d6eaa90d74a4f239963933c3a744df3&quot;
+container = &quot;test4&quot;
+obj = &quot;object-a.txt&quot;</p>
+<p>&#x6700;&#x540E;&#x5F97;&#x5230;&#x7684; partition &#x503C;&#x662F; 119</p>
+<p>&#x600E;&#x4E48;&#x5F97;&#x5230;&#x4E0B;&#x9762;&#x7684; 119 &#x5462;&#xFF1F;</p>
+<h4 id="&#x672C;&#x8D28;">&#x672C;&#x8D28;</h4>
+<p>&#x76F4;&#x63A5;&#x770B;&#x6E90;&#x7801;&#x3002;</p>
+<h5 id="&#x6E90;&#x7801;&#x4F4D;&#x7F6E;">&#x6E90;&#x7801;&#x4F4D;&#x7F6E;</h5>
+<p>&#x5728; python &#x5B89;&#x88C5;&#x5305;&#x7684;&#x8DEF;&#x5F84;&#x4E0B;&#x3002;&#x6211;&#x8FD9;&#x91CC;&#x662F; </p>
+<pre class="language-"><code class="lang-shell">root@controller:/usr/lib/python2.7/dist-packages/swift<span class="token comment"># ls</span>
+account  cli  common  container  __init__.py  __init__.pyc  locale  obj  proxy
+root@controller:/usr/lib/python2.7/dist-packages/swift<span class="token comment">#</span>
+</code></pre>
+<p>&#x5982;&#x679C;&#x4F60;&#x5F53;&#x524D;&#x6CA1;&#x6709;&#x5B89;&#x88C5;swift&#x7684;&#x73AF;&#x5883;&#xFF0C;&#x4E5F;&#x6CA1;&#x6709;&#x5173;&#x7CFB;&#xFF0C;&#x53BB;<a href="https://github.com/openstack/swift" target="_blank">github&#x4E0B;&#x8F7D;</a>&#x3002;
+&#x8FD9;&#x91CC;&#x8981;&#x6CE8;&#x610F;&#x7248;&#x672C;&#x3002;&#x4E0D;&#x540C;&#x7248;&#x672C;&#xFF0C;&#x6E90;&#x4EE3;&#x7801;&#x5F53;&#x7136;&#x4E0D;&#x540C;&#x5566;, &#x627E;&#x4E0E;&#x4F60;&#x5BF9;&#x5E94;&#x7684;&#x7248;&#x672C;&#x54DF;! &#x6211;&#x7684;swift&#x662F;queen&#x7248;&#x672C;&#x65F6;&#x5B89;&#x88C5;&#x7684;&#x3002;
+&#x4E0B;&#x8F7D;&#x540E;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#xFF0C;&#x8FDB;&#x5165;&#xFF0C;&#x91CC;&#x6709;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;swift&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4E0E;&#x4E0A;&#x9762;&#x6211;&#x8FD9;&#x91CC;&#x7684;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;</p>
+<p>&#x5404;&#x6587;&#x4EF6;&#x5939;&#x662F;&#x4EC0;&#x4E48;&#x4F5C;&#x7528;&#xFF0C;&#x8FD9;&#x91CC;&#x5148;&#x4E0D;&#x4ECB;&#x7ECD;&#x4E86;&#x3002;</p>
+<h5 id="getpart">get_part</h5>
+<p>&#x5728; <code>./common/ring/ring.py</code> &#x7684; 333 &#x884C;&#xFF0C;&#x627E;&#x5230; get_part &#x51FD;&#x6570;&#x3002;&#x8FD9;&#x4E2A;&#x5C31;&#x662F;&#x6211;&#x60F3;&#x8981;&#x7684;&#x3002;</p>
+<pre class="language-"><code class="lang-python">    <span class="token keyword">def</span> <span class="token function">get_part</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> account<span class="token punctuation">,</span> container<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> obj<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">&quot;&quot;&quot;
+        Get the partition for an account/container/object.
+
+        :param account: account name
+        :param container: container name
+        :param obj: object name
+        :returns: the partition number
+        &quot;&quot;&quot;</span>
+        key <span class="token operator">=</span> hash_path<span class="token punctuation">(</span>account<span class="token punctuation">,</span> container<span class="token punctuation">,</span> obj<span class="token punctuation">,</span> raw_digest<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> self<span class="token punctuation">.</span>_rtime<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>_reload<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        part <span class="token operator">=</span> struct<span class="token punctuation">.</span>unpack_from<span class="token punctuation">(</span><span class="token string">&apos;&gt;I&apos;</span><span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&gt;&gt;</span> self<span class="token punctuation">.</span>_part_shift
+        <span class="token keyword">return</span> part
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x3002;&#x91CC;&#x9762;&#x4E3B;&#x8981;&#x5C31;&#x662F; hash_path &#x548C; struct.unpack_from &#x51FD;&#x6570;</p>
+<h6 id="hashpath">hash_path</h6>
+<p>&#x627E;&#x5230;&#x6E90;&#x7801; <code>common/utils.py</code> &#x7684; 2265 &#x884C;&#xFF0C;&#x627E;&#x5230; hash_path &#x51FD;&#x6570;</p>
+<pre class="language-"><code class="lang-python"><span class="token keyword">def</span> <span class="token function">hash_path</span><span class="token punctuation">(</span>account<span class="token punctuation">,</span> container<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token builtin">object</span><span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> raw_digest<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;
+    Get the canonical hash for an account/container/object
+
+    :param account: Account
+    :param container: Container
+    :param object: Object
+    :param raw_digest: If True, return the raw version rather than a hex digest
+    :returns: hash string
+    &quot;&quot;&quot;</span>
+    <span class="token keyword">if</span> <span class="token builtin">object</span> <span class="token operator">and</span> <span class="token operator">not</span> container<span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">&apos;container is required if object is provided&apos;</span><span class="token punctuation">)</span>
+    paths <span class="token operator">=</span> <span class="token punctuation">[</span>account<span class="token punctuation">]</span>
+    <span class="token keyword">if</span> container<span class="token punctuation">:</span>
+        paths<span class="token punctuation">.</span>append<span class="token punctuation">(</span>container<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token builtin">object</span><span class="token punctuation">:</span>
+        paths<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> raw_digest<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> md5<span class="token punctuation">(</span>HASH_PATH_PREFIX <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span>
+                   <span class="token operator">+</span> HASH_PATH_SUFFIX<span class="token punctuation">)</span><span class="token punctuation">.</span>digest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> md5<span class="token punctuation">(</span>HASH_PATH_PREFIX <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span>
+                   <span class="token operator">+</span> HASH_PATH_SUFFIX<span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>&#x770B;&#x5230;&#x4E86;&#x4E48;&#xFF1F;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x662F;&#x6267;&#x884C; </p>
+<pre class="language-"><code>md5(HASH_PATH_PREFIX + &apos;/&apos; + &apos;/&apos;.join(paths)
+                   + HASH_PATH_SUFFIX).digest()
+</code></pre><p>&#x6CE8;&#x610F;&#x5230;&#x8FD9;&#x91CC;&#x6709; </p>
+<ul>
+<li>HASH_PATH_PREFIX = &quot;openstack&quot;</li>
+<li>HASH_PATH_SUFFIX = &quot;openstack&quot;</li>
+</ul>
+<p>&#x6765;&#x81EA;&#x4E8E;&#x914D;&#x7F6E;&#x6587;&#x4EF6;<code>/etc/swift/swift.conf</code></p>
+<pre class="language-"><code class="lang-shell">root@controller:/home/ubuntu<span class="token comment"># grep swift_hash_path_suffix -rn /etc/swift/swift.conf</span>
+9:swift_hash_path_suffix <span class="token operator">=</span> openstack
+root@controller:/home/ubuntu<span class="token comment"># grep swift_hash_path_prefix -rn /etc/swift/swift.conf</span>
+10:swift_hash_path_prefix <span class="token operator">=</span> openstack
+root@controller:/home/ubuntu<span class="token comment">#</span>
+</code></pre>
+<h6 id="md5"># md5</h6>
+<p><a href="https://docs.python.org/2/library/md5.html" target="_blank">https://docs.python.org/2/library/md5.html</a></p>
+<h6 id="structunpackfrom">struct.unpack_from</h6>
+<p>struct.unpack_from &#x7684; &#x4F5C;&#x7528;&#xFF0C;&#x8BF7;&#x770B;<a href="../jwl/python-struct-module">&#x8FD9;&#x91CC;</a> &#x6216;&#x8005; <a href="../post/python-struct-module">&#x8FD9;&#x91CC;</a></p>
+<p>&#x7B80;&#x5355;&#x8BF4;&#x5C31;&#x662F;&#xFF1A; &#x5C06;&#x5B57;&#x8282;&#x6D41;&#x8F6C;&#x6362;&#x6210;python&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;Unpack the buffer according to the given format.</p>
+<p>&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x662F; <code>struct.unpack_from(&apos;&gt;I&apos;, key)[0]</code> </p>
+<p><code>&apos;&gt;I&apos;</code>, &#x8868;&#x793A;&#x8F6C;&#x6362;&#x6210;python&#x7684; unsigned int&#x3002;</p>
+<h4 id="&#x672C;&#x8D28;&#x7684;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;">&#x672C;&#x8D28;&#x7684;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;</h4>
+<pre class="language-"><code class="lang-shell">ubuntu@controller:~$ python
+Python 2.7.12 <span class="token punctuation">(</span>default, Dec  4 2017, 14:50:18<span class="token punctuation">)</span> 
+<span class="token punctuation">[</span>GCC 5.4.0 20160609<span class="token punctuation">]</span> on linux2
+Type <span class="token string">&quot;help&quot;</span>, <span class="token string">&quot;copyright&quot;</span>, <span class="token string">&quot;credits&quot;</span> or <span class="token string">&quot;license&quot;</span> <span class="token keyword">for</span> <span class="token function">more</span> information.
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> <span class="token function">import</span> swift
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> from swift.common.utils <span class="token function">import</span> hash_path, validate_configuration
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> from hashlib <span class="token function">import</span> md5, sha1
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> <span class="token function">import</span> struct
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> HASH_PATH_PREFIX <span class="token operator">=</span> <span class="token string">&quot;openstack&quot;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> HASH_PATH_SUFFIX <span class="token operator">=</span> <span class="token string">&quot;openstack&quot;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> account<span class="token operator">=</span> <span class="token string">&quot;AUTH_7d6eaa90d74a4f239963933c3a744df3&quot;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> container <span class="token operator">=</span> <span class="token string">&quot;test4&quot;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> obj <span class="token operator">=</span> <span class="token string">&quot;object-a.txt&quot;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> paths <span class="token operator">=</span> <span class="token punctuation">[</span>account, container, obj<span class="token punctuation">]</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> <span class="token string">&apos;/&apos;</span>.join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span>
+<span class="token string">&apos;AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a.txt&apos;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> HASH_PATH_PREFIX + <span class="token string">&apos;/&apos;</span> + <span class="token string">&apos;/&apos;</span>.join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span> + HASH_PATH_SUFFIX
+<span class="token string">&apos;openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a.txtopenstack&apos;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> md5<span class="token punctuation">(</span>HASH_PATH_PREFIX + <span class="token string">&apos;/&apos;</span> + <span class="token string">&apos;/&apos;</span>.join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span> + HASH_PATH_SUFFIX<span class="token punctuation">)</span>
+<span class="token operator">&lt;</span>md5 HASH object @ 0x7f8632c45670<span class="token operator">&gt;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> md5<span class="token punctuation">(</span>HASH_PATH_PREFIX + <span class="token string">&apos;/&apos;</span> + <span class="token string">&apos;/&apos;</span>.join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span> + HASH_PATH_SUFFIX<span class="token punctuation">)</span>.digest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token string">&apos;\x1d\xf3\xd1_:\x9a+x\x8e75v\xbc\xf9v\x11&apos;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> key <span class="token operator">=</span> hash_path<span class="token punctuation">(</span>account, container, obj, raw_digest<span class="token operator">=</span>True<span class="token punctuation">)</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> key
+<span class="token string">&apos;\x1d\xf3\xd1_:\x9a+x\x8e75v\xbc\xf9v\x11&apos;</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> print<span class="token punctuation">(</span>struct.unpack_from<span class="token punctuation">(</span><span class="token string">&apos;&gt;I&apos;</span>, key<span class="token punctuation">))</span>
+<span class="token punctuation">(</span>502518111,<span class="token punctuation">)</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> print<span class="token punctuation">(</span>struct.unpack_from<span class="token punctuation">(</span><span class="token string">&apos;&gt;I&apos;</span>, key<span class="token punctuation">)</span><span class="token punctuation">[</span>0<span class="token punctuation">]</span><span class="token punctuation">)</span>
+502518111
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> 502518111 <span class="token operator">&gt;&gt;</span> 22
+119
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> part <span class="token operator">=</span> struct.unpack_from<span class="token punctuation">(</span><span class="token string">&apos;&gt;I&apos;</span>, key<span class="token punctuation">)</span><span class="token punctuation">[</span>0<span class="token punctuation">]</span> <span class="token operator">&gt;&gt;</span> 22
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> part
+119
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> exit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>&#x597D;&#x4E86;&#xFF0C;&#x73B0;&#x5728;&#x57FA;&#x672C;&#x4E0A;&#x77E5;&#x9053;&#xFF0C;119&#xFF0C;&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x6765;&#x7684;&#x4E86;&#x3002;</p>
+<h4 id="&#x8C03;&#x8BD5;&#x6E90;&#x4EE3;&#x7801;">&#x8C03;&#x8BD5;&#x6E90;&#x4EE3;&#x7801;</h4>
+<p>&#x4F46;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x770B;&#x662F;&#x60F3;&#x4EB2;&#x773C;&#x89C1;&#x4E00;&#x4E0B;&#xFF0C;119&#xFF0C;&#x600E;&#x4E48;&#x529E;&#xFF1F;&#x8C03;&#x8BD5;&#x6E90;&#x4EE3;&#x7801;&#x5427;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x6211;&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x4E0A;&#x4F20;&#x4E86; object = &quot;object-a.txt&quot; &#x3002;&#x4E0D;&#x80FD;&#x540C;&#x540D;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x73B0;&#x5728;object = &quot;object-a-3.txt&quot;</p>
+<h5 id="&#x4FEE;&#x6539;&#x6E90;&#x4EE3;&#x7801;">&#x4FEE;&#x6539;&#x6E90;&#x4EE3;&#x7801;</h5>
+<p>&#x6211;&#x8FD9;&#x91CC;&#x53EA;&#x662F;&#x793A;&#x4F8B;&#x3002;</p>
+<ul>
+<li><code>./common/ring/ring.py</code> &#x7684; 333 &#x884C;</li>
+</ul>
+<pre class="language-"><code class="lang-python">    <span class="token keyword">def</span> <span class="token function">get_part</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> account<span class="token punctuation">,</span> container<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> obj<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">&quot;&quot;&quot;
+        Get the partition for an account/container/object.
+
+        :param account: account name
+        :param container: container name
+        :param obj: object name
+        :returns: the partition number
+        &quot;&quot;&quot;</span>
+        key <span class="token operator">=</span> hash_path<span class="token punctuation">(</span>account<span class="token punctuation">,</span> container<span class="token punctuation">,</span> obj<span class="token punctuation">,</span> raw_digest<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;--------------------------------------------------, my debug --------------------&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;=========keys:&quot;</span><span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> self<span class="token punctuation">.</span>_rtime<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>_reload<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        part <span class="token operator">=</span> struct<span class="token punctuation">.</span>unpack_from<span class="token punctuation">(</span><span class="token string">&apos;&gt;I&apos;</span><span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&gt;&gt;</span> self<span class="token punctuation">.</span>_part_shift
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;11111111partition:&quot;</span><span class="token punctuation">,</span> part<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> part
+</code></pre>
+<ul>
+<li><code>common/utils.py</code> &#x7684; 2265 &#x884C;</li>
+</ul>
+<pre class="language-"><code class="lang-python"><span class="token keyword">def</span> <span class="token function">hash_path</span><span class="token punctuation">(</span>account<span class="token punctuation">,</span> container<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token builtin">object</span><span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> raw_digest<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;
+    Get the canonical hash for an account/container/object
+
+    :param account: Account
+    :param container: Container
+    :param object: Object
+    :param raw_digest: If True, return the raw version rather than a hex digest
+    :returns: hash string
+    &quot;&quot;&quot;</span>
+    <span class="token keyword">if</span> <span class="token builtin">object</span> <span class="token operator">and</span> <span class="token operator">not</span> container<span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">&apos;container is required if object is provided&apos;</span><span class="token punctuation">)</span>
+    paths <span class="token operator">=</span> <span class="token punctuation">[</span>account<span class="token punctuation">]</span>
+    <span class="token keyword">if</span> container<span class="token punctuation">:</span>
+        paths<span class="token punctuation">.</span>append<span class="token punctuation">(</span>container<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token builtin">object</span><span class="token punctuation">:</span>
+        paths<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> raw_digest<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;--------------------------------------------------, my debug --------------------&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>HASH_PATH_PREFIX<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>HASH_PATH_PREFIX <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span> <span class="token operator">+</span> HASH_PATH_SUFFIX<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>md5<span class="token punctuation">(</span>HASH_PATH_PREFIX <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span> <span class="token operator">+</span> HASH_PATH_SUFFIX<span class="token punctuation">)</span><span class="token punctuation">.</span>digest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> md5<span class="token punctuation">(</span>HASH_PATH_PREFIX <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span>
+                   <span class="token operator">+</span> HASH_PATH_SUFFIX<span class="token punctuation">)</span><span class="token punctuation">.</span>digest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> md5<span class="token punctuation">(</span>HASH_PATH_PREFIX <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>paths<span class="token punctuation">)</span>
+                   <span class="token operator">+</span> HASH_PATH_SUFFIX<span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h5 id="&#x91CD;&#x542F;swift-proxy&#x670D;&#x52A1;">&#x91CD;&#x542F;swift-proxy&#x670D;&#x52A1;</h5>
+<pre class="language-"><code class="lang-shell">root@controller:/home/ubuntu<span class="token comment"># service swift-proxy restart</span>
+root@controller:/home/ubuntu<span class="token comment"># service swift-proxy status</span>
+</code></pre>
+<h5 id="&#x770B;&#x65E5;&#x5FD7;">&#x770B;&#x65E5;&#x5FD7;</h5>
+<pre class="language-"><code class="lang-shell">root@controller:/home/ubuntu<span class="token comment"># tail -f /var/log/syslog</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: ??70L??023G <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xdf\xcf\x8a\xff\x9b7\xc1H0L\xf4A\xb2\x13\xc1\x87&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 895<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: - - 30/Jan/2019/08/07/44 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3%3Fformat%3Djson HTTP/1.0 204 - Swift - - - - tx5d49fd7b64cb4e0c89e04-005c515b50 - 0.0047 RL - 1548835664.549806118 1548835664.554487944 -
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: ??70L??023G <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xdf\xcf\x8a\xff\x9b7\xc1H0L\xf4A\xb2\x13\xc1\x87&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 895<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: ?<span class="token punctuation">]</span>?14&#x39D;?<span class="token comment">#023#032#032#001#027??txn: tx5d49fd7b64cb4e0c89e04-005c515b50)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xbc]\xec\x0c\xcf]\x8a\xb6\x13\x1a\x96\x1a\x01\x17\xf6\xd1&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 753<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: ?<span class="token punctuation">]</span>?14&#x39D;?<span class="token comment">#023#032#032#001#027??txn: tx5d49fd7b64cb4e0c89e04-005c515b50) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xbc]\xec\x0c\xcf]\x8a\xb6\x13\x1a\x96\x1a\x01\x17\xf6\xd1&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 753<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a-3.txtopenstack <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token operator">&gt;</span>&#x60D8;<span class="token operator">&amp;</span><span class="token comment">#013??#026%?? (txn: tx5d49fd7b64cb4e0c89e04-005c515b50) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;&gt;\xe6\x83\x98&amp;\x0b\xaa\xe1\xe0\xa1\x16%\xd9\xf6\x82\xbf&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 251<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx5d49fd7b64cb4e0c89e04-005c515b50<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:44 controller proxy-server: 127.0.0.1 127.0.0.1 30/Jan/2019/08/07/44 HEAD /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a-3.txt HTTP/1.0 404 - python-swiftclient-3.5.0 gAAAAABcUVjCZNjJ<span class="token punctuation">..</span>. - - - tx5d49fd7b64cb4e0c89e04-005c515b50 - 0.0212 - - 1548835664.548610926 1548835664.569818020 0
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4openstack <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ?<span class="token punctuation">]</span>?14&#x39D;?<span class="token comment">#023#032#032#001#027??txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xbc]\xec\x0c\xcf]\x8a\xb6\x13\x1a\x96\x1a\x01\x17\xf6\xd1&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 753<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a-3.txtopenstack <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token operator">&gt;</span>&#x60D8;<span class="token operator">&amp;</span><span class="token comment">#013??#026%?? (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;&gt;\xe6\x83\x98&amp;\x0b\xaa\xe1\xe0\xa1\x16%\xd9\xf6\x82\xbf&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 251<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: txacc37f453a6441499423e-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: 127.0.0.1 127.0.0.1 30/Jan/2019/08/07/45 PUT /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a-3.txt HTTP/1.0 201 - python-swiftclient-3.5.0 gAAAAABcUVjCZNjJ<span class="token punctuation">..</span>. 18431 - - txacc37f453a6441499423e-005c515b51 - 0.0709 - - 1548835665.213526964 1548835665.284423113 0
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3openstack <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ??70L??023G <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xdf\xcf\x8a\xff\x9b7\xc1H0L\xf4A\xb2\x13\xc1\x87&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 895<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4openstack <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ?<span class="token punctuation">]</span>?14&#x39D;?<span class="token comment">#023#032#032#001#027??txn: tx06a68fa051174db18c0aa-005c515b51) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xbc]\xec\x0c\xcf]\x8a\xb6\x13\x1a\x96\x1a\x01\x17\xf6\xd1&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 753<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx06a68fa051174db18c0aa-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3openstack <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ??70L??023G <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xdf\xcf\x8a\xff\x9b7\xc1H0L\xf4A\xb2\x13\xc1\x87&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 895<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4openstack <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ?<span class="token punctuation">]</span>?14&#x39D;?<span class="token comment">#023#032#032#001#027??txn: tx8a9fb911df1d48af97b6f-005c515b51) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xbc]\xec\x0c\xcf]\x8a\xb6\x13\x1a\x96\x1a\x01\x17\xf6\xd1&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 753<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx8a9fb911df1d48af97b6f-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: 127.0.0.1 127.0.0.1 30/Jan/2019/08/07/45 GET /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/%3Fformat%3Djson HTTP/1.0 200 - python-swiftclient-3.5.0 gAAAAABcUVjCZNjJ<span class="token punctuation">..</span>. - 103 - tx06a68fa051174db18c0aa-005c515b51 - 0.0584 - - 1548835665.329989910 1548835665.388351917 0
+Jan 30 16:07:45 controller proxy-server: 127.0.0.1 127.0.0.1 30/Jan/2019/08/07/45 GET /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4%3Fdelimiter%3D%252F%26limit%3D1001%26format%3Djson HTTP/1.0 200 - python-swiftclient-3.5.0 gAAAAABcUVjCZNjJ<span class="token punctuation">..</span>. - 1017 - tx8a9fb911df1d48af97b6f-005c515b51 - 0.0464 - - 1548835665.346412897 1548835665.392823935 0
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3openstack <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ??70L??023G <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xdf\xcf\x8a\xff\x9b7\xc1H0L\xf4A\xb2\x13\xc1\x87&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 895<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4openstack <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: ?<span class="token punctuation">]</span>?14&#x39D;?<span class="token comment">#023#032#032#001#027??txn: tx10ed616c142448debc5d4-005c515b51) (client_ip: 127.0.0.1)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;=========keys:&apos;</span>, <span class="token string">&apos;\xbc]\xec\x0c\xcf]\x8a\xb6\x13\x1a\x96\x1a\x01\x17\xf6\xd1&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: STDOUT: <span class="token punctuation">(</span><span class="token string">&apos;11111111partition:&apos;</span>, 753<span class="token punctuation">)</span> <span class="token punctuation">(</span>txn: tx10ed616c142448debc5d4-005c515b51<span class="token punctuation">)</span> <span class="token punctuation">(</span>client_ip: 127.0.0.1<span class="token punctuation">)</span>
+Jan 30 16:07:45 controller proxy-server: 127.0.0.1 127.0.0.1 30/Jan/2019/08/07/45 GET /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4%3Fmarker%3Dobject-server.txt%26delimiter%3D%252F%26limit%3D1001%26format%3Djson HTTP/1.0 200 - python-swiftclient-3.5.0 gAAAAABcUVjCZNjJ<span class="token punctuation">..</span>. - 2 - tx10ed616c142448debc5d4-005c515b51 - 0.0069 - - 1548835665.394655943 1548835665.401551962 0
+</code></pre>
+<p>&#x627E;&#x5230;&#x4E86;</p>
+<pre class="language-"><code class="lang-text">Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: STDOUT: openstack/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a-3.txtopenstack (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: STDOUT: &gt;&#x60D8;&amp;#013??#026%?? (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: STDOUT: --------------------------------------------------, my debug -------------------- (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: STDOUT: (&apos;=========keys:&apos;, &apos;&gt;\xe6\x83\x98&amp;\x0b\xaa\xe1\xe0\xa1\x16%\xd9\xf6\x82\xbf&apos;) (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: STDOUT: (&apos;11111111partition:&apos;, 251) (txn: txacc37f453a6441499423e-005c515b51) (client_ip: 127.0.0.1)
+Jan 30 16:07:45 controller proxy-server: 127.0.0.1 127.0.0.1 30/Jan/2019/08/07/45 PUT /v1/AUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a-3.txt HTTP/1.0 201 - python-swiftclient-3.5.0 gAAAAABcUVjCZNjJ... 18431 - - txacc37f453a6441499423e-005c515b51 - 0.0709 - - 1548835665.213526964 1548835665.284423113 0
+</code></pre>
+<p>&#x8FD9;&#x4E0B;&#x7EC8;&#x4E8E;&#x653E;&#x5FC3;&#x4E86;&#x3002;</p>
+<p>&#x51E0;&#x4E2A;&#x60F3;&#x770B;&#x5230;&#x7684;&#x70B9;&#xFF0C;&#x90FD;&#x770B;&#x5230;&#x4E86;&#x3002;&#x6700;&#x540E;&#x5F97;&#x5230;&#x7684; partition &#x662F; 251&#x3002;&#x54C8;&#x54C8;&#xFF01;~</p>
+<h4 id="&#x73B0;&#x8C61;&#x7ED3;&#x5408;&#x672C;&#x8D28;">&#x73B0;&#x8C61;&#x7ED3;&#x5408;&#x672C;&#x8D28;</h4>
+<p>openstackAUTH_7d6eaa90d74a4f239963933c3a744df3/test4/object-a.txtopenstack</p>
+<p>Compute the MD5 hash of that string to get 942354320ddd6c54d9a4c052ef18bc25</p>
+<p>then take the first 16 bits to get 9423, or in decimal, <strong>*</strong>.</p>
+<h2 id="ref">ref</h2>
+<ul>
+<li><a href="https://ask.openstack.org/en/question/6766/what-is-a-swift-partition/" target="_blank">https://ask.openstack.org/en/question/6766/what-is-a-swift-partition/</a></li>
+<li><a href="https://docs.openstack.org/swift/queens/overview_ring.html" target="_blank">https://docs.openstack.org/swift/queens/overview_ring.html</a> </li>
+</ul>
+<footer class="page-footer"><span class="copyright"><p><a href="https://github.com/eiuapp/swift-handbook" target="_blank">Openstack Swift&#x5B9E;&#x8DF5;&#x6307;&#x5357;</a> | <a href="https://github.com/eiuapp/swift-docs" target="_blank">Openstack Swift&#x6587;&#x6863;&#x9605;&#x8BFB;</a></p><p><a href="https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg" data-lightbox="2fd927ee-fa64-4eca-8ed5-6bd72b573a3c" target="_blank">&#x70B9;&#x51FB;&#x5173;&#x6CE8;&#x3010;servicemesher&#x3011;&#x516C;&#x4F17;&#x53F7;&#x56DE;&#x590D;&#x3010;&#x52A0;&#x7FA4;&#x3011;&#x52A0;&#x5165;&#x5B66;&#x4E60;&#x7FA4;</a> | </p>Copyright &#xA9; <a href="https://eiu.app" target="_blank">eiu.app</a> 2017-2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification"> Updated at 
+2019-03-13 06:22:24
+</span></footer></body></html>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="swift-what-is-a-swift-partition.html" class="navigation navigation-prev " aria-label="Previous page: what is a swift partition">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="openstack-swift-object-storage-result-analysis.html" class="navigation navigation-next " aria-label="Next page: 上传文件结果分析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ring如何生成partition","level":"6.2","depth":1,"next":{"title":"上传文件结果分析","level":"6.3","depth":1,"path":"docs/openstack-swift-object-storage-result-analysis.md","ref":"docs/openstack-swift-object-storage-result-analysis.md","articles":[]},"previous":{"title":"what is a swift partition","level":"6.1","depth":1,"path":"docs/swift-what-is-a-swift-partition.md","ref":"docs/swift-what-is-a-swift-partition.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github","codesnippet","splitter","page-toc-button","editlink","back-to-top-button","-lunr","-search","search-plus","github-buttons@2.1.0","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","3-ba","theme-default","-highlight","prism","prism-themes","sitemap-general","lightbox","adsense","ga"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"<p><a href=https://github.com/eiuapp/swift-handbook>Openstack Swift实践指南</a> | <a href=https://github.com/eiuapp/swift-docs>Openstack Swift文档阅读</a></p><p><a href=https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【servicemesher】公众号回复【加群】加入学习群</a> | </p>Copyright © <a href=https://eiu.app>eiu.app</a> 2017-2019","modify_label":" Updated at ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"lang":{"shell":"bash"},"css":["prism-themes/themes/prism-ghcolors.css"]},"github":{"url":"https://github.com/eiuapp/swift-handbook"},"editlink":{"label":"编辑本页","multilingual":false,"base":"https://github.com/eiuapp/swift-handbook/blob/master/"},"splitter":{},"adsense":{"client":"ca-pub-4029167986768912","slot":"2445941692","format":"auto","element":".page-inner section","position":"bottom"},"codesnippet":{},"sitemap-general":{"prefix":"https://eiu.app/swift-docs/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"lightbox":{"jquery":true},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"11f7d254cfa4e0ca44b175c66d379ecc"},"ga":{"configuration":"auto","token":"UA-93485976-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{}},"theme":"default","author":"Donald Tsang（圆月弯刀）","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)","language":"zh-hans","links":{"sidebar":{"Donald Tsang":"https://b.qqbb.app","Swift Docs":"https://eiuapp.github.io/swift-docs","Swift Handbook":"https://eiuapp.github.io/swift-handbook","Ceph Handbook":"https://eiuapp.github.io/ceph-handbook"}},"gitbook":"*","description":"Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) "},"file":{"path":"docs/openstack-swift-analysis-partition.md","mtime":"2019-03-13T06:22:24.673Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T06:23:30.925Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-adsense/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

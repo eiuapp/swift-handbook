@@ -1,0 +1,1262 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>代理节点安装 · Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Donald Tsang（圆月弯刀）">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-ghcolors.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-lightbox/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="analysis-openstack-swift-keystone-authentication.html" />
+    
+    
+    <link rel="prev" href="swift-multy-proxy-node-illustration.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://b.qqbb.app" target="_blank" class="custom-link">Donald Tsang</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-docs" target="_blank" class="custom-link">Swift Docs</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-handbook" target="_blank" class="custom-link">Swift Handbook</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/ceph-handbook" target="_blank" class="custom-link">Ceph Handbook</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        <li class="header">序言</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">环境配置</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="env.html">
+            
+                <a href="env.html">
+            
+                    
+                        <b>2.1.</b>
+                    
+                    swift 2.17 环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">安装</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="swift-queens-install.html">
+            
+                <a href="swift-queens-install.html">
+            
+                    
+                        <b>3.1.</b>
+                    
+                    swift 安装过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="swift-controller-node-add-a-new-storage-node.html">
+            
+                <a href="swift-controller-node-add-a-new-storage-node.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    增加storage节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="swift-multy-proxy-node-conf.html">
+            
+                <a href="swift-multy-proxy-node-conf.html">
+            
+                    
+                        <b>3.3.</b>
+                    
+                    多代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                <a href="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                    
+                        <b>3.4.</b>
+                    
+                    多代理节点通过nginx实现HA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="swift-multy-proxy-node-illustration.html">
+            
+                <a href="swift-multy-proxy-node-illustration.html">
+            
+                    
+                        <b>3.5.</b>
+                    
+                    多代理节点效果展示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="3.6" data-path="proxy-node-install.html">
+            
+                <a href="proxy-node-install.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">认证</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="analysis-openstack-swift-keystone-authentication.html">
+            
+                <a href="analysis-openstack-swift-keystone-authentication.html">
+            
+                    
+                        <b>4.1.</b>
+                    
+                    与keystone结合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                    
+                        <b>4.2.</b>
+                    
+                    让swift通过keystone认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">ring</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="analysis-openstack-swift-overview-ring.html">
+            
+                <a href="analysis-openstack-swift-overview-ring.html">
+            
+                    
+                        <b>5.1.</b>
+                    
+                    overview ring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">partition</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="swift-what-is-a-swift-partition.html">
+            
+                <a href="swift-what-is-a-swift-partition.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    what is a swift partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="openstack-swift-analysis-partition.html">
+            
+                <a href="openstack-swift-analysis-partition.html">
+            
+                    
+                        <b>6.2.</b>
+                    
+                    ring如何生成partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="openstack-swift-object-storage-result-analysis.html">
+            
+                <a href="openstack-swift-object-storage-result-analysis.html">
+            
+                    
+                        <b>6.3.</b>
+                    
+                    上传文件结果分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">quota</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                <a href="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                    
+                        <b>7.1.</b>
+                    
+                    enable reseller admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="swift-account-quota-outcome.html">
+            
+                <a href="swift-account-quota-outcome.html">
+            
+                    
+                        <b>7.2.</b>
+                    
+                    设置account的quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="swift-account-quota-process.html">
+            
+                <a href="swift-account-quota-process.html">
+            
+                    
+                        <b>7.3.</b>
+                    
+                    设置account的quota（分析过程）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="swfit-account-quota-restful-api.html">
+            
+                <a href="swfit-account-quota-restful-api.html">
+            
+                    
+                        <b>7.4.</b>
+                    
+                    REST调用accout quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">erasure code</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="analysis-openstack-swift-overview_erasure_code.html">
+            
+                <a href="analysis-openstack-swift-overview_erasure_code.html">
+            
+                    
+                        <b>8.1.</b>
+                    
+                    与 erasure code 相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">测试</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="swift-benchmarking-getput.html">
+            
+                <a href="swift-benchmarking-getput.html">
+            
+                    
+                        <b>9.1.</b>
+                    
+                    getput使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">日志</li>
+        
+        
+    
+        <li class="chapter " data-level="10.1" data-path="swift-logfiles.html">
+            
+                <a href="swift-logfiles.html">
+            
+                    
+                        <b>10.1.</b>
+                    
+                    组件日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">常见问题</li>
+        
+        
+    
+        <li class="chapter " data-level="11.1" data-path="swift-faq.html">
+            
+                <a href="swift-faq.html">
+            
+                    
+                        <b>11.1.</b>
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.2" data-path="swift-admin-cannot-login.html">
+            
+                <a href="swift-admin-cannot-login.html">
+            
+                    
+                        <b>11.2.</b>
+                    
+                    admin被删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.3" data-path="swift-controller-change-ip.html">
+            
+                <a href="swift-controller-change-ip.html">
+            
+                    
+                        <b>11.3.</b>
+                    
+                    controller节点更换IP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.4" data-path="swift-demo-cannot-get-user-info.html">
+            
+                <a href="swift-demo-cannot-get-user-info.html">
+            
+                    
+                        <b>11.4.</b>
+                    
+                    无法获取用户信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.5" data-path="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                <a href="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                    
+                        <b>11.5.</b>
+                    
+                    auth version require python-keystoneclient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.6" data-path="swift-installed-source-code-address.html">
+            
+                <a href="swift-installed-source-code-address.html">
+            
+                    
+                        <b>11.6.</b>
+                    
+                    swift安装包源码地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.7" data-path="swift-multy-proxy-node-faq.html">
+            
+                <a href="swift-multy-proxy-node-faq.html">
+            
+                    
+                        <b>11.7.</b>
+                    
+                    多代理节点安装出现的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.8" data-path="swift-problem-with-xfs-file-system.html">
+            
+                <a href="swift-problem-with-xfs-file-system.html">
+            
+                    
+                        <b>11.8.</b>
+                    
+                    swift storage node 出现 xfs 错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.9" data-path="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                <a href="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                    
+                        <b>11.9.</b>
+                    
+                    rsync数据通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.10" data-path="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                    
+                        <b>11.10.</b>
+                    
+                    rebalance后数据未通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.11" data-path="swift-storage-node-system-failed-re-mount.html">
+            
+                <a href="swift-storage-node-system-failed-re-mount.html">
+            
+                    
+                        <b>11.11.</b>
+                    
+                    storage node 的主板坏了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.12" data-path="swift-mount-structure-needs-cleaning.html">
+            
+                <a href="swift-mount-structure-needs-cleaning.html">
+            
+                    
+                        <b>11.12.</b>
+                    
+                    mount Structure needs cleaning
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">笔记</li>
+        
+        
+    
+        <li class="chapter " data-level="12.1" data-path="note-about-openstack-swift.html">
+            
+                <a href="note-about-openstack-swift.html">
+            
+                    
+                        <b>12.1.</b>
+                    
+                    笔记1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">未来</li>
+        
+        
+    
+        <li class="chapter " data-level="13.1" >
+            
+                <a target="_blank" href="https://b.qqbb.app/tags/swift/">
+            
+                    
+                        <b>13.1.</b>
+                    
+                    我的swift探险之旅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="13.2" >
+            
+                <a target="_blank" href="https://eiuapp.github.io/swift-handbook/">
+            
+                    
+                        <b>13.2.</b>
+                    
+                    Swift Handbook
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">相关资源</li>
+        
+        
+    
+        <li class="chapter " data-level="14.1" data-path="tech_resource.md">
+            
+                <span>
+            
+                    
+                        <b>14.1.</b>
+                    
+                    swift技术工具与资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >代理节点安装</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <html><head></head><body><p>&#x5728; 192.168.10.12 &#x4E0A;&#x5B89;&#x88C5; proxy node </p>
+<h2 id="env">env</h2>
+<p>&#x56E0;&#x4E3A; 192.168.10.13 &#x4E2D;&#x7684; &#x7528;&#x6237;&#x4FE1;&#x606F;&#x83B7;&#x53D6;&#x65F6;&#x603B;&#x662F;&#x6709;&#x95EE;&#x9898;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x7EC4;&#x5458;&#x51B3;&#x5B9A;&#x4E0D;&#x6298;&#x817E;&#xFF08;&#x66F4;&#x6298;&#x817E;&#xFF09;&#x5728;&#x53E6;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x91CD;&#x65B0;&#x5B89;&#x88C5; proxy , keystone, controller &#x7EC4;&#x4EF6;&#x3002;</p>
+<p>proxy &#x642D;&#x5EFA; &#x5BF9;&#x5E94;&#x7684;controller&#xFF0C;keystone &#x5747;&#x4E3A; 192.168.10.12  </p>
+<h2 id="step">step</h2>
+<pre class="language-"><code>root@ubuntu:~# sudo apt-get install swift swift-proxy python-swiftclient \
+&gt;   python-keystoneclient python-keystonemiddleware \
+&gt;   memcached -y
+</code></pre><p>&#x53D1;&#x73B0;&#x6CA1;&#x6709; /etc/swift/ &#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x90A3;&#x4E48;&#x628A; 192.168.10.13 &#x4E0A;&#x7684; /etc/swift/ &#x76F4;&#x63A5;&#x590D;&#x5236;&#x8FC7;&#x6765;&#x3002;</p>
+<pre class="language-"><code>root@ubuntu:~# ls /etc/swift
+ls: cannot access &apos;/etc/swift&apos;: No such file or directory
+root@ubuntu:~# cp -a /home/administrator/swift/ /etc/swift/
+root@ubuntu:~# cd /etc/swift/
+root@ubuntu:/etc/swift# head proxy-server.conf 
+[DEFAULT]
+# bind_ip = 0.0.0.0
+bind_port = 8080
+# bind_timeout = 30
+# backlog = 4096
+swift_dir = /etc/swift
+user = swift
+
+# Enables exposing configuration settings via HTTP GET /info.
+# expose_info = true
+root@ubuntu:/etc/swift# chown -R root:swift /etc/swift
+</code></pre><p>&#x4FEE;&#x6539; /etc/hosts &#x6587;&#x4EF6;</p>
+<pre class="language-"><code>root@ubuntu:~# vi /etc/hosts
+root@ubuntu:~# cat /etc/hosts
+127.0.0.1    localhost
+127.0.1.1    ubuntu
+#192.168.10.12    controller
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+
+# controller
+192.168.10.13      controller
+
+# swiftproxy 
+192.168.10.12      swiftproxy
+root@ubuntu:~#
+</code></pre><p>&#x786E;&#x4FDD;&#x6709; memcache &#x5305;</p>
+<pre class="language-"><code>root@ubuntu:/etc/swift# python
+Python 2.7.12 (default, Nov 12 2018, 14:36:49) 
+[GCC 5.4.0 20160609] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import memcache
+&gt;&gt;&gt; 
+root@ubuntu:/etc/swift#
+</code></pre><pre class="language-"><code>root@ubuntu:/etc/swift# service memcached restart
+root@ubuntu:/etc/swift# service swift-proxy restart
+root@ubuntu:/etc/swift# service memcached status 
+root@ubuntu:/etc/swift# service memcached status  
+root@ubuntu:/etc/swift# service swift-proxy status 
+root@ubuntu:/etc/swift# netstat -ntlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      7904/sshd       
+tcp        0      0 127.0.0.1:7001          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN      15627/0         
+tcp        0      0 127.0.0.1:4001          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 0.0.0.0:25672           0.0.0.0:*               LISTEN      9901/beam.smp   
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      8792/mysqld     
+tcp        0      0 0.0.0.0:11211           0.0.0.0:*               LISTEN      16688/memcached 
+tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 127.0.0.1:2380          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      16714/python    
+tcp        0      0 0.0.0.0:4369            0.0.0.0:*               LISTEN      9788/epmd       
+tcp6       0      0 :::22                   :::*                    LISTEN      7904/sshd       
+tcp6       0      0 ::1:6010                :::*                    LISTEN      15627/0         
+tcp6       0      0 :::5000                 :::*                    LISTEN      13217/apache2   
+tcp6       0      0 :::5672                 :::*                    LISTEN      9901/beam.smp   
+tcp6       0      0 :::80                   :::*                    LISTEN      13217/apache2   
+tcp6       0      0 :::4369                 :::*                    LISTEN      9788/epmd       
+root@ubuntu:/etc/swift#
+</code></pre><pre class="language-"><code>root@ubuntu:~# cd
+root@ubuntu:~# ls
+demo-openrc
+root@ubuntu:~# vi demo-openrc 
+root@ubuntu:~# . demo-openrc 
+root@ubuntu:~# swift list
+ab
+abc
+abcd
+container1
+test
+root@ubuntu:~#
+</code></pre><p>&#x8FD9;&#x91CC;&#x8FD8;&#x662F; 192.168.10.13 &#x4E0A;&#x7684;&#x6570;&#x636E;</p>
+<p>&#x67E5;&#x4E00;&#x4E0B; endpoint </p>
+<pre class="language-"><code>root@ubuntu:~# cat demo-openrc 
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=demo
+export OS_USERNAME=demo
+export OS_PASSWORD=413eaac0d4cff66fde56
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+
+root@ubuntu:~# 
+root@ubuntu:~# openstack endpoint list
++----------------------------------|-----------|--------------|--------------|---------|-----------|--------------------------------------------------+
+| ID                               | Region    | Service Name | Service Type | Enabled | Interface | URL                                              |
++----------------------------------|-----------|--------------|--------------|---------|-----------|--------------------------------------------------+
+| 3736d384b23f45a8a21e6f5e5888d759 | RegionOne | keystone     | identity     | True    | admin     | http://192.168.10.13:5000/v3/                    |
+| 3fc42de3790b4c5f8d635a9721ed23a6 | RegionOne | swift        | object-store | True    | public    | http://192.168.10.13:8080/v1/AUTH_%(project_id)s |
+| 88634b7b1e6c4b0989f079f00adbffb8 | RegionOne | keystone     | identity     | True    | internal  | http://192.168.10.13:5000/v3/                    |
+| 8b4faa17e4404ef4aa709c0e78636742 | RegionOne | swift        | object-store | True    | internal  | http://192.168.10.13:8080/v1/AUTH_%(project_id)s |
+| bf0706eea0e04412ae4588ec9dd067a0 | RegionOne | keystone     | identity     | True    | public    | http://192.168.10.13:5000/v3/                    |
+| bfae1eb954c84364803023604999ef93 | RegionOne | swift        | object-store | True    | admin     | http://192.168.10.13:8080/v1/                    |
++----------------------------------|-----------|--------------|--------------|---------|-----------|--------------------------------------------------+
+root@ubuntu:~#
+</code></pre><p>&#x8FD9;&#x91CC; &#x80AF;&#x5B9A;&#x8981;&#x4FEE;&#x6539;&#x4E00;&#x4E0B; endpoint, &#x8BA9; swift &#x7684;&#x670D;&#x52A1; url &#x6307;&#x5411; 192.168.10.12</p>
+<p>&#x4FEE;&#x6539; /etc/hosts</p>
+<pre class="language-"><code>root@ubuntu:~# vi /etc/hosts
+root@ubuntu:~# cat /etc/hosts
+127.0.0.1    localhost
+127.0.1.1    ubuntu
+#192.168.10.12    controller
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+
+# controller
+192.168.10.12      controller
+
+# swiftproxy 
+192.168.10.12      swiftproxy
+root@ubuntu:~#
+</code></pre><p>&#x91CD;&#x542F;&#x670D;&#x52A1;&#xFF0C;&#x53D1;&#x73B0; openstack &#x8BA4;&#x8BC1;&#x4E0D;&#x4E86;&#x3002;&#x8981;&#x53BB;&#x627E; admin &#x7528;&#x6237;&#x3002;</p>
+<pre class="language-"><code>root@ubuntu:~# service swift-proxy restart
+root@ubuntu:~# service memcached restart
+root@ubuntu:~# openstack endpoint list
+The request you have made requires authentication. (HTTP 401) (Request-ID: req-afb2463d-ba10-455b-a3af-5ebd0b1a1bb4)
+root@ubuntu:~#
+</code></pre><pre class="language-"><code>root@ubuntu:~# vi admin-openrc
+root@ubuntu:~# . admin-openrc 
+root@ubuntu:~# openstack endpoint list
++----------------------------------|-----------|--------------|--------------|---------|-----------|-------------------------------+
+| ID                               | Region    | Service Name | Service Type | Enabled | Interface | URL                           |
++----------------------------------|-----------|--------------|--------------|---------|-----------|-------------------------------+
+| 3424fdd10aa047418502f4fe92f1f10c | RegionOne | keystone     | identity     | True    | public    | http://192.168.10.12:5000/v3/ |
+| 698a2a4b64b74e5ea289c21296e36303 | RegionOne | keystone     | identity     | True    | admin     | http://192.168.10.12:5000/v3/ |
+| d66b0bd887d141c49a166c2426633cb8 | RegionOne | keystone     | identity     | True    | internal  | http://192.168.10.12:5000/v3/ |
++----------------------------------|-----------|--------------|--------------|---------|-----------|-------------------------------+
+root@ubuntu:~# openstack user list
++----------------------------------|-------+
+| ID                               | Name  |
++----------------------------------|-------+
+| 590061f35488419e8aa33fd9cfc9ce3f | demo  |
+| e73b44116b8a4a0aacb9ad6b4f08d7b8 | admin |
++----------------------------------|-------+
+</code></pre><p>&#x521B;&#x5EFA; domain </p>
+<pre class="language-"><code>root@ubuntu:~# openstack user create --domain default --password-prompt swift 
+User Password:
+Repeat User Password:
++---------------------|----------------------------------+
+| Field               | Value                            |
++---------------------|----------------------------------+
+| domain_id           | default                          |
+| enabled             | True                             |
+| id                  | d1eecb70a7314472b386e8eb2d05aed8 |
+| name                | swift                            |
+| options             | {}                               |
+| password_expires_at | None                             |
++---------------------|----------------------------------+
+root@ubuntu:~#
+</code></pre><p>swift &#x5BF9;&#x5E94; &#x5BC6;&#x7801;&#x662F; <code>5df7764659a27b695e85</code></p>
+<p>&#x521B;&#x5EFA; service , endpoint </p>
+<pre class="language-"><code>root@ubuntu:~# openstack role add --project service --user swift admin
+root@ubuntu:~# openstack service create --name swift \
+&gt;   --description &quot;OpenStack Object Storage&quot; object-store
++-------------|----------------------------------+
+| Field       | Value                            |
++-------------|----------------------------------+
+| description | OpenStack Object Storage         |
+| enabled     | True                             |
+| id          | 25dfd6435b4245a9991f6a0e0c5f609c |
+| name        | swift                            |
+| type        | object-store                     |
++-------------|----------------------------------+
+root@ubuntu:~# openstack endpoint create --region RegionOne \
+&gt;   object-store public http://controller:8080/v1/AUTH_%\(project_id\)s
++--------------|-----------------------------------------------+
+| Field        | Value                                         |
++--------------|-----------------------------------------------+
+| enabled      | True                                          |
+| id           | 4327c259c9a843e5b0b9dff1140a1e72              |
+| interface    | public                                        |
+| region       | RegionOne                                     |
+| region_id    | RegionOne                                     |
+| service_id   | 25dfd6435b4245a9991f6a0e0c5f609c              |
+| service_name | swift                                         |
+| service_type | object-store                                  |
+| url          | http://controller:8080/v1/AUTH_%(project_id)s |
++--------------|-----------------------------------------------+
+root@ubuntu:~# openstack endpoint create --region RegionOne \
+&gt;   object-store internal http://controller:8080/v1/AUTH_%\(project_id\)s
++--------------|-----------------------------------------------+
+| Field        | Value                                         |
++--------------|-----------------------------------------------+
+| enabled      | True                                          |
+| id           | b87a66d75ea242ef97c1969c0deaff57              |
+| interface    | internal                                      |
+| region       | RegionOne                                     |
+| region_id    | RegionOne                                     |
+| service_id   | 25dfd6435b4245a9991f6a0e0c5f609c              |
+| service_name | swift                                         |
+| service_type | object-store                                  |
+| url          | http://controller:8080/v1/AUTH_%(project_id)s |
++--------------|-----------------------------------------------+
+root@ubuntu:~# openstack endpoint create --region RegionOne \
+&gt;   object-store admin http://controller:8080/v1
++--------------|----------------------------------+
+| Field        | Value                            |
++--------------|----------------------------------+
+| enabled      | True                             |
+| id           | 8eba4b8e86654a999c1cd8fe27f94735 |
+| interface    | admin                            |
+| region       | RegionOne                        |
+| region_id    | RegionOne                        |
+| service_id   | 25dfd6435b4245a9991f6a0e0c5f609c |
+| service_name | swift                            |
+| service_type | object-store                     |
+| url          | http://controller:8080/v1        |
++--------------|----------------------------------+
+root@ubuntu:~# openstack endpoint  list
++----------------------------------|-----------|--------------|--------------|---------|-----------|-----------------------------------------------+
+| ID                               | Region    | Service Name | Service Type | Enabled | Interface | URL                                           |
++----------------------------------|-----------|--------------|--------------|---------|-----------|-----------------------------------------------+
+| 3424fdd10aa047418502f4fe92f1f10c | RegionOne | keystone     | identity     | True    | public    | http://192.168.10.12:5000/v3/                 |
+| 4327c259c9a843e5b0b9dff1140a1e72 | RegionOne | swift        | object-store | True    | public    | http://controller:8080/v1/AUTH_%(project_id)s |
+| 698a2a4b64b74e5ea289c21296e36303 | RegionOne | keystone     | identity     | True    | admin     | http://192.168.10.12:5000/v3/                 |
+| 8eba4b8e86654a999c1cd8fe27f94735 | RegionOne | swift        | object-store | True    | admin     | http://controller:8080/v1                     |
+| b87a66d75ea242ef97c1969c0deaff57 | RegionOne | swift        | object-store | True    | internal  | http://controller:8080/v1/AUTH_%(project_id)s |
+| d66b0bd887d141c49a166c2426633cb8 | RegionOne | keystone     | identity     | True    | internal  | http://192.168.10.12:5000/v3/                 |
++----------------------------------|-----------|--------------|--------------|---------|-----------|-----------------------------------------------+
+</code></pre><p>&#x91CD;&#x542F;&#x670D;&#x52A1;</p>
+<pre class="language-"><code>root@ubuntu:~# chown -R root:swift /etc/swift
+root@ubuntu:~# service swift-proxy restart
+root@ubuntu:~# service memcached restart
+root@ubuntu:~#  netstat -ntlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      7904/sshd       
+tcp        0      0 127.0.0.1:7001          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN      15627/0         
+tcp        0      0 127.0.0.1:4001          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 0.0.0.0:25672           0.0.0.0:*               LISTEN      9901/beam.smp   
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      8792/mysqld     
+tcp        0      0 0.0.0.0:11211           0.0.0.0:*               LISTEN      17294/memcached 
+tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 127.0.0.1:2380          0.0.0.0:*               LISTEN      11437/etcd      
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      17265/python    
+tcp        0      0 0.0.0.0:4369            0.0.0.0:*               LISTEN      9788/epmd       
+tcp6       0      0 :::22                   :::*                    LISTEN      7904/sshd       
+tcp6       0      0 ::1:6010                :::*                    LISTEN      15627/0         
+tcp6       0      0 :::5000                 :::*                    LISTEN      13217/apache2   
+tcp6       0      0 :::5672                 :::*                    LISTEN      9901/beam.smp   
+tcp6       0      0 :::80                   :::*                    LISTEN      13217/apache2   
+tcp6       0      0 :::4369                 :::*                    LISTEN      9788/epmd       
+root@ubuntu:~# . admin-openrc 
+root@ubuntu:~# swift list
+</code></pre><p>&#x7528;&#x539F;&#x6765; 192.168.10.13 &#x7684; demo &#x7528;&#x6237; openrc &#x6587;&#x4EF6;&#xFF0C;&#x5DF2;&#x7ECF;&#x4E0D;&#x53EF;&#x7528;&#x3002;</p>
+<pre class="language-"><code>root@ubuntu:~# . demo-openrc 
+root@ubuntu:~# swift list
+Unauthorized. Check username/id, password, tenant name/id and user/tenant domain name/id.
+root@ubuntu:~#
+</code></pre><p>&#x521B;&#x5EFA;&#x65B0;&#x7684; demo &#x7528;&#x6237;openrc &#x6587;&#x4EF6;&#x3002;</p>
+<pre class="language-"><code>root@ubuntu:~# cp demo-openrc demo-openrc.12
+root@ubuntu:~# vi demo-openrc.12  
+root@ubuntu:~# cat demo-openrc.12
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=demo
+export OS_USERNAME=demo
+export OS_PASSWORD=openstack
+export OS_AUTH_URL=http://controller:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+root@ubuntu:~# . demo-openrc.12 
+root@ubuntu:~# swift list
+root@ubuntu:~#
+</code></pre><p>&#x597D;&#x4E86;&#xFF0C;&#x73B0;&#x5728;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E86;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#xFF0C;&#x5168;&#x65B0;&#x7684;&#x4E00;&#x4E2A; proxy node &#x8282;&#x70B9;&#x5C31;&#x642D;&#x5EFA;&#x597D;&#x4E86;&#x3002;</p>
+<h2 id="ref">ref</h2>
+<ul>
+<li><a href="https://docs.openstack.org/swift/queens/install/controller-install-ubuntu.html" target="_blank">https://docs.openstack.org/swift/queens/install/controller-install-ubuntu.html</a></li>
+<li><a href="https://eiuapp.github.io/swift-handbook/docs/swift-multy-proxy-node-conf.html" target="_blank">https://eiuapp.github.io/swift-handbook/docs/swift-multy-proxy-node-conf.html</a></li>
+</ul>
+<footer class="page-footer"><span class="copyright"><p><a href="https://github.com/eiuapp/swift-handbook" target="_blank">Openstack Swift&#x5B9E;&#x8DF5;&#x6307;&#x5357;</a> | <a href="https://github.com/eiuapp/swift-docs" target="_blank">Openstack Swift&#x6587;&#x6863;&#x9605;&#x8BFB;</a></p><p><a href="https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg" data-lightbox="2fd927ee-fa64-4eca-8ed5-6bd72b573a3c" target="_blank">&#x70B9;&#x51FB;&#x5173;&#x6CE8;&#x3010;servicemesher&#x3011;&#x516C;&#x4F17;&#x53F7;&#x56DE;&#x590D;&#x3010;&#x52A0;&#x7FA4;&#x3011;&#x52A0;&#x5165;&#x5B66;&#x4E60;&#x7FA4;</a> | </p>Copyright &#xA9; <a href="https://eiu.app" target="_blank">eiu.app</a> 2017-2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification"> Updated at 
+2019-03-13 06:22:24
+</span></footer></body></html>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="swift-multy-proxy-node-illustration.html" class="navigation navigation-prev " aria-label="Previous page: 多代理节点效果展示">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="analysis-openstack-swift-keystone-authentication.html" class="navigation navigation-next " aria-label="Next page: 与keystone结合">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"代理节点安装","level":"3.6","depth":1,"next":{"title":"与keystone结合","level":"4.1","depth":1,"path":"docs/analysis-openstack-swift-keystone-authentication.md","ref":"docs/analysis-openstack-swift-keystone-authentication.md","articles":[]},"previous":{"title":"多代理节点效果展示","level":"3.5","depth":1,"path":"docs/swift-multy-proxy-node-illustration.md","ref":"docs/swift-multy-proxy-node-illustration.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github","codesnippet","splitter","page-toc-button","editlink","back-to-top-button","-lunr","-search","search-plus","github-buttons@2.1.0","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","3-ba","theme-default","-highlight","prism","prism-themes","sitemap-general","lightbox","adsense","ga"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"<p><a href=https://github.com/eiuapp/swift-handbook>Openstack Swift实践指南</a> | <a href=https://github.com/eiuapp/swift-docs>Openstack Swift文档阅读</a></p><p><a href=https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【servicemesher】公众号回复【加群】加入学习群</a> | </p>Copyright © <a href=https://eiu.app>eiu.app</a> 2017-2019","modify_label":" Updated at ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"lang":{"shell":"bash"},"css":["prism-themes/themes/prism-ghcolors.css"]},"github":{"url":"https://github.com/eiuapp/swift-handbook"},"editlink":{"label":"编辑本页","multilingual":false,"base":"https://github.com/eiuapp/swift-handbook/blob/master/"},"splitter":{},"adsense":{"client":"ca-pub-4029167986768912","slot":"2445941692","format":"auto","element":".page-inner section","position":"bottom"},"codesnippet":{},"sitemap-general":{"prefix":"https://eiu.app/swift-docs/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"lightbox":{"jquery":true},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"11f7d254cfa4e0ca44b175c66d379ecc"},"ga":{"configuration":"auto","token":"UA-93485976-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{}},"theme":"default","author":"Donald Tsang（圆月弯刀）","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)","language":"zh-hans","links":{"sidebar":{"Donald Tsang":"https://b.qqbb.app","Swift Docs":"https://eiuapp.github.io/swift-docs","Swift Handbook":"https://eiuapp.github.io/swift-handbook","Ceph Handbook":"https://eiuapp.github.io/ceph-handbook"}},"gitbook":"*","description":"Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) "},"file":{"path":"docs/proxy-node-install.md","mtime":"2019-03-13T06:22:24.673Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T06:23:30.925Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-adsense/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1363 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>与keystone结合 · Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Donald Tsang（圆月弯刀）">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-ghcolors.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-lightbox/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html" />
+    
+    
+    <link rel="prev" href="proxy-node-install.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://b.qqbb.app" target="_blank" class="custom-link">Donald Tsang</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-docs" target="_blank" class="custom-link">Swift Docs</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-handbook" target="_blank" class="custom-link">Swift Handbook</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/ceph-handbook" target="_blank" class="custom-link">Ceph Handbook</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        <li class="header">序言</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">环境配置</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="env.html">
+            
+                <a href="env.html">
+            
+                    
+                        <b>2.1.</b>
+                    
+                    swift 2.17 环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">安装</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="swift-queens-install.html">
+            
+                <a href="swift-queens-install.html">
+            
+                    
+                        <b>3.1.</b>
+                    
+                    swift 安装过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="swift-controller-node-add-a-new-storage-node.html">
+            
+                <a href="swift-controller-node-add-a-new-storage-node.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    增加storage节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="swift-multy-proxy-node-conf.html">
+            
+                <a href="swift-multy-proxy-node-conf.html">
+            
+                    
+                        <b>3.3.</b>
+                    
+                    多代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                <a href="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                    
+                        <b>3.4.</b>
+                    
+                    多代理节点通过nginx实现HA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="swift-multy-proxy-node-illustration.html">
+            
+                <a href="swift-multy-proxy-node-illustration.html">
+            
+                    
+                        <b>3.5.</b>
+                    
+                    多代理节点效果展示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="proxy-node-install.html">
+            
+                <a href="proxy-node-install.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">认证</li>
+        
+        
+    
+        <li class="chapter active" data-level="4.1" data-path="analysis-openstack-swift-keystone-authentication.html">
+            
+                <a href="analysis-openstack-swift-keystone-authentication.html">
+            
+                    
+                        <b>4.1.</b>
+                    
+                    与keystone结合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                    
+                        <b>4.2.</b>
+                    
+                    让swift通过keystone认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">ring</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="analysis-openstack-swift-overview-ring.html">
+            
+                <a href="analysis-openstack-swift-overview-ring.html">
+            
+                    
+                        <b>5.1.</b>
+                    
+                    overview ring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">partition</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="swift-what-is-a-swift-partition.html">
+            
+                <a href="swift-what-is-a-swift-partition.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    what is a swift partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="openstack-swift-analysis-partition.html">
+            
+                <a href="openstack-swift-analysis-partition.html">
+            
+                    
+                        <b>6.2.</b>
+                    
+                    ring如何生成partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="openstack-swift-object-storage-result-analysis.html">
+            
+                <a href="openstack-swift-object-storage-result-analysis.html">
+            
+                    
+                        <b>6.3.</b>
+                    
+                    上传文件结果分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">quota</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                <a href="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                    
+                        <b>7.1.</b>
+                    
+                    enable reseller admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="swift-account-quota-outcome.html">
+            
+                <a href="swift-account-quota-outcome.html">
+            
+                    
+                        <b>7.2.</b>
+                    
+                    设置account的quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="swift-account-quota-process.html">
+            
+                <a href="swift-account-quota-process.html">
+            
+                    
+                        <b>7.3.</b>
+                    
+                    设置account的quota（分析过程）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="swfit-account-quota-restful-api.html">
+            
+                <a href="swfit-account-quota-restful-api.html">
+            
+                    
+                        <b>7.4.</b>
+                    
+                    REST调用accout quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">erasure code</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="analysis-openstack-swift-overview_erasure_code.html">
+            
+                <a href="analysis-openstack-swift-overview_erasure_code.html">
+            
+                    
+                        <b>8.1.</b>
+                    
+                    与 erasure code 相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">测试</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="swift-benchmarking-getput.html">
+            
+                <a href="swift-benchmarking-getput.html">
+            
+                    
+                        <b>9.1.</b>
+                    
+                    getput使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">日志</li>
+        
+        
+    
+        <li class="chapter " data-level="10.1" data-path="swift-logfiles.html">
+            
+                <a href="swift-logfiles.html">
+            
+                    
+                        <b>10.1.</b>
+                    
+                    组件日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">常见问题</li>
+        
+        
+    
+        <li class="chapter " data-level="11.1" data-path="swift-faq.html">
+            
+                <a href="swift-faq.html">
+            
+                    
+                        <b>11.1.</b>
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.2" data-path="swift-admin-cannot-login.html">
+            
+                <a href="swift-admin-cannot-login.html">
+            
+                    
+                        <b>11.2.</b>
+                    
+                    admin被删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.3" data-path="swift-controller-change-ip.html">
+            
+                <a href="swift-controller-change-ip.html">
+            
+                    
+                        <b>11.3.</b>
+                    
+                    controller节点更换IP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.4" data-path="swift-demo-cannot-get-user-info.html">
+            
+                <a href="swift-demo-cannot-get-user-info.html">
+            
+                    
+                        <b>11.4.</b>
+                    
+                    无法获取用户信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.5" data-path="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                <a href="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                    
+                        <b>11.5.</b>
+                    
+                    auth version require python-keystoneclient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.6" data-path="swift-installed-source-code-address.html">
+            
+                <a href="swift-installed-source-code-address.html">
+            
+                    
+                        <b>11.6.</b>
+                    
+                    swift安装包源码地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.7" data-path="swift-multy-proxy-node-faq.html">
+            
+                <a href="swift-multy-proxy-node-faq.html">
+            
+                    
+                        <b>11.7.</b>
+                    
+                    多代理节点安装出现的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.8" data-path="swift-problem-with-xfs-file-system.html">
+            
+                <a href="swift-problem-with-xfs-file-system.html">
+            
+                    
+                        <b>11.8.</b>
+                    
+                    swift storage node 出现 xfs 错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.9" data-path="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                <a href="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                    
+                        <b>11.9.</b>
+                    
+                    rsync数据通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.10" data-path="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                    
+                        <b>11.10.</b>
+                    
+                    rebalance后数据未通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.11" data-path="swift-storage-node-system-failed-re-mount.html">
+            
+                <a href="swift-storage-node-system-failed-re-mount.html">
+            
+                    
+                        <b>11.11.</b>
+                    
+                    storage node 的主板坏了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.12" data-path="swift-mount-structure-needs-cleaning.html">
+            
+                <a href="swift-mount-structure-needs-cleaning.html">
+            
+                    
+                        <b>11.12.</b>
+                    
+                    mount Structure needs cleaning
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">笔记</li>
+        
+        
+    
+        <li class="chapter " data-level="12.1" data-path="note-about-openstack-swift.html">
+            
+                <a href="note-about-openstack-swift.html">
+            
+                    
+                        <b>12.1.</b>
+                    
+                    笔记1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">未来</li>
+        
+        
+    
+        <li class="chapter " data-level="13.1" >
+            
+                <a target="_blank" href="https://b.qqbb.app/tags/swift/">
+            
+                    
+                        <b>13.1.</b>
+                    
+                    我的swift探险之旅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="13.2" >
+            
+                <a target="_blank" href="https://eiuapp.github.io/swift-handbook/">
+            
+                    
+                        <b>13.2.</b>
+                    
+                    Swift Handbook
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">相关资源</li>
+        
+        
+    
+        <li class="chapter " data-level="14.1" data-path="tech_resource.md">
+            
+                <span>
+            
+                    
+                        <b>14.1.</b>
+                    
+                    swift技术工具与资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >与keystone结合</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <html><head></head><body><p>+++
+title = &quot;SWIFt &#x901A;&#x8FC7; keystone &#x8BA4;&#x8BC1;&#xFF0C;&#x5E76;&#x5B9E;&#x73B0;&#x8C03;&#x7528;swift&#x63A5;&#x53E3;&quot;
+date = 2018-11-23T00:00:00-08:00
+lastmod = 2019-01-18T02:11:47-08:00
+tags = [&quot;openstack&quot;, &quot;swift&quot;]
+categories = [&quot;openstack&quot;]
+draft = false
+weight = 3001
++++</p>
+<h2 id="&#x603B;&#x4F53;">&#x603B;&#x4F53; </h2>
+<ol>
+<li>&#x5B89;&#x88C5; keystone &#x8BA4;&#x8BC1;</li>
+<li>&#x8C03;&#x7528;swift&#x63A5;&#x53E3;<ol>
+<li>&#x5411;keystone&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x3002;&#x5F97;&#x5230;X-Auth-Token</li>
+<li>&#x5E26;X-Auth-Token&#x5411;swift&#x670D;&#x52A1;&#x53D1;&#x51FA;&#x8BF7;&#x6C42;</li>
+</ol>
+</li>
+</ol>
+<h2 id="env">env </h2>
+<ol>
+<li>controller node &#x4E0A;&#x5B89;&#x88C5;&#x4E86; keystone, swift-proxy &#x670D;&#x52A1;&#x3002;</li>
+<li>storage node &#x5B89;&#x88C5; account, container, object &#x670D;&#x52A1;&#x3002;</li>
+</ol>
+<p>ip:</p>
+<ul>
+<li>controller node:<ul>
+<li>192.168.0.50</li>
+</ul>
+</li>
+<li>storage node:<ul>
+<li>192.168.0.198</li>
+<li>192.168.0.134</li>
+<li>192.168.0.135</li>
+</ul>
+</li>
+</ul>
+<h2 id="&#x5B89;&#x88C5;-keystone-&#x8BA4;&#x8BC1;">&#x5B89;&#x88C5; keystone &#x8BA4;&#x8BC1; </h2>
+<p>swift &#x4E0E; keystone &#x7ED3;&#x5408;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x6863;&#x5728;
+<a href="https://docs.openstack.org/swift/latest/overview%5Fauth.html" target="_blank">https://docs.openstack.org/swift/latest/overview%5Fauth.html</a></p>
+<p>&#x6587;&#x6863;&#x6700;&#x540E;
+<a href="https://docs.openstack.org/swift/latest/overview%5Fauth.html#troubleshooting-tips-for-keystoneauth-deployment" target="_blank">https://docs.openstack.org/swift/latest/overview%5Fauth.html#troubleshooting-tips-for-keystoneauth-deployment</a>
+&#x6307;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x9A8C;&#x8BC1;&#x65B9;&#x5F0F;</p>
+<pre class="language-"><code class="lang-shell">swift --os-auth-url https://api.example.com/v3 --auth-version 3\
+     --os-project-name project1 --os-project-domain-name domain1 \
+     --os-username user --os-user-domain-name domain1 \
+     --os-password password list
+</code></pre>
+<p>&#x5F53;&#x7136;&#x8FD9;&#x4E2A;&#x662F;&#x6309;&#x7167;&#x914D;&#x7F6E;&#x6765;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x9762;swift&#x5BF9;&#x5E94;&#x7684;password&#x662F; openstack, &#x6240;&#x4EE5;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x7684;&#x9A8C;&#x8BC1;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># openstack --os-identity-api-version=3 --os-auth-url=http://keystonehost:5000/     --os-username=swift --os-user-domain-id=default     --os-project-name=service --os-project-domain-id=default     --os-password=openstack catalog show object-store</span>
++-----------<span class="token operator">|</span>-----------------------------------------------------------------------------+
+<span class="token operator">|</span> Field     <span class="token operator">|</span> Value                                                                       <span class="token operator">|</span>
++-----------<span class="token operator">|</span>-----------------------------------------------------------------------------+
+<span class="token operator">|</span> endpoints <span class="token operator">|</span> RegionOne                                                                   <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token operator">|</span>   public: http://controller:8080/v1/AUTH_a640c74e595c44c4902d1c5ebc3afa8a   <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token operator">|</span> RegionOne                                                                   <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token operator">|</span>   admin: http://controller:8080/v1                                          <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token operator">|</span> RegionOne                                                                   <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token operator">|</span>   internal: http://controller:8080/v1/AUTH_a640c74e595c44c4902d1c5ebc3afa8a <span class="token operator">|</span>
+<span class="token operator">|</span>           <span class="token operator">|</span>                                                                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>        <span class="token operator">|</span> e929673efa1a4acb9adc4a06e4f56a31                                            <span class="token operator">|</span>
+<span class="token operator">|</span> name      <span class="token operator">|</span> swift                                                                       <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">type</span>      <span class="token operator">|</span> object-store                                                                <span class="token operator">|</span>
++-----------<span class="token operator">|</span>-----------------------------------------------------------------------------+
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x770B;&#x51FA;&#xFF0C;&#x914D;&#x7F6E;&#x662F;&#x6CA1;&#x6709;&#x95EE;&#x9898;&#x7684;&#x3002;</p>
+<h2 id="&#x8C03;&#x7528;swift&#x63A5;&#x53E3;">&#x8C03;&#x7528;swift&#x63A5;&#x53E3; </h2>
+<h3 id="&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">&#x51C6;&#x5907;&#x5DE5;&#x4F5C; </h3>
+<h4 id="endpoint">endpoint </h4>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># openstack endpoint list</span>
+Missing value auth-url required <span class="token keyword">for</span> auth plugin password
+root@controller:~<span class="token comment"># . admin-openrc</span>
+root@controller:~<span class="token comment"># openstack endpoint list</span>
++----------------------------------<span class="token operator">|</span>-----------<span class="token operator">|</span>--------------<span class="token operator">|</span>--------------<span class="token operator">|</span>---------<span class="token operator">|</span>-----------<span class="token operator">|</span>-----------------------------------------------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Region    <span class="token operator">|</span> Service Name <span class="token operator">|</span> Service Type <span class="token operator">|</span> Enabled <span class="token operator">|</span> Interface <span class="token operator">|</span> URL                                           <span class="token operator">|</span>
++----------------------------------<span class="token operator">|</span>-----------<span class="token operator">|</span>--------------<span class="token operator">|</span>--------------<span class="token operator">|</span>---------<span class="token operator">|</span>-----------<span class="token operator">|</span>-----------------------------------------------+
+<span class="token operator">|</span> 014c4ed5c42042c394d62a1194bf07ce <span class="token operator">|</span> RegionOne <span class="token operator">|</span> keystone     <span class="token operator">|</span> identity     <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:5000/v3/                    <span class="token operator">|</span>
+<span class="token operator">|</span> 0b3dc5788cac4f2cb66edc3efacf10c0 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> keystone     <span class="token operator">|</span> identity     <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:5000/v3/                    <span class="token operator">|</span>
+<span class="token operator">|</span> 19e727c1668c4e8aae4315e13057fbbd <span class="token operator">|</span> RegionOne <span class="token operator">|</span> cinderv2     <span class="token operator">|</span> volumev2     <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:8776/v2/%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s      <span class="token operator">|</span>
+<span class="token operator">|</span> 216d8d8f353a49f78aa4421ff6e8c27b <span class="token operator">|</span> RegionOne <span class="token operator">|</span> swift        <span class="token operator">|</span> object-store <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:8080/v1/AUTH_%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s <span class="token operator">|</span>
+<span class="token operator">|</span> 2548787f06524287b6a27d0a562da375 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> glance       <span class="token operator">|</span> image        <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:9292                        <span class="token operator">|</span>
+<span class="token operator">|</span> 295cfee33ff04ab7890a84b47e95bc3f <span class="token operator">|</span> RegionOne <span class="token operator">|</span> keystone     <span class="token operator">|</span> identity     <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:5000/v3/                    <span class="token operator">|</span>
+<span class="token operator">|</span> 50d3b61b60654a65bda26584b4fe0896 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> neutron      <span class="token operator">|</span> network      <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:9696                        <span class="token operator">|</span>
+<span class="token operator">|</span> 55367bdc8db6438da3a4ed82b1a1b04c <span class="token operator">|</span> RegionOne <span class="token operator">|</span> glance       <span class="token operator">|</span> image        <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:9292                        <span class="token operator">|</span>
+<span class="token operator">|</span> 5b60dcd8e374410f83e675201d76f06f <span class="token operator">|</span> RegionOne <span class="token operator">|</span> placement    <span class="token operator">|</span> placement    <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:8778                        <span class="token operator">|</span>
+<span class="token operator">|</span> 610f89fa29764f7eb5c91e737ad0110e <span class="token operator">|</span> RegionOne <span class="token operator">|</span> swift        <span class="token operator">|</span> object-store <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:8080/v1                     <span class="token operator">|</span>
+<span class="token operator">|</span> 76d61f360fc140a58b4258c344ea9ae5 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> nova         <span class="token operator">|</span> compute      <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:8774/v2.1                   <span class="token operator">|</span>
+<span class="token operator">|</span> 7eece3971f9f4105b031214666940d54 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> placement    <span class="token operator">|</span> placement    <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:8778                        <span class="token operator">|</span>
+<span class="token operator">|</span> 8237211a85314e0c914ea34851e324b7 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> cinderv2     <span class="token operator">|</span> volumev2     <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:8776/v2/%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s      <span class="token operator">|</span>
+<span class="token operator">|</span> 99b6673fda7f48bb8b6ae11a87ba0e1b <span class="token operator">|</span> RegionOne <span class="token operator">|</span> glance       <span class="token operator">|</span> image        <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:9292                        <span class="token operator">|</span>
+<span class="token operator">|</span> a39982358d3041e0aebd7a1a1fb691bb <span class="token operator">|</span> RegionOne <span class="token operator">|</span> swift        <span class="token operator">|</span> object-store <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:8080/v1/AUTH_%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s <span class="token operator">|</span>
+<span class="token operator">|</span> a61cbe1448284dd482725fb3067fa25c <span class="token operator">|</span> RegionOne <span class="token operator">|</span> nova         <span class="token operator">|</span> compute      <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:8774/v2.1                   <span class="token operator">|</span>
+<span class="token operator">|</span> cfb1df03d1bd42719dd506e0fbee7e5a <span class="token operator">|</span> RegionOne <span class="token operator">|</span> cinderv3     <span class="token operator">|</span> volumev3     <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:8776/v3/%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s      <span class="token operator">|</span>
+<span class="token operator">|</span> cfe6b374e86048c98951d079a3cdaa42 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> placement    <span class="token operator">|</span> placement    <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:8778                        <span class="token operator">|</span>
+<span class="token operator">|</span> d9bb0785c23143ed855d0bb74dfe53bb <span class="token operator">|</span> RegionOne <span class="token operator">|</span> cinderv3     <span class="token operator">|</span> volumev3     <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:8776/v3/%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s      <span class="token operator">|</span>
+<span class="token operator">|</span> e1f98d0e79f549a5bc46bcf05705c4b1 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> neutron      <span class="token operator">|</span> network      <span class="token operator">|</span> True    <span class="token operator">|</span> public    <span class="token operator">|</span> http://controller:9696                        <span class="token operator">|</span>
+<span class="token operator">|</span> f089ebe1cb5040319e942dbc607e9930 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> cinderv3     <span class="token operator">|</span> volumev3     <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:8776/v3/%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s      <span class="token operator">|</span>
+<span class="token operator">|</span> f3350a1d66fa4813a091beef3782b6fd <span class="token operator">|</span> RegionOne <span class="token operator">|</span> neutron      <span class="token operator">|</span> network      <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:9696                        <span class="token operator">|</span>
+<span class="token operator">|</span> f5460d92ef8b428b9dc354628acdb289 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> cinderv2     <span class="token operator">|</span> volumev2     <span class="token operator">|</span> True    <span class="token operator">|</span> internal  <span class="token operator">|</span> http://controller:8776/v2/%<span class="token punctuation">(</span>project_id<span class="token punctuation">)</span>s      <span class="token operator">|</span>
+<span class="token operator">|</span> fb5c30679ed14e078646041e75e77294 <span class="token operator">|</span> RegionOne <span class="token operator">|</span> nova         <span class="token operator">|</span> compute      <span class="token operator">|</span> True    <span class="token operator">|</span> admin     <span class="token operator">|</span> http://controller:8774/v2.1                   <span class="token operator">|</span>
++----------------------------------<span class="token operator">|</span>-----------<span class="token operator">|</span>--------------<span class="token operator">|</span>--------------<span class="token operator">|</span>---------<span class="token operator">|</span>-----------<span class="token operator">|</span>-----------------------------------------------+
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x4ECE; openstack endpoint &#x62FF;&#x5230; swift &#x7684; URL &#x662F;&#xFF1A; <a href="http://controller:8080/v1" target="_blank">http://controller:8080/v1</a></p>
+<h4 id="&#x8BD5;&#x9A8C;swift-&#x72B6;&#x6001;">&#x8BD5;&#x9A8C;swift &#x72B6;&#x6001; </h4>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># swift stat -v</span>
+                     StorageURL: http://controller:8080/v1/AUTH_f04ec0abf3d1460dad82608bb03af589
+                     Auth Token: gAAAAABcQUnrEMgo3fTeFVMWrYcA6-6t6XNAGljTzPNdH111cbawcBjozo0DUvHhsOY4hucyfzhBAzwMlzsigyj1jOqdQndn_6cO5k8JTrQtyYGzLxJ5weEdHnV6HVszgQBtyxq17ut1_RTu_DhVT-m5MLKpMGcglszF-XCcC-Ua9I2NHTLicCg
+                        Account: AUTH_f04ec0abf3d1460dad82608bb03af589
+                     Containers: 1
+                        Objects: 1
+                          Bytes: 26262280
+Containers <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+   Objects <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+     Bytes <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 26262280
+    X-Account-Project-Domain-Id: default
+         X-Openstack-Request-Id: tx753c958eb6ad4bd5b2ef0-005c4149eb
+                    X-Timestamp: 1547641627.86782
+                     X-Trans-Id: tx753c958eb6ad4bd5b2ef0-005c4149eb
+                   Content-Type: application/json<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+                  Accept-Ranges: bytes
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x4ECE; swift stat -v &#x7684;&#x8FD4;&#x56DE;&#x53EF;&#x4EE5;&#x770B;&#x5230; Auth Token &#x4E14;&#x72B6;&#x6001;&#x6B63;&#x5E38;&#x3002;
+&#x6240;&#x4EE5;&#xFF0C;&#x662F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; curl, python &#x901A;&#x8FC7;RESTFUL API&#x8C03;&#x7528;swift&#x670D;&#x52A1;&#x7684;&#x3002;</p>
+<h4 id="&#x901A;&#x8FC7;swift&#x547D;&#x4EE4;-&#x83B7;&#x5F97;&#x8BF7;&#x6C42;&#x53C2;&#x6570;">&#x901A;&#x8FC7;swift&#x547D;&#x4EE4;&#xFF0C;&#x83B7;&#x5F97;&#x8BF7;&#x6C42;&#x53C2;&#x6570; </h4>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># swift stat -v</span>
+                     StorageURL: http://controller:8080/v1/AUTH_f04ec0abf3d1460dad82608bb03af589
+                     Auth Token: gAAAAABcQUnrEMgo3fTeFVMWrYcA6-6t6XNAGljTzPNdH111cbawcBjozo0DUvHhsOY4hucyfzhBAzwMlzsigyj1jOqdQndn_6cO5k8JTrQtyYGzLxJ5weEdHnV6HVszgQBtyxq17ut1_RTu_DhVT-m5MLKpMGcglszF-XCcC-Ua9I2NHTLicCg
+                        Account: AUTH_f04ec0abf3d1460dad82608bb03af589
+                     Containers: 1
+                        Objects: 1
+                          Bytes: 26262280
+Containers <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+   Objects <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+     Bytes <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 26262280
+    X-Account-Project-Domain-Id: default
+         X-Openstack-Request-Id: tx753c958eb6ad4bd5b2ef0-005c4149eb
+                    X-Timestamp: 1547641627.86782
+                     X-Trans-Id: tx753c958eb6ad4bd5b2ef0-005c4149eb
+                   Content-Type: application/json<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+                  Accept-Ranges: bytes
+root@controller:~<span class="token comment"># swift --help</span>
+usage: swift <span class="token punctuation">[</span>--version<span class="token punctuation">]</span> <span class="token punctuation">[</span>--help<span class="token punctuation">]</span> <span class="token punctuation">[</span>--os-help<span class="token punctuation">]</span> <span class="token punctuation">[</span>--snet<span class="token punctuation">]</span> <span class="token punctuation">[</span>--verbose<span class="token punctuation">]</span>
+
+Command-line interface to the OpenStack Swift API.
+
+Positional arguments:
+
+Examples:
+  swift download --help
+
+  swift -A https://api.example.com/v1.0 \
+      -U user -K api_key <span class="token function">stat</span> -v
+
+  swift --os-auth-url https://api.example.com/v2.0 \
+      --os-tenant-name tenant \
+      --os-username user --os-password password list
+
+  swift --os-auth-url https://api.example.com/v3 --auth-version 3\
+      --os-project-name project1 --os-project-domain-name domain1 \
+      --os-username user --os-user-domain-name domain1 \
+      --os-password password list
+
+  swift --os-auth-url https://api.example.com/v3 --auth-version 3\
+      --os-project-id 0123456789abcdef0123456789abcdef \
+      --os-user-id abcdef0123456789abcdef0123456789 \
+      --os-password password list
+
+  swift --os-auth-token 6ee5eb33efad4e45ab46806eac010566 \
+      --os-storage-url https://10.1.5.2:8080/v1/AUTH_ced809b6a4baea7aeab61a \
+      list
+
+  swift list --lh
+
+optional arguments:
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;example &#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x539F;&#x6765;&#x4E4B;&#x524D;&#x7684; swift stat -v &#x5C31;&#x662F;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x4E86; . admin-openrc &#x4E2D;&#x7684;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#xFF0C;&#x540E;&#x7EED;&#xFF0C;&#x6211;&#x4EEC;&#x662F;&#x4E0D;&#x4F1A;&#x4F7F;&#x7528; admin &#x8FD9;&#x4E2A;&#x5E10;&#x53F7;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x73B0;&#x5728;&#x8D77;&#x6211;&#x4EEC;&#x5207;&#x6362;&#x6210; demo &#x5E10;&#x53F7;&#x3002;</p>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># . demo-openrc</span>
+root@controller:~<span class="token comment"># openstack endpoint list</span>
+You are not authorized to perform the requested action: identity:list_endpoints. <span class="token punctuation">(</span>HTTP 403<span class="token punctuation">)</span> <span class="token punctuation">(</span>Request-ID: req-b7efc3d8-0046-4847-b4ed-2e99d53d9e35<span class="token punctuation">)</span>
+root@controller:~<span class="token comment"># swift stat -v</span>
+                     StorageURL: http://controller:8080/v1/AUTH_7d6eaa90d74a4f239963933c3a744df3
+                     Auth Token: gAAAAABcQUz9FSJBIUSo2DC5sOCFLcytonKVdX6MOf6m9KY4-IcGlTztCZkULlkUKhaiRzCdYKJeNE06MblaIjArbb-VASeMelaKL3SBRWTdRn2Qb3TygrmRt3CFuU2bRQGitjuxp4m8WY7hYroL97cSyrDKTpCHKYhfz9X05F2yFlQ-gLZqC7w
+                        Account: AUTH_7d6eaa90d74a4f239963933c3a744df3
+                     Containers: 6
+                        Objects: 29
+                          Bytes: 7319499838
+Containers <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 6
+   Objects <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 29
+     Bytes <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 7319499838
+    X-Account-Project-Domain-Id: default
+         X-Openstack-Request-Id: tx85bf81afca4b40bdbd431-005c414cfd
+                    X-Timestamp: 1546928904.74292
+                     X-Trans-Id: tx85bf81afca4b40bdbd431-005c414cfd
+                   Content-Type: application/json<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+                  Accept-Ranges: bytes
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x7ED3;&#x679C;&#x770B;&#x5230;&#xFF0C;demo &#x7528;&#x6237;&#x662F;&#x4E0D;&#x80FD;&#x8BBF;&#x95EE; endpoint &#x7684;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230; swift &#x670D;&#x52A1;&#x3002;</p>
+<h4 id="&#x6784;&#x9020;-swift-example">&#x6784;&#x9020; swift example </h4>
+<p>&#x770B;&#x4E00;&#x4E0B; demo-openrc &#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># cat demo-openrc</span>
+<span class="token function">export</span> OS_PROJECT_DOMAIN_NAME<span class="token operator">=</span>Default
+<span class="token function">export</span> OS_USER_DOMAIN_NAME<span class="token operator">=</span>Default
+<span class="token function">export</span> OS_PROJECT_NAME<span class="token operator">=</span>demo
+<span class="token function">export</span> OS_USERNAME<span class="token operator">=</span>demo
+<span class="token function">export</span> OS_PASSWORD<span class="token operator">=</span>openstack
+<span class="token function">export</span> OS_AUTH_URL<span class="token operator">=</span>http://controller:5000/v3
+<span class="token function">export</span> OS_IDENTITY_API_VERSION<span class="token operator">=</span>3
+<span class="token function">export</span> OS_IMAGE_API_VERSION<span class="token operator">=</span>2
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x6309; swift example &#x7684;&#x65B9;&#x5F0F;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x4E86;&#xFF1A;&#x4E0B;&#x9762;&#x7684;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#xFF0C;&#x662F;&#x53EF;&#x4EE5;&#x4E0D;&#x9884;&#x5148;&#x8FD0;&#x884C;`. demo-openrc`&#x547D;&#x4EE4;&#x7684;&#x3002;</p>
+<pre class="language-"><code class="lang-shell">ubuntu@controller:~$  swift --os-auth-url http://controller:5000/v3 --auth-version 3\
+<span class="token operator">&gt;</span>       --os-project-name demo --os-project-domain-name Default \
+<span class="token operator">&gt;</span>       --os-username demo --os-user-domain-name Default \
+<span class="token operator">&gt;</span>       --os-password openstack list
+container1
+container1_segments
+container2
+jinweilai-work
+pub1
+test3
+ubuntu@controller:~$
+</code></pre>
+<p>&#x5982;&#x679C;&#x50CF;&#x4E0B;&#x9762;&#x7684;&#x8FD9;&#x6837;&#xFF0C;&#x628A;project &#x7684;&#x4FE1;&#x606F;&#x53BB;&#x9664;&#xFF0C;&#x5219;&#x4F1A;&#x62A5;&#x9519;</p>
+<pre class="language-"><code class="lang-shell">ubuntu@controller:~$  swift --os-auth-url http://controller:5000/v3 --auth-version 3\
+<span class="token operator">&gt;</span>       --os-username demo --os-user-domain-name Default \
+<span class="token operator">&gt;</span>       --os-password openstack list
+No project name or project <span class="token function">id</span> specified.
+ubuntu@controller:~$
+</code></pre>
+<p>&#x8BF4;&#x660E;&#x6BCF;&#x4E00;&#x4E2A;&#x5730;&#x65B9;&#x7684;&#x8BBE;&#x7F6E;&#xFF0C;&#x90FD;&#x8981;&#x52A0;&#x5230;&#x8BF7;&#x6C42;&#x53C2;&#x6570;&#x4E2D;&#x53BB;&#x3002;</p>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8FD9;&#x4E2A; demo-openrc &#x662F;&#x6709;scope &#x7684;&#x3002;</p>
+<h4 id="&#x5206;&#x6790;swift-example">&#x5206;&#x6790;swift example </h4>
+<p>&#x90A3;&#x4E48;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x67E5;&#x770B;&#x51FA; demo &#x8FD9;&#x4E2A;&#x5E10;&#x53F7;&#x7684; container &#x4FE1;&#x606F;&#x7684;&#x5462;&#xFF1F;</p>
+<p>&#x6839;&#x636E;&#x6587;&#x6863;&#x77E5;&#x9053;&#xFF0C;&#x662F;&#x5148;&#x5411; keystone &#x62FF;&#x5230; X-Auth-Token, &#x7136;&#x540E;&#x62FF;&#x4E0A;&#x8FD9;&#x4E2A;X-Auth-Token &#x5411;swift &#x8BF7;&#x6C42;&#x7684;&#x3002;</p>
+<p>&#x90A3;&#x8FD9;&#x6837;&#x5B50;&#x8BF4;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528; `swift stat -v` &#x4E2D;&#x7684; `Auth Token` &#x76F4;&#x63A5;&#x5411;swift&#x8BF7;&#x6C42;&#xFF0C;&#x8BD5;&#x4E00;&#x4E0B;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x6709;&#x6548;&#x3002;&#xFF08;&#x5176;&#x5B9E;&#x901A;&#x8FC7;keystone&#x65E5;&#x5FD7;/var/log/keystone/keystone-wsgi-public.log &#x548C; swift&#x65E5;&#x5FD7;&#xFF08;&#x5B58;&#x653E;&#x5728;&#x7CFB;&#x7EDF;&#x65E5;&#x5FD7;&#xFF09;/var/log/syslog , &#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5C31;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x3002;&#xFF09;</p>
+<p>&#x8BA9;&#x6211;&#x4EEC;&#x8BD5;&#x4E00;&#x4E0B;&#x3002;</p>
+<p>&#x5728; controller node &#x4E2D; &#x4F7F;&#x7528; `swift stat -v`&#x518D;&#x6765;&#x4E00;&#x6B21;&#x3002;</p>
+<pre class="language-"><code class="lang-shell">root@controller:~<span class="token comment"># swift stat -v</span>
+                     StorageURL: http://controller:8080/v1/AUTH_7d6eaa90d74a4f239963933c3a744df3
+                     Auth Token: gAAAAABcQVk7Q6QgnbTmTobnt36rLZmifbCMow4W-MWfQ9txcRyHEYOPXWRKAcc2r7bAVG0uS_VNC5GyIPw6FjQx3Bb-mofESZDEPs5AHe8m2Pg1Nwfmhrd8lg_4VqWZRffUQIrrRiNH1JSViBXFRZJn0zwSdwUREoskIuetQ0uZ5FWXuQOz240
+                        Account: AUTH_7d6eaa90d74a4f239963933c3a744df3
+                     Containers: 6
+                        Objects: 29
+                          Bytes: 7319499838
+Containers <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 6
+   Objects <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 29
+     Bytes <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 7319499838
+    X-Account-Project-Domain-Id: default
+         X-Openstack-Request-Id: txb40ee72900e8487a8e5ec-005c41593b
+                    X-Timestamp: 1546928904.74292
+                     X-Trans-Id: txb40ee72900e8487a8e5ec-005c41593b
+                   Content-Type: application/json<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+                  Accept-Ranges: bytes
+root@controller:~<span class="token comment">#</span>
+</code></pre>
+<p>&#x7136;&#x540E;&#x6839;&#x636E;
+<a href="https://developer.openstack.org/api-ref/object-store/index.html?expanded=show-account-details-and-list-containers-detail#show-container-details-and-list-objects" target="_blank">https://developer.openstack.org/api-ref/object-store/index.html?expanded=show-account-details-and-list-containers-detail#show-container-details-and-list-objects</a>
+&#x53BB;&#x4EFB;&#x4F55;&#x4E00;&#x53F0;&#x516C;&#x7F51;&#x673A;&#x5668;&#x4E0A;</p>
+<pre class="language-"><code class="lang-shell">&#x279C;  swift <span class="token function">curl</span> -i <span class="token string">&quot;http://192.168.0.50:8080/v1/AUTH_7d6eaa90d74a4f239963933c3a744df3?format=json&quot;</span> -X GET -H <span class="token string">&quot;X-Auth-Token: gAAAAABcQVk7Q6QgnbTmTobnt36rLZmifbCMow4W-MWfQ9txcRyHEYOPXWRKAcc2r7bAVG0uS_VNC5GyIPw6FjQx3Bb-mofESZDEPs5AHe8m2Pg1Nwfmhrd8lg_4VqWZRffUQIrrRiNH1JSViBXFRZJn0zwSdwUREoskIuetQ0uZ5FWXuQOz240&quot;</span>
+HTTP/1.1 200 OK
+Content-Length: 337
+X-Account-Object-Count: 29
+X-Account-Storage-Policy-Policy-0-Bytes-Used: 7319499838
+X-Account-Storage-Policy-Policy-0-Container-Count: 6
+X-Timestamp: 1546928904.74292
+X-Account-Storage-Policy-Policy-0-Object-Count: 29
+X-Account-Bytes-Used: 7319499838
+X-Account-Container-Count: 6
+Content-Type: application/json<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+Accept-Ranges: bytes
+x-account-project-domain-id: default
+X-Trans-Id: txcd8c653a027b4a5d9a9a0-005c415a1d
+X-Openstack-Request-Id: txcd8c653a027b4a5d9a9a0-005c415a1d
+Date: Fri, 18 Jan 2019 04:46:21 GMT
+
+<span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 9, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 506788650, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;container1&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 4, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 3460191876, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;container1_segments&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 1, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 18290688, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;container2&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 1, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 375626779, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;jinweilai-work&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 1, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 399336, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;pub1&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 13, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 2958202509, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;test3&quot;</span><span class="token punctuation">}</span><span class="token punctuation">]</span>%
+&#x279C;  swift
+</code></pre>
+<p>&#x5F97;&#x5230;&#x7ED3;&#x679C;&#x4E86;&#x3002;&#x54C8;&#x54C8;&#x3002;</p>
+<p>&#x90A3;&#x8FD9;&#x6837;&#x5B50;&#x8BF4;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x5F97;&#x5230;&#x6B63;&#x786E;&#x7684;`X-Auth-Token`&#xFF0C;&#x5C31;&#x4E00;&#x5B9A;&#x80FD;&#x8C03;&#x7528;swift&#x670D;&#x52A1;&#x4E86;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x5C31;&#x662F;&#x4F9D;&#x636E;&#x6211;&#x4EEC;&#x73B0;&#x6709;&#x7684;&#x6750;&#x6599;&#xFF0C;&#x5411;keystone&#x53D1;&#x9001;&#x8BF7;&#x6C42;, &#x5F97;&#x5230;&#x6211;&#x4EEC;&#x8981;&#x7684; X-Auth-Token &#x4E86;&#x3002;</p>
+<h3 id="&#x5411;keystone&#x53D1;&#x9001;&#x8BF7;&#x6C42;-&#x5F97;&#x5230;x-auth-token">&#x5411;keystone&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x3002;&#x5F97;&#x5230;X-Auth-Token </h3>
+<p>&#x6839;&#x636E;&#x4E0B;&#x9762;&#x6587;&#x6863;
+<a href="https://developer.openstack.org/api-ref/identity/v3/index.html?expanded=password-authentication-with-scoped-authorization-detail#identity-api-operations" target="_blank">https://developer.openstack.org/api-ref/identity/v3/index.html?expanded=password-authentication-with-scoped-authorization-detail#identity-api-operations</a></p>
+<p>&#x7ED3;&#x5408;&#x6211;&#x4EEC; demo-openrc &#x548C; &#x521A;&#x521A;&#x7684; swift example, &#x6211;&#x4EEC;&#x5F97;&#x5230;</p>
+<p>&#x751F;&#x6210;JSON&#x683C;&#x5F0F;&#x8BF7;&#x6C42;body:</p>
+<pre class="language-"><code class="lang-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;auth&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;identity&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;methods&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token string">&quot;password&quot;</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;password&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;user&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;demo&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Default&quot;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;password&quot;</span><span class="token operator">:</span> <span class="token string">&quot;openstack&quot;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;scope&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">&quot;project&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Default&quot;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;demo&quot;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x5411; keystone &#x7684; endpoint</p>
+<pre class="language-"><code class="lang-text">| 0b3dc5788cac4f2cb66edc3efacf10c0 | RegionOne | keystone     | identity     | True    | public    | http://controller:5000/v3/                    |
+</code></pre>
+<p>URL: <a href="http://controller:5000/v3/" target="_blank">http://controller:5000/v3/</a></p>
+<p>&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x3002;&#x5F97;&#x5230;response. &#x5176;&#x4E2D;&#x54CD;&#x5E94; headers &#x4E2D;&#x7684; &apos;X-Subject-Token&apos;, &#x5C31;&#x662F; X-Auth-Token &#x4E86;&#x3002;</p>
+<h3 id="&#x5E26;x-auth-token&#x5411;swift&#x670D;&#x52A1;&#x53D1;&#x51FA;&#x8BF7;&#x6C42;">&#x5E26;X-Auth-Token&#x5411;swift&#x670D;&#x52A1;&#x53D1;&#x51FA;&#x8BF7;&#x6C42; </h3>
+<p>&#x8FD9;&#x4E00;&#x6B65;&#x5C31;&#x662F;&#x91CD;&#x590D;&#x521A;&#x521A;&#x8BB2;&#x8FC7;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x5411;swift&#x8BF7;&#x6C42;&#x4E86;.
+&#x7136;&#x540E;&#x6839;&#x636E;
+<a href="https://developer.openstack.org/api-ref/object-store/index.html?expanded=show-account-details-and-list-containers-detail#show-container-details-and-list-objects" target="_blank">https://developer.openstack.org/api-ref/object-store/index.html?expanded=show-account-details-and-list-containers-detail#show-container-details-and-list-objects</a>
+&#x53BB;&#x4EFB;&#x4F55;&#x4E00;&#x53F0;&#x516C;&#x7F51;&#x673A;&#x5668;&#x4E0A;</p>
+<pre class="language-"><code class="lang-shell">&#x279C;  swift <span class="token function">curl</span> -i <span class="token string">&quot;http://192.168.0.50:8080/v1/AUTH_7d6eaa90d74a4f239963933c3a744df3?format=json&quot;</span> -X GET -H <span class="token string">&quot;X-Auth-Token: gAAAAABcQVk7Q6QgnbTmTobnt36rLZmifbCMow4W-MWfQ9txcRyHEYOPXWRKAcc2r7bAVG0uS_VNC5GyIPw6FjQx3Bb-mofESZDEPs5AHe8m2Pg1Nwfmhrd8lg_4VqWZRffUQIrrRiNH1JSViBXFRZJn0zwSdwUREoskIuetQ0uZ5FWXuQOz240&quot;</span>
+HTTP/1.1 200 OK
+Content-Length: 337
+X-Account-Object-Count: 29
+X-Account-Storage-Policy-Policy-0-Bytes-Used: 7319499838
+X-Account-Storage-Policy-Policy-0-Container-Count: 6
+X-Timestamp: 1546928904.74292
+X-Account-Storage-Policy-Policy-0-Object-Count: 29
+X-Account-Bytes-Used: 7319499838
+X-Account-Container-Count: 6
+Content-Type: application/json<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+Accept-Ranges: bytes
+x-account-project-domain-id: default
+X-Trans-Id: txcd8c653a027b4a5d9a9a0-005c415a1d
+X-Openstack-Request-Id: txcd8c653a027b4a5d9a9a0-005c415a1d
+Date: Fri, 18 Jan 2019 04:46:21 GMT
+
+<span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 9, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 506788650, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;container1&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 4, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 3460191876, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;container1_segments&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 1, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 18290688, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;container2&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 1, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 375626779, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;jinweilai-work&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 1, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 399336, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;pub1&quot;</span><span class="token punctuation">}</span>, <span class="token punctuation">{</span><span class="token string">&quot;count&quot;</span><span class="token keyword">:</span> 13, <span class="token string">&quot;bytes&quot;</span><span class="token keyword">:</span> 2958202509, <span class="token string">&quot;name&quot;</span><span class="token keyword">:</span> <span class="token string">&quot;test3&quot;</span><span class="token punctuation">}</span><span class="token punctuation">]</span>%
+&#x279C;  swift
+</code></pre>
+<p>&#x5F97;&#x5230;&#x7ED3;&#x679C;&#x4E86;&#x3002;&#x54C8;&#x54C8;&#x3002;</p>
+<h3 id="&#x5229;&#x7528;-python-&#x6765;&#x8BBF;&#x95EE;swift">&#x5229;&#x7528; python &#x6765;&#x8BBF;&#x95EE;swift </h3>
+<p>&#x76F4;&#x63A5;&#x4E0A;&#x4EE3;&#x7801;&#x4E86;&#x3002;</p>
+<pre class="language-"><code class="lang-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> json
+URL <span class="token operator">=</span> <span class="token string">&apos;http://192.168.0.50:5000/v3/auth/tokens&apos;</span>
+body <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">&quot;auth&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                    <span class="token string">&quot;identity&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                                    <span class="token string">&quot;methods&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+                                                        <span class="token string">&quot;password&quot;</span>
+                                    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                    <span class="token string">&quot;password&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                                                        <span class="token string">&quot;user&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                                                            <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;demo&quot;</span><span class="token punctuation">,</span>
+                                            <span class="token string">&quot;domain&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                            <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;Default&quot;</span>
+                                            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                                            <span class="token string">&quot;password&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;openstack&quot;</span>
+                                                        <span class="token punctuation">}</span>
+                                    <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token string">&quot;scope&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                                    <span class="token string">&quot;project&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                                                        <span class="token string">&quot;domain&quot;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                                                                                <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;Default&quot;</span>
+                                                        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                                                        <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;demo&quot;</span>
+                                    <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+body <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>body<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&apos;Content-Type&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;application/json&apos;</span><span class="token punctuation">}</span>
+res <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>URL<span class="token punctuation">,</span>data<span class="token operator">=</span>body<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+token <span class="token operator">=</span> res<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">&apos;X-Subject-Token&apos;</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span>
+
+URL <span class="token operator">=</span> <span class="token string">&apos;http://192.168.0.50:8080/v1/AUTH_7d6eaa90d74a4f239963933c3a744df3&apos;</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&apos;X-Auth-Token&apos;</span><span class="token punctuation">:</span>token<span class="token punctuation">,</span><span class="token string">&quot;Content-Type&quot;</span><span class="token punctuation">:</span> <span class="token string">&apos;application/json&apos;</span><span class="token punctuation">}</span>
+res <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>URL<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span>
+</code></pre>
+<footer class="page-footer"><span class="copyright"><p><a href="https://github.com/eiuapp/swift-handbook" target="_blank">Openstack Swift&#x5B9E;&#x8DF5;&#x6307;&#x5357;</a> | <a href="https://github.com/eiuapp/swift-docs" target="_blank">Openstack Swift&#x6587;&#x6863;&#x9605;&#x8BFB;</a></p><p><a href="https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg" data-lightbox="2fd927ee-fa64-4eca-8ed5-6bd72b573a3c" target="_blank">&#x70B9;&#x51FB;&#x5173;&#x6CE8;&#x3010;servicemesher&#x3011;&#x516C;&#x4F17;&#x53F7;&#x56DE;&#x590D;&#x3010;&#x52A0;&#x7FA4;&#x3011;&#x52A0;&#x5165;&#x5B66;&#x4E60;&#x7FA4;</a> | </p>Copyright &#xA9; <a href="https://eiu.app" target="_blank">eiu.app</a> 2017-2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification"> Updated at 
+2019-03-13 06:22:24
+</span></footer></body></html>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="proxy-node-install.html" class="navigation navigation-prev " aria-label="Previous page: 代理节点安装">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html" class="navigation navigation-next " aria-label="Next page: 让swift通过keystone认证">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"与keystone结合","level":"4.1","depth":1,"next":{"title":"让swift通过keystone认证","level":"4.2","depth":1,"path":"docs/swift-keystone-auth-with-jinweilai-openstack-dev-env2.md","ref":"docs/swift-keystone-auth-with-jinweilai-openstack-dev-env2.md","articles":[]},"previous":{"title":"代理节点安装","level":"3.6","depth":1,"path":"docs/proxy-node-install.md","ref":"docs/proxy-node-install.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github","codesnippet","splitter","page-toc-button","editlink","back-to-top-button","-lunr","-search","search-plus","github-buttons@2.1.0","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","3-ba","theme-default","-highlight","prism","prism-themes","sitemap-general","lightbox","adsense","ga"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"<p><a href=https://github.com/eiuapp/swift-handbook>Openstack Swift实践指南</a> | <a href=https://github.com/eiuapp/swift-docs>Openstack Swift文档阅读</a></p><p><a href=https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【servicemesher】公众号回复【加群】加入学习群</a> | </p>Copyright © <a href=https://eiu.app>eiu.app</a> 2017-2019","modify_label":" Updated at ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"lang":{"shell":"bash"},"css":["prism-themes/themes/prism-ghcolors.css"]},"github":{"url":"https://github.com/eiuapp/swift-handbook"},"editlink":{"label":"编辑本页","multilingual":false,"base":"https://github.com/eiuapp/swift-handbook/blob/master/"},"splitter":{},"adsense":{"client":"ca-pub-4029167986768912","slot":"2445941692","format":"auto","element":".page-inner section","position":"bottom"},"codesnippet":{},"sitemap-general":{"prefix":"https://eiu.app/swift-docs/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"lightbox":{"jquery":true},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"11f7d254cfa4e0ca44b175c66d379ecc"},"ga":{"configuration":"auto","token":"UA-93485976-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{}},"theme":"default","author":"Donald Tsang（圆月弯刀）","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)","language":"zh-hans","links":{"sidebar":{"Donald Tsang":"https://b.qqbb.app","Swift Docs":"https://eiuapp.github.io/swift-docs","Swift Handbook":"https://eiuapp.github.io/swift-handbook","Ceph Handbook":"https://eiuapp.github.io/ceph-handbook"}},"gitbook":"*","description":"Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) "},"file":{"path":"docs/analysis-openstack-swift-keystone-authentication.md","mtime":"2019-03-13T06:22:24.673Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T06:23:30.925Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-adsense/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

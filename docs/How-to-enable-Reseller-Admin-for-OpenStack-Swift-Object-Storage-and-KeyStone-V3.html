@@ -1,0 +1,1230 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>enable reseller admin · Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Donald Tsang（圆月弯刀）">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-ghcolors.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-lightbox/lightbox.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="swift-account-quota-outcome.html" />
+    
+    
+    <link rel="prev" href="openstack-swift-object-storage-result-analysis.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="https://b.qqbb.app" target="_blank" class="custom-link">Donald Tsang</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-docs" target="_blank" class="custom-link">Swift Docs</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/swift-handbook" target="_blank" class="custom-link">Swift Handbook</a>
+        </li>
+    
+        
+        <li>
+            <a href="https://eiuapp.github.io/ceph-handbook" target="_blank" class="custom-link">Ceph Handbook</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        <li class="header">序言</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">环境配置</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="env.html">
+            
+                <a href="env.html">
+            
+                    
+                        <b>2.1.</b>
+                    
+                    swift 2.17 环境配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">安装</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="swift-queens-install.html">
+            
+                <a href="swift-queens-install.html">
+            
+                    
+                        <b>3.1.</b>
+                    
+                    swift 安装过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="swift-controller-node-add-a-new-storage-node.html">
+            
+                <a href="swift-controller-node-add-a-new-storage-node.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    增加storage节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="swift-multy-proxy-node-conf.html">
+            
+                <a href="swift-multy-proxy-node-conf.html">
+            
+                    
+                        <b>3.3.</b>
+                    
+                    多代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                <a href="swift-multy-proxy-node-ha-with-nginx.html">
+            
+                    
+                        <b>3.4.</b>
+                    
+                    多代理节点通过nginx实现HA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="swift-multy-proxy-node-illustration.html">
+            
+                <a href="swift-multy-proxy-node-illustration.html">
+            
+                    
+                        <b>3.5.</b>
+                    
+                    多代理节点效果展示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="proxy-node-install.html">
+            
+                <a href="proxy-node-install.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    代理节点安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">认证</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="analysis-openstack-swift-keystone-authentication.html">
+            
+                <a href="analysis-openstack-swift-keystone-authentication.html">
+            
+                    
+                        <b>4.1.</b>
+                    
+                    与keystone结合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                <a href="swift-keystone-auth-with-jinweilai-openstack-dev-env2.html">
+            
+                    
+                        <b>4.2.</b>
+                    
+                    让swift通过keystone认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">ring</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="analysis-openstack-swift-overview-ring.html">
+            
+                <a href="analysis-openstack-swift-overview-ring.html">
+            
+                    
+                        <b>5.1.</b>
+                    
+                    overview ring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">partition</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="swift-what-is-a-swift-partition.html">
+            
+                <a href="swift-what-is-a-swift-partition.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    what is a swift partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="openstack-swift-analysis-partition.html">
+            
+                <a href="openstack-swift-analysis-partition.html">
+            
+                    
+                        <b>6.2.</b>
+                    
+                    ring如何生成partition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="openstack-swift-object-storage-result-analysis.html">
+            
+                <a href="openstack-swift-object-storage-result-analysis.html">
+            
+                    
+                        <b>6.3.</b>
+                    
+                    上传文件结果分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">quota</li>
+        
+        
+    
+        <li class="chapter active" data-level="7.1" data-path="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                <a href="How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.html">
+            
+                    
+                        <b>7.1.</b>
+                    
+                    enable reseller admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="swift-account-quota-outcome.html">
+            
+                <a href="swift-account-quota-outcome.html">
+            
+                    
+                        <b>7.2.</b>
+                    
+                    设置account的quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="swift-account-quota-process.html">
+            
+                <a href="swift-account-quota-process.html">
+            
+                    
+                        <b>7.3.</b>
+                    
+                    设置account的quota（分析过程）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="swfit-account-quota-restful-api.html">
+            
+                <a href="swfit-account-quota-restful-api.html">
+            
+                    
+                        <b>7.4.</b>
+                    
+                    REST调用accout quota
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">erasure code</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="analysis-openstack-swift-overview_erasure_code.html">
+            
+                <a href="analysis-openstack-swift-overview_erasure_code.html">
+            
+                    
+                        <b>8.1.</b>
+                    
+                    与 erasure code 相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">测试</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="swift-benchmarking-getput.html">
+            
+                <a href="swift-benchmarking-getput.html">
+            
+                    
+                        <b>9.1.</b>
+                    
+                    getput使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">日志</li>
+        
+        
+    
+        <li class="chapter " data-level="10.1" data-path="swift-logfiles.html">
+            
+                <a href="swift-logfiles.html">
+            
+                    
+                        <b>10.1.</b>
+                    
+                    组件日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">常见问题</li>
+        
+        
+    
+        <li class="chapter " data-level="11.1" data-path="swift-faq.html">
+            
+                <a href="swift-faq.html">
+            
+                    
+                        <b>11.1.</b>
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.2" data-path="swift-admin-cannot-login.html">
+            
+                <a href="swift-admin-cannot-login.html">
+            
+                    
+                        <b>11.2.</b>
+                    
+                    admin被删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.3" data-path="swift-controller-change-ip.html">
+            
+                <a href="swift-controller-change-ip.html">
+            
+                    
+                        <b>11.3.</b>
+                    
+                    controller节点更换IP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.4" data-path="swift-demo-cannot-get-user-info.html">
+            
+                <a href="swift-demo-cannot-get-user-info.html">
+            
+                    
+                        <b>11.4.</b>
+                    
+                    无法获取用户信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.5" data-path="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                <a href="swift-faq-auth-version-require-python-keystoneclient.html">
+            
+                    
+                        <b>11.5.</b>
+                    
+                    auth version require python-keystoneclient
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.6" data-path="swift-installed-source-code-address.html">
+            
+                <a href="swift-installed-source-code-address.html">
+            
+                    
+                        <b>11.6.</b>
+                    
+                    swift安装包源码地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.7" data-path="swift-multy-proxy-node-faq.html">
+            
+                <a href="swift-multy-proxy-node-faq.html">
+            
+                    
+                        <b>11.7.</b>
+                    
+                    多代理节点安装出现的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.8" data-path="swift-problem-with-xfs-file-system.html">
+            
+                <a href="swift-problem-with-xfs-file-system.html">
+            
+                    
+                        <b>11.8.</b>
+                    
+                    swift storage node 出现 xfs 错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.9" data-path="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                <a href="swift-rsync-dev2-fix-rsyncdconf.html">
+            
+                    
+                        <b>11.9.</b>
+                    
+                    rsync数据通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.10" data-path="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                <a href="swift-rsync-storage-node-cannot-get-rebalance-data.html">
+            
+                    
+                        <b>11.10.</b>
+                    
+                    rebalance后数据未通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.11" data-path="swift-storage-node-system-failed-re-mount.html">
+            
+                <a href="swift-storage-node-system-failed-re-mount.html">
+            
+                    
+                        <b>11.11.</b>
+                    
+                    storage node 的主板坏了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="11.12" data-path="swift-mount-structure-needs-cleaning.html">
+            
+                <a href="swift-mount-structure-needs-cleaning.html">
+            
+                    
+                        <b>11.12.</b>
+                    
+                    mount Structure needs cleaning
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">笔记</li>
+        
+        
+    
+        <li class="chapter " data-level="12.1" data-path="note-about-openstack-swift.html">
+            
+                <a href="note-about-openstack-swift.html">
+            
+                    
+                        <b>12.1.</b>
+                    
+                    笔记1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">未来</li>
+        
+        
+    
+        <li class="chapter " data-level="13.1" >
+            
+                <a target="_blank" href="https://b.qqbb.app/tags/swift/">
+            
+                    
+                        <b>13.1.</b>
+                    
+                    我的swift探险之旅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="13.2" >
+            
+                <a target="_blank" href="https://eiuapp.github.io/swift-handbook/">
+            
+                    
+                        <b>13.2.</b>
+                    
+                    Swift Handbook
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">相关资源</li>
+        
+        
+    
+        <li class="chapter " data-level="14.1" data-path="tech_resource.md">
+            
+                <span>
+            
+                    
+                        <b>14.1.</b>
+                    
+                    swift技术工具与资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >enable reseller admin</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <html><head></head><body><p>How to enable Reseller Admin for OpenStack Swift Object Storage and KeyStone V3?</p>
+<p>&#x672C;&#x6587;&#x6574;&#x7406;&#x81EA; <a href="https://www.ibm.com/developerworks/community/forums/html/topic?id=813eb4fd-c0c6-43a5-9317-a35e4081ef72" target="_blank">https://www.ibm.com/developerworks/community/forums/html/topic?id=813eb4fd-c0c6-43a5-9317-a35e4081ef72</a></p>
+<p>How to enable Reseller Admin for OpenStack Swift Object Storage and KeyStone V3?</p>
+<p>Jul 2, 2015 | Tags: account, admin, configuring, enable, enabling, how, keystone, management, object, openstack, reseller, reseller_admin, reselleradmin, scale, spectrum, swift, to, v3</p>
+<p>How to enable Reseller Admin for OpenStack Swift Object Storage and KeyStone V3?</p>
+<p>The purpose of the article is to leverage the Reseller Admin concept in Swift to query account statistics from a single admin level user.  As per OpenStack Swift documentation, Users with the Keystone role defined in reseller_admin_role (ResellerAdmin by default) can operate on any account. The auth system sets the request environ reseller_request to True if a request is coming from a user with this role.</p>
+<p>This article explains how this can be configured. In this sample exercise, our goal is to enable Reseller Admin access to &apos;admin&apos; user belonging to &apos;admin&apos; project.  You can also create other users and enable ResellerAdmin access.</p>
+<p>Assumptions:</p>
+<p>KeyStone V3 is setup and Swift is configured. 
+Python openstack client command line interface is available.
+By default, &apos;admin&apos; user and &apos;admin&apos; project is created and assigned to &apos;default&apos; Domain.  We will use this in this exercise, however you can configure different user, project and domain to accomplish ResellerAdmin setup.
+Openrc file is available to work with openstack CLI client.</p>
+<p>Initially, you will see something like this</p>
+<pre class="language-"><code class="lang-shell"> <span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># cat openrc</span>
+<span class="token comment"># Mon Jun 29 03:34:36 EDT 2015</span>
+<span class="token function">export</span> OS_AUTH_URL<span class="token operator">=</span><span class="token string">&quot;http://127.0.0.1:35357/v3&quot;</span>
+<span class="token function">export</span> OS_IDENTITY_API_VERSION<span class="token operator">=</span>3
+<span class="token function">export</span> OS_AUTH_VERSION<span class="token operator">=</span>3
+<span class="token function">export</span> OS_USERNAME<span class="token operator">=</span><span class="token string">&quot;admin&quot;</span>
+<span class="token function">export</span> OS_PASSWORD<span class="token operator">=</span><span class="token string">&quot;password&quot;</span>
+<span class="token function">export</span> OS_USER_DOMAIN_NAME<span class="token operator">=</span>Default
+<span class="token function">export</span> OS_PROJECT_NAME<span class="token operator">=</span>admin
+<span class="token function">export</span> OS_PROJECT_DOMAIN_NAME<span class="token operator">=</span>Default
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack domain list</span>
++---------+---------+---------+----------------------------------------------------------------------+
+<span class="token operator">|</span> ID      <span class="token operator">|</span> Name    <span class="token operator">|</span> Enabled <span class="token operator">|</span> Description                                                          
++---------+---------+---------+----------------------------------------------------------------------+
+<span class="token operator">|</span> default <span class="token operator">|</span> Default <span class="token operator">|</span> True    <span class="token operator">|</span> Owns <span class="token function">users</span> and tenants <span class="token punctuation">(</span>i.e. projects<span class="token punctuation">)</span> available on Identity API v2. <span class="token operator">|</span>
++---------+---------+---------+----------------------------------------------------------------------+
+</code></pre>
+<p>Now, create a new Domain</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack domain create Domain1</span>
++---------+----------------------------------+
+<span class="token operator">|</span> Field   <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++---------+----------------------------------+
+<span class="token operator">|</span> enabled <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>      <span class="token operator">|</span> 193bed5ba5a5481c8676bb5e06cf6125 <span class="token operator">|</span>
+<span class="token operator">|</span> name    <span class="token operator">|</span> Domain1                          <span class="token operator">|</span>
++---------+----------------------------------+
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack domain list</span>
++----------------------------------+---------+---------+----------------------------------------------------------------------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name    <span class="token operator">|</span> Enabled <span class="token operator">|</span> Description                                                          
++----------------------------------+---------+---------+----------------------------------------------------------------------+
+<span class="token operator">|</span> default                          <span class="token operator">|</span> Default <span class="token operator">|</span> True    <span class="token operator">|</span> Owns <span class="token function">users</span> and tenants <span class="token punctuation">(</span>i.e. projects<span class="token punctuation">)</span> available on Identity API v2. <span class="token operator">|</span>
+<span class="token operator">|</span> 193bed5ba5a5481c8676bb5e06cf6125 <span class="token operator">|</span> Domain1 <span class="token operator">|</span> True    <span class="token operator">|</span>                                                                      <span class="token operator">|</span>
++----------------------------------+---------+---------+----------------------------------------------------------------------+
+</code></pre>
+<p>Next, create a new project, lets call it &apos;Project1&apos;</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack project list</span>
++----------------------------------+---------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name    <span class="token operator">|</span>
++----------------------------------+---------+
+<span class="token operator">|</span> 534bca56aca443e889036ab52cfe40ec <span class="token operator">|</span> admin   <span class="token operator">|</span>
+<span class="token operator">|</span> 4c03ae000dd54860a4f9645d75272f5e <span class="token operator">|</span> <span class="token function">service</span> <span class="token operator">|</span>
++----------------------------------+---------+
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack project create Project1 --domain Domain1</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> Field       <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> description <span class="token operator">|</span>                                  <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id   <span class="token operator">|</span> 193bed5ba5a5481c8676bb5e06cf6125 <span class="token operator">|</span>
+<span class="token operator">|</span> enabled     <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>          <span class="token operator">|</span> e597d73f169444a1bb55a1e3a4adb29d <span class="token operator">|</span>
+<span class="token operator">|</span> name        <span class="token operator">|</span> Project1                         <span class="token operator">|</span>
++-------------+----------------------------------+
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack project list</span>
++----------------------------------+----------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name     <span class="token operator">|</span>
++----------------------------------+----------+
+<span class="token operator">|</span> 534bca56aca443e889036ab52cfe40ec <span class="token operator">|</span> admin    <span class="token operator">|</span>
+<span class="token operator">|</span> 4c03ae000dd54860a4f9645d75272f5e <span class="token operator">|</span> <span class="token function">service</span>  <span class="token operator">|</span>
+<span class="token operator">|</span> e597d73f169444a1bb55a1e3a4adb29d <span class="token operator">|</span> Project1 <span class="token operator">|</span>
++----------------------------------+----------+
+</code></pre>
+<p>Next, create a new user &apos;User1&apos; and assign him to &apos;Project1&apos; as part of &apos;Domain1&apos;</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment">#  openstack user create --domain Domain1 --project Project1 --password User1 User1</span>
++--------------------+----------------------------------+
+<span class="token operator">|</span> Field              <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------------+----------------------------------+
+<span class="token operator">|</span> default_project_id <span class="token operator">|</span> e597d73f169444a1bb55a1e3a4adb29d <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id          <span class="token operator">|</span> 193bed5ba5a5481c8676bb5e06cf6125 <span class="token operator">|</span>
+<span class="token operator">|</span> enabled            <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>                 <span class="token operator">|</span> d82e44a986234ad9bbac48d58cd2d18c <span class="token operator">|</span>
+<span class="token operator">|</span> name               <span class="token operator">|</span> User1                            <span class="token operator">|</span>
++--------------------+----------------------------------+
+</code></pre>
+<p>In KeyStone V3, by default, you will see  &apos;admin&apos; role is being configured and available</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role list</span>
++----------------------------------+-------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name  <span class="token operator">|</span>
++----------------------------------+-------+
+<span class="token operator">|</span> 4fbfdce0a56b47dd8d29907f534d4b52 <span class="token operator">|</span> admin <span class="token operator">|</span>
++----------------------------------+-------+
+</code></pre>
+<p>Lets add the newly created &apos;User1&apos; to &apos;Project1&apos; as part of &apos;Domain1&apos;</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --project Project1 --user User1 admin</span>
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># echo $?</span>
+0
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --domain Domain1 --user User1 admin</span>
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># echo $?</span>
+0
+</code></pre>
+<p>Copy openrc and modify it to create  a testrc (sample below)</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># cat testrc</span>
+<span class="token comment"># Mon Jun 29 03:34:36 EDT 2015</span>
+<span class="token function">export</span> OS_AUTH_URL<span class="token operator">=</span><span class="token string">&quot;http://127.0.0.1:35357/v3&quot;</span>
+<span class="token function">export</span> OS_IDENTITY_API_VERSION<span class="token operator">=</span>3
+<span class="token function">export</span> OS_AUTH_VERSION<span class="token operator">=</span>3
+<span class="token function">export</span> OS_USERNAME<span class="token operator">=</span><span class="token string">&quot;User1&quot;</span>
+<span class="token function">export</span> OS_PASSWORD<span class="token operator">=</span><span class="token string">&quot;User1&quot;</span>
+<span class="token function">export</span> OS_USER_DOMAIN_NAME<span class="token operator">=</span>Domain1
+<span class="token function">export</span> OS_PROJECT_NAME<span class="token operator">=</span>Project1
+<span class="token function">export</span> OS_PROJECT_DOMAIN_NAME<span class="token operator">=</span>Domain1
+</code></pre>
+<p>Source the &apos;testrc&apos;, we will try and create a swift container and upload a sample object and get account level statistics.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># source testrc</span>
+</code></pre>
+<p>Intially, &apos;swift list&apos; shows nothing.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift list</span>
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment">#</span>
+</code></pre>
+<p>Now, create a container</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift post testcontainer1</span>
+</code></pre>
+<p>We can upload an object to the &apos;testcontainer1&apos;</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift upload testcontainer1 file1</span>
+file1
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift list</span>
+testcontainer1
+</code></pre>
+<p>Now, ensure swift stat shows</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift stat</span>
+                        Account: AUTH_e597d73f169444a1bb55a1e3a4adb29d
+                     Containers: 1
+                        Objects: 1
+                          Bytes: 166978
+Containers <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+   Objects <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+     Bytes <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 166978
+    X-Account-Project-Domain-Id: 193bed5ba5a5481c8676bb5e06cf6125
+                    X-Timestamp: 1435818271.19603
+                     X-Trans-Id: txa197a1317218450c8a734-005594e2ec
+                   Content-Type: text/plain<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+                  Accept-Ranges: bytes
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift list testcontainer1</span>
+file1
+</code></pre>
+<p>Now, source &apos;openrc&apos; to &apos;admin&apos; user of &apos;admin&apos; project with &apos;Default&apos; domain</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># source openrc</span>
+</code></pre>
+<p>As &apos;admin&apos; user, If you try to list the container created by &apos;User1&apos; of &apos;Project1&apos; and &apos;Domain1&apos;, you will not be able to do this.  This requires ResellerAdmin level access, which is what we are going to configure now.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift list testcontainer1</span>
+Container <span class="token string">&apos;testcontainer1&apos;</span> not found
+</code></pre>
+<p>Swift proxy-server.conf needs to be edited to add &apos;reseller_admin_role&apos; and &apos;reseller_prefix&apos;.</p>
+<p>As per KeyStone V3 documentation, the name &apos;ResellerAdmin&apos; is not hardcoded and can be user defined.<br>&apos;reseller<em>prefix&apos; can be set to a user defined prefix.  We will use &apos;AUTH</em>&apos;, but you can use something else as well.</p>
+<p>By default, on /etc/swift/proxy-server.conf, you will see something like this</p>
+<pre class="language-"><code>[filter:keystone]
+use = egg:swift#keystoneauth
+operator_roles = admin, SwiftOperator
+is_admin = true
+cache = swift.cache
+</code></pre><p>Edit the  proxy-server.conf (filter:keystone section) and add the lines highlighted in bold.</p>
+<pre class="language-"><code>[filter:keystone]
+use = egg:swift#keystoneauth
+operator_roles = admin, SwiftOperator
+reseller_admin_role = ResellerAdmin
+reseller_prefix = AUTH_
+is_admin = true
+cache = swift.cache
+</code></pre><p>Now, create ResellerAdmin role.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role create ResellerAdmin</span>
++-------+----------------------------------+
+<span class="token operator">|</span> Field <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++-------+----------------------------------+
+<span class="token operator">|</span> <span class="token function">id</span>    <span class="token operator">|</span> 9658c423949a460bbb6ed04b19fae672 <span class="token operator">|</span>
+<span class="token operator">|</span> name  <span class="token operator">|</span> ResellerAdmin                    <span class="token operator">|</span>
++-------+----------------------------------+
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role list</span>
++----------------------------------+---------------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name          <span class="token operator">|</span>
++----------------------------------+---------------+
+<span class="token operator">|</span> 4fbfdce0a56b47dd8d29907f534d4b52 <span class="token operator">|</span> admin         <span class="token operator">|</span>
+<span class="token operator">|</span> 9658c423949a460bbb6ed04b19fae672 <span class="token operator">|</span> ResellerAdmin <span class="token operator">|</span>
++----------------------------------+---------------+
+</code></pre>
+<p>Add &apos;ResellerAdmin&apos; role to &apos;admin&apos; user of &apos;admin&apos; project with &apos;Default&apos; domain.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role add --domain Default --user admin ResellerAdmin</span>
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role add  --project admin --user admin ResellerAdmin</span>
+</code></pre>
+<p>The following command confirms, that &apos;ResellerAdmin&apos; role is assigned to &apos;admin&apos; user.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack role assignment list --role ResellerAdmin</span>
++----------------------------------+----------------------------------+-------+----------------------------------+---------+
+<span class="token operator">|</span> Role                             <span class="token operator">|</span> User                             <span class="token operator">|</span> Group <span class="token operator">|</span> Project                          <span class="token operator">|</span> Domain  <span class="token operator">|</span>
++----------------------------------+----------------------------------+-------+----------------------------------+---------+
+<span class="token operator">|</span> 9658c423949a460bbb6ed04b19fae672 <span class="token operator">|</span> 56dbaf1aa80247c7a4834c0fea604926 <span class="token operator">|</span>       <span class="token operator">|</span>                                 <span class="token operator">|</span> default <span class="token operator">|</span>
+<span class="token operator">|</span> 9658c423949a460bbb6ed04b19fae672 <span class="token operator">|</span> 56dbaf1aa80247c7a4834c0fea604926 <span class="token operator">|</span>       <span class="token operator">|</span> 534bca56aca443e889036ab52cfe40ec <span class="token operator">|</span>         <span class="token operator">|</span>
++----------------------------------+----------------------------------+-------+----------------------------------+---------+
+
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack user show 56dbaf1aa80247c7a4834c0fea604926</span>
++--------------------+----------------------------------+
+<span class="token operator">|</span> Field              <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++--------------------+----------------------------------+
+<span class="token operator">|</span> default_project_id <span class="token operator">|</span> 534bca56aca443e889036ab52cfe40ec <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id          <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> enabled            <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>                 <span class="token operator">|</span> 56dbaf1aa80247c7a4834c0fea604926 <span class="token operator">|</span>
+<span class="token operator">|</span> name               <span class="token operator">|</span> admin                            <span class="token operator">|</span>
++--------------------+----------------------------------+
+
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack project show 534bca56aca443e889036ab52cfe40ec</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> Field       <span class="token operator">|</span> Value                            <span class="token operator">|</span>
++-------------+----------------------------------+
+<span class="token operator">|</span> description <span class="token operator">|</span>                                  <span class="token operator">|</span>
+<span class="token operator">|</span> domain_id   <span class="token operator">|</span> default                          <span class="token operator">|</span>
+<span class="token operator">|</span> enabled     <span class="token operator">|</span> True                             <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token function">id</span>          <span class="token operator">|</span> 534bca56aca443e889036ab52cfe40ec <span class="token operator">|</span>
+<span class="token operator">|</span> name        <span class="token operator">|</span> admin                            <span class="token operator">|</span>
++-------------+----------------------------------+
+</code></pre>
+<p>As &apos;admin&apos; user, invoke keystone to get a new token.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># export TOKEN=`openstack --os-username admin --os-project-name admin  token issue | grep id | head -n 1 | awk &apos;{print $4}&apos; `</span>
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># echo $TOKEN</span>
+a5957db94c3e4fb6aa2f118cbdf63896
+</code></pre>
+<p>You have provided &apos;ResellerAdmin&apos; access to user &apos;admin&apos;.  Find, the project Id that you want to access using &apos;ResellerAdmin&apos; access.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># openstack project list</span>
++----------------------------------+----------+
+<span class="token operator">|</span> ID                               <span class="token operator">|</span> Name     <span class="token operator">|</span>
++----------------------------------+----------+
+<span class="token operator">|</span> 534bca56aca443e889036ab52cfe40ec <span class="token operator">|</span> admin    <span class="token operator">|</span>
+<span class="token operator">|</span> 4c03ae000dd54860a4f9645d75272f5e <span class="token operator">|</span> <span class="token function">service</span>  <span class="token operator">|</span>
+<span class="token operator">|</span> e597d73f169444a1bb55a1e3a4adb29d <span class="token operator">|</span> Project1 <span class="token operator">|</span>
++----------------------------------+----------+
+</code></pre>
+<p>Now, as &apos;admin&apos; user from &apos;admin&apos; project of &apos;Default&apos; domain, get the account stat for Project1.</p>
+<p>Remember, we added &apos;AUTH<em>&apos; as the reseller prefix in proxy-server.conf.  So append the project id to &apos;AUTH</em>&apos; and issue the following openstack command.   The following swift command line shows how to invoke the account stats using the reseller prefix.</p>
+<p>Note, the swift endpoint URI can be obtained via &apos;openstack endpoint list&apos;.</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift --os-auth-token $TOKEN --os-storage-url http://localhost:8080/v1/AUTH_e597d73f169444a1bb55a1e3a4adb29d stat</span>
+                        Account: AUTH_e597d73f169444a1bb55a1e3a4adb29d
+                     Containers: 1
+                        Objects: 1
+                          Bytes: 166978
+Containers <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+   Objects <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 1
+     Bytes <span class="token keyword">in</span> policy <span class="token string">&quot;policy-0&quot;</span><span class="token keyword">:</span> 166978
+    X-Account-Project-Domain-Id: 193bed5ba5a5481c8676bb5e06cf6125
+                    X-Timestamp: 1435818271.19603
+                     X-Trans-Id: tx2d07e74417ca4e0abea68-005594dda2
+                   Content-Type: text/plain<span class="token punctuation">;</span> charset<span class="token operator">=</span>utf-8
+                  Accept-Ranges: bytes
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift --os-auth-token $TOKEN --os-storage-url http://localhost:8080/v1/AUTH_e597d73f169444a1bb55a1e3a4adb29d list</span>
+testcontainer1
+<span class="token punctuation">[</span>root@host ~<span class="token punctuation">]</span><span class="token comment"># swift --os-auth-token $TOKEN --os-storage-url http://localhost:8080/v1/AUTH_e597d73f169444a1bb55a1e3a4adb29d list testcontainer1</span>
+file1
+</code></pre>
+<p>Now, you are able to query any account using a single user using &apos;ResellerAdmin&apos; level access, without requiring password of those accounts.  </p>
+<p>Happy OpenStack Swift!!!</p>
+<p>Note: The information in this blog is provided &quot;AS IS&quot;.  The opinions expressed on this blog represent my own and not those of my employer.</p>
+<p>Log in to reply.
+Updated on Jul 2, 2015 at 11:21 PM by manbazha </p>
+<footer class="page-footer"><span class="copyright"><p><a href="https://github.com/eiuapp/swift-handbook" target="_blank">Openstack Swift&#x5B9E;&#x8DF5;&#x6307;&#x5357;</a> | <a href="https://github.com/eiuapp/swift-docs" target="_blank">Openstack Swift&#x6587;&#x6863;&#x9605;&#x8BFB;</a></p><p><a href="https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg" data-lightbox="2fd927ee-fa64-4eca-8ed5-6bd72b573a3c" target="_blank">&#x70B9;&#x51FB;&#x5173;&#x6CE8;&#x3010;servicemesher&#x3011;&#x516C;&#x4F17;&#x53F7;&#x56DE;&#x590D;&#x3010;&#x52A0;&#x7FA4;&#x3011;&#x52A0;&#x5165;&#x5B66;&#x4E60;&#x7FA4;</a> | </p>Copyright &#xA9; <a href="https://eiu.app" target="_blank">eiu.app</a> 2017-2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification"> Updated at 
+2019-03-13 06:22:24
+</span></footer></body></html>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="openstack-swift-object-storage-result-analysis.html" class="navigation navigation-prev " aria-label="Previous page: 上传文件结果分析">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="swift-account-quota-outcome.html" class="navigation navigation-next " aria-label="Next page: 设置account的quota">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"enable reseller admin","level":"7.1","depth":1,"next":{"title":"设置account的quota","level":"7.2","depth":1,"path":"docs/swift-account-quota-outcome.md","ref":"docs/swift-account-quota-outcome.md","articles":[]},"previous":{"title":"上传文件结果分析","level":"6.3","depth":1,"path":"docs/openstack-swift-object-storage-result-analysis.md","ref":"docs/openstack-swift-object-storage-result-analysis.md","articles":[]},"dir":"ltr"},"config":{"plugins":["github","codesnippet","splitter","page-toc-button","editlink","back-to-top-button","-lunr","-search","search-plus","github-buttons@2.1.0","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","3-ba","theme-default","-highlight","prism","prism-themes","sitemap-general","lightbox","adsense","ga"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"<p><a href=https://github.com/eiuapp/swift-handbook>Openstack Swift实践指南</a> | <a href=https://github.com/eiuapp/swift-docs>Openstack Swift文档阅读</a></p><p><a href=https://res.cloudinary.com/dmtixvmgt/image/upload/v1539022273/wechat-qrcode_cml5dm.jpg data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【servicemesher】公众号回复【加群】加入学习群</a> | </p>Copyright © <a href=https://eiu.app>eiu.app</a> 2017-2019","modify_label":" Updated at ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"lang":{"shell":"bash"},"css":["prism-themes/themes/prism-ghcolors.css"]},"github":{"url":"https://github.com/eiuapp/swift-handbook"},"editlink":{"label":"编辑本页","multilingual":false,"base":"https://github.com/eiuapp/swift-handbook/blob/master/"},"splitter":{},"adsense":{"client":"ca-pub-4029167986768912","slot":"2445941692","format":"auto","element":".page-inner section","position":"bottom"},"codesnippet":{},"sitemap-general":{"prefix":"https://eiu.app/swift-docs/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"lightbox":{"jquery":true},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"repo":"eiuapp/swift-handbook","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"11f7d254cfa4e0ca44b175c66d379ecc"},"ga":{"configuration":"auto","token":"UA-93485976-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{}},"theme":"default","author":"Donald Tsang（圆月弯刀）","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Swift Handbook - Swift 实践指南 by Donald Tsang(圆月弯刀)","language":"zh-hans","links":{"sidebar":{"Donald Tsang":"https://b.qqbb.app","Swift Docs":"https://eiuapp.github.io/swift-docs","Swift Handbook":"https://eiuapp.github.io/swift-handbook","Ceph Handbook":"https://eiuapp.github.io/ceph-handbook"}},"gitbook":"*","description":"Swift Handbook - Swift 实践指南  2019年 by Donald Tsang(圆月弯刀) "},"file":{"path":"docs/How-to-enable-Reseller-Admin-for-OpenStack-Swift-Object-Storage-and-KeyStone-V3.md","mtime":"2019-03-13T06:22:24.673Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-13T06:23:30.925Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lightbox/lightbox.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-adsense/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
